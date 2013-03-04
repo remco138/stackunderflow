@@ -1,4 +1,6 @@
-﻿* { margin: 0; padding: 0; }
+﻿/* Setup stuff
+-----------------------------------------------------------*/
+* { margin: 0; padding: 0; }
 
 .clear { clear: both; }
 
@@ -18,7 +20,8 @@ header, footer, nav, section {
     display: block;
 }
 
-/* HEADER */
+/* Header
+-----------------------------------------------------------*/
 #user {
     background: #eee;
     height: 30px;
@@ -34,7 +37,8 @@ header, footer, nav, section {
     float: left;
 }
 
-/* NAVIGATION */
+/* Navigation
+-----------------------------------------------------------*/
 #navigation { float: left; margin-left: 25px; margin-top: 16px; }
 #navigation ul { list-style-type: none; }
 #navigation ul li {
@@ -52,9 +56,18 @@ header, footer, nav, section {
     line-height: 30px;
     padding: 0 8px 0 8px;
 }
-#navigation ul li:hover { background: #888; }
+#navigation ul li:hover,#navigation ul li.active { background: #ff9900; }
 
+/* @Renderbody
+-----------------------------------------------------------*/
+#content {
+    margin-top: 15px;
+}
+#content h2 { border-bottom: 1px solid #333; margin-bottom: 20px; }
 
+/*****************************************************
+    NOT USED CODE BELOW, DONT YOU DIE ON ME!
+******************************************************/
 /* Styles for basic forms
 -----------------------------------------------------------*/
 fieldset {
@@ -108,7 +121,6 @@ textarea {
 
 /* Content
 -----------------------------------------------------------*/
-
 .content {
     margin: 0 auto;
     width: 960px;

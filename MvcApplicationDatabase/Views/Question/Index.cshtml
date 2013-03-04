@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<MvcApplicationDatabase.Models.Question>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Questions";
 }
 
-<h2>Index</h2>
+<h2>All @ViewBag.Title</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -49,3 +49,9 @@
 }
 
 </table>
+<p>
+    @for (int i = 1; i <= Math.Abs(Model.Count()/ViewBag.PageSize); i++)
+    {
+        @Html.ActionLink(i.ToString() + " | ", "Index", new { pagesize=(i*ViewBag.PageSize) })
+    }
+</p>
