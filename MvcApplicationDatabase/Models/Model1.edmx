@@ -1,0 +1,411 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="StackOverflowDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="StackOverflowDBModelStoreContainer">
+          <EntitySet Name="Posts" EntityType="StackOverflowDBModel.Store.Posts" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Questions" EntityType="StackOverflowDBModel.Store.Questions" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Tagged_Questions" EntityType="StackOverflowDBModel.Store.Tagged_Questions" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Tags" EntityType="StackOverflowDBModel.Store.Tags" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Users" EntityType="StackOverflowDBModel.Store.Users" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="BelongsToQuestion" Association="StackOverflowDBModel.Store.BelongsToQuestion">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="Posts" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="BestAnswerPost_id" Association="StackOverflowDBModel.Store.BestAnswerPost_id">
+            <End Role="Posts" EntitySet="Posts" />
+            <End Role="Questions" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="QuestionToTag" Association="StackOverflowDBModel.Store.QuestionToTag">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="Tagged_Questions" EntitySet="Tagged_Questions" />
+          </AssociationSet>
+          <AssociationSet Name="ReplyToPost" Association="StackOverflowDBModel.Store.ReplyToPost">
+            <End Role="Posts" EntitySet="Posts" />
+            <End Role="Posts1" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="TheChosenTag" Association="StackOverflowDBModel.Store.TheChosenTag">
+            <End Role="Tags" EntitySet="Tags" />
+            <End Role="Tagged_Questions" EntitySet="Tagged_Questions" />
+          </AssociationSet>
+          <AssociationSet Name="UserWhoMadeThisQuestion" Association="StackOverflowDBModel.Store.UserWhoMadeThisQuestion">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Questions" EntitySet="Questions" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Posts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Question_id" Type="int" />
+          <Property Name="ReplyToPost_id" Type="int" />
+          <Property Name="Content" Type="text" />
+          <Property Name="Votes" Type="int" />
+          <Property Name="DateCreated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Questions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="User_id" Type="int" />
+          <Property Name="BestAnswer_id" Type="int" />
+          <Property Name="Content" Type="text" />
+          <Property Name="DateCreated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Tagged_Questions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Question_id" Type="int" />
+          <Property Name="Tag_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Tags">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="nchar" MaxLength="10" />
+          <Property Name="LastName" Type="nchar" MaxLength="10" />
+          <Property Name="Password" Type="nchar" MaxLength="10" />
+          <Property Name="Email" Type="nchar" MaxLength="10" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="PermissionLEvel" Type="int" />
+          <Property Name="Votes" Type="int" />
+        </EntityType>
+        <Association Name="BelongsToQuestion">
+          <End Role="Questions" Type="StackOverflowDBModel.Store.Questions" Multiplicity="0..1" />
+          <End Role="Posts" Type="StackOverflowDBModel.Store.Posts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Posts">
+              <PropertyRef Name="Question_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="BestAnswerPost_id">
+          <End Role="Posts" Type="StackOverflowDBModel.Store.Posts" Multiplicity="0..1" />
+          <End Role="Questions" Type="StackOverflowDBModel.Store.Questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Posts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Questions">
+              <PropertyRef Name="BestAnswer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="QuestionToTag">
+          <End Role="Questions" Type="StackOverflowDBModel.Store.Questions" Multiplicity="0..1" />
+          <End Role="Tagged_Questions" Type="StackOverflowDBModel.Store.Tagged_Questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tagged_Questions">
+              <PropertyRef Name="Question_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ReplyToPost">
+          <End Role="Posts" Type="StackOverflowDBModel.Store.Posts" Multiplicity="0..1" />
+          <End Role="Posts1" Type="StackOverflowDBModel.Store.Posts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Posts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Posts1">
+              <PropertyRef Name="ReplyToPost_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TheChosenTag">
+          <End Role="Tags" Type="StackOverflowDBModel.Store.Tags" Multiplicity="0..1" />
+          <End Role="Tagged_Questions" Type="StackOverflowDBModel.Store.Tagged_Questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tags">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tagged_Questions">
+              <PropertyRef Name="Tag_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserWhoMadeThisQuestion">
+          <End Role="Users" Type="StackOverflowDBModel.Store.Users" Multiplicity="0..1" />
+          <End Role="Questions" Type="StackOverflowDBModel.Store.Questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Questions">
+              <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="StackOverflowDBModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="StackOverflowDbContext" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Posts" EntityType="StackOverflowDBModel.Post" />
+          <EntitySet Name="Questions" EntityType="StackOverflowDBModel.Question" />
+          <EntitySet Name="Tagged_Questions" EntityType="StackOverflowDBModel.Tagged_Questions" />
+          <EntitySet Name="Tags" EntityType="StackOverflowDBModel.Tag" />
+          <EntitySet Name="Users" EntityType="StackOverflowDBModel.User" />
+          <AssociationSet Name="BelongsToQuestion" Association="StackOverflowDBModel.BelongsToQuestion">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="Posts" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="BestAnswerPost_id" Association="StackOverflowDBModel.BestAnswerPost_id">
+            <End Role="Posts" EntitySet="Posts" />
+            <End Role="Questions" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="ReplyToPost" Association="StackOverflowDBModel.ReplyToPost">
+            <End Role="Posts" EntitySet="Posts" />
+            <End Role="Posts1" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="QuestionToTag" Association="StackOverflowDBModel.QuestionToTag">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="Tagged_Questions" EntitySet="Tagged_Questions" />
+          </AssociationSet>
+          <AssociationSet Name="UserWhoMadeThisQuestion" Association="StackOverflowDBModel.UserWhoMadeThisQuestion">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Questions" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="TheChosenTag" Association="StackOverflowDBModel.TheChosenTag">
+            <End Role="Tags" EntitySet="Tags" />
+            <End Role="Tagged_Questions" EntitySet="Tagged_Questions" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Question_id" Type="Int32" />
+          <Property Name="ReplyToPost_id" Type="Int32" />
+          <Property Name="Content" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="Votes" Type="Int32" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Question" Relationship="StackOverflowDBModel.BelongsToQuestion" FromRole="Posts" ToRole="Questions" />
+          <NavigationProperty Name="Questions" Relationship="StackOverflowDBModel.BestAnswerPost_id" FromRole="Posts" ToRole="Questions" />
+          <NavigationProperty Name="Posts1" Relationship="StackOverflowDBModel.ReplyToPost" FromRole="Posts" ToRole="Posts1" />
+          <NavigationProperty Name="Post1" Relationship="StackOverflowDBModel.ReplyToPost" FromRole="Posts1" ToRole="Posts" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="User_id" Type="Int32" />
+          <Property Name="BestAnswer_id" Type="Int32" />
+          <Property Name="Content" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Posts" Relationship="StackOverflowDBModel.BelongsToQuestion" FromRole="Questions" ToRole="Posts" />
+          <NavigationProperty Name="Post" Relationship="StackOverflowDBModel.BestAnswerPost_id" FromRole="Questions" ToRole="Posts" />
+          <NavigationProperty Name="Tagged_Questions" Relationship="StackOverflowDBModel.QuestionToTag" FromRole="Questions" ToRole="Tagged_Questions" />
+          <NavigationProperty Name="User" Relationship="StackOverflowDBModel.UserWhoMadeThisQuestion" FromRole="Questions" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Tagged_Questions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Question_id" Type="Int32" />
+          <Property Name="Tag_id" Type="Int32" />
+          <NavigationProperty Name="Question" Relationship="StackOverflowDBModel.QuestionToTag" FromRole="Tagged_Questions" ToRole="Questions" />
+          <NavigationProperty Name="Tag" Relationship="StackOverflowDBModel.TheChosenTag" FromRole="Tagged_Questions" ToRole="Tags" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+          <NavigationProperty Name="Tagged_Questions" Relationship="StackOverflowDBModel.TheChosenTag" FromRole="Tags" ToRole="Tagged_Questions" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+          <Property Name="LastName" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+          <Property Name="Password" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+          <Property Name="Email" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="PermissionLEvel" Type="Int32" />
+          <Property Name="Votes" Type="Int32" />
+          <NavigationProperty Name="Questions" Relationship="StackOverflowDBModel.UserWhoMadeThisQuestion" FromRole="Users" ToRole="Questions" />
+        </EntityType>
+        <Association Name="BelongsToQuestion">
+          <End Role="Questions" Type="StackOverflowDBModel.Question" Multiplicity="0..1" />
+          <End Role="Posts" Type="StackOverflowDBModel.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Posts">
+              <PropertyRef Name="Question_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="BestAnswerPost_id">
+          <End Role="Posts" Type="StackOverflowDBModel.Post" Multiplicity="0..1" />
+          <End Role="Questions" Type="StackOverflowDBModel.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Posts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Questions">
+              <PropertyRef Name="BestAnswer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ReplyToPost">
+          <End Role="Posts" Type="StackOverflowDBModel.Post" Multiplicity="0..1" />
+          <End Role="Posts1" Type="StackOverflowDBModel.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Posts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Posts1">
+              <PropertyRef Name="ReplyToPost_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="QuestionToTag">
+          <End Role="Questions" Type="StackOverflowDBModel.Question" Multiplicity="0..1" />
+          <End Role="Tagged_Questions" Type="StackOverflowDBModel.Tagged_Questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tagged_Questions">
+              <PropertyRef Name="Question_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserWhoMadeThisQuestion">
+          <End Role="Users" Type="StackOverflowDBModel.User" Multiplicity="0..1" />
+          <End Role="Questions" Type="StackOverflowDBModel.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Questions">
+              <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TheChosenTag">
+          <End Role="Tags" Type="StackOverflowDBModel.Tag" Multiplicity="0..1" />
+          <End Role="Tagged_Questions" Type="StackOverflowDBModel.Tagged_Questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tags">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tagged_Questions">
+              <PropertyRef Name="Tag_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="StackOverflowDBModelStoreContainer" CdmEntityContainer="StackOverflowDbContext">
+          <EntitySetMapping Name="Posts">
+            <EntityTypeMapping TypeName="StackOverflowDBModel.Post">
+              <MappingFragment StoreEntitySet="Posts">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Question_id" ColumnName="Question_id" />
+                <ScalarProperty Name="ReplyToPost_id" ColumnName="ReplyToPost_id" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Votes" ColumnName="Votes" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Questions">
+            <EntityTypeMapping TypeName="StackOverflowDBModel.Question">
+              <MappingFragment StoreEntitySet="Questions">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="User_id" ColumnName="User_id" />
+                <ScalarProperty Name="BestAnswer_id" ColumnName="BestAnswer_id" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tagged_Questions">
+            <EntityTypeMapping TypeName="StackOverflowDBModel.Tagged_Questions">
+              <MappingFragment StoreEntitySet="Tagged_Questions">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Question_id" ColumnName="Question_id" />
+                <ScalarProperty Name="Tag_id" ColumnName="Tag_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tags">
+            <EntityTypeMapping TypeName="StackOverflowDBModel.Tag">
+              <MappingFragment StoreEntitySet="Tags">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="StackOverflowDBModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="PermissionLEvel" ColumnName="PermissionLEvel" />
+                <ScalarProperty Name="Votes" ColumnName="Votes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

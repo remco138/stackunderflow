@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f603da7bd6ef40eca8e3628b4af58147" Name="Diagram1" ZoomLevel="114">
+        <EntityTypeShape EntityType="StackOverflowDBModel.Post" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StackOverflowDBModel.Question" Width="1.5" PointX="3" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="StackOverflowDBModel.Tagged_Questions" Width="1.5" PointX="3.25" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="StackOverflowDBModel.Tag" Width="1.5" PointX="5.5" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="StackOverflowDBModel.User" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
+        <AssociationConnector Association="StackOverflowDBModel.BelongsToQuestion" ManuallyRouted="false" />
+        <AssociationConnector Association="StackOverflowDBModel.BestAnswerPost_id" ManuallyRouted="false" />
+        <AssociationConnector Association="StackOverflowDBModel.ReplyToPost" ManuallyRouted="false" />
+        <AssociationConnector Association="StackOverflowDBModel.QuestionToTag" ManuallyRouted="false" />
+        <AssociationConnector Association="StackOverflowDBModel.UserWhoMadeThisQuestion" ManuallyRouted="false" />
+        <AssociationConnector Association="StackOverflowDBModel.TheChosenTag" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
