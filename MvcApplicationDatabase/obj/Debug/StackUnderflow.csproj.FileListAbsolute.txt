@@ -28,3 +28,33 @@ C:\Users\Minardus\Documents\Visual Studio 2012\Projects\StackUnderflow\stackunde
 C:\Users\Minardus\Documents\Visual Studio 2012\Projects\StackUnderflow\stackunderflow\MvcApplicationDatabase\obj\Debug\StackUnderflow.csprojResolveAssemblyReference.cache
 C:\Users\Minardus\Documents\Visual Studio 2012\Projects\StackUnderflow\stackunderflow\MvcApplicationDatabase\obj\Debug\MvcApplicationDatabase.dll
 C:\Users\Minardus\Documents\Visual Studio 2012\Projects\StackUnderflow\stackunderflow\MvcApplicationDatabase\obj\Debug\MvcApplicationDatabase.pdb
+D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\bin\MvcApplicationDatabase.dll
+D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\bin\MvcApplicationDatabase.pdb
+D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\bin\Antlr3.Runtime.dll
+D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\bin\EntityFramework.dll
+D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\bin\Microsoft.Web.Infrastructure.dll
+D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\bin\Newtonsoft.Json.dll
+D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\bin\System.Net.Http.Formatting.dll
+D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\bin\System.Web.Http.dll
+D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\bin\System.Web.Http.WebHost.dll
+D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\bin\System.Web.Mvc.dll
+D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\bin\System.Web.Optimization.dll
+D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\bin\System.Web.Providers.dll
+D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\bin\System.Web.Razor.dll
+D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\bin\System.Web.WebPages.Deployment.dll
+D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\bin\System.Web.WebPages.dll
+D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\bin\System.Web.WebPages.Razor.dll
+D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\bin\WebGrease.dll
+D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\bin\EntityFramework.xml
+D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\bin\Newtonsoft.Json.xml
+D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\bin\System.Net.Http.Formatting.xml
+D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\bin\System.Web.Http.xml
+D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\bin\System.Web.Http.WebHost.xml
+D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\bin\System.Web.Mvc.xml
+D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\bin\System.Web.Razor.xml
+D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\bin\System.Web.WebPages.xml
+D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\bin\System.Web.WebPages.Deployment.xml
+D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\bin\System.Web.WebPages.Razor.xml
+D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\obj\Debug\StackUnderflow.csprojResolveAssemblyReference.cache
+D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\obj\Debug\MvcApplicationDatabase.dll
+D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\obj\Debug\MvcApplicationDatabase.pdb
