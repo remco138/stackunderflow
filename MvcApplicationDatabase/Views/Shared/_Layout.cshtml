@@ -3,15 +3,34 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
+    <title>@ViewBag.Title - StackUnderflow</title>
+    <link rel="shortcut icon" type="image/png" href="~/Content/themes/layout/favicon.png" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="content">
-        @RenderBody()
+    <div id="user">
+        <div class="wrapper">
+            <p><a href="#">Username</a> <input type="text" size="30" name="search" placeholder="search" /></p>
+        </div>
     </div>
-
+    <div class="wrapper">
+        <div id="logo"><a href="/"><img src="~/Content/themes/layout/logo.png" alt="logo" /></a></div>
+        <div id="navigation">
+            <ul>
+                <li>@Html.ActionLink("Questions", "Index", "Question")</li>
+                <li>@Html.ActionLink("Tags", "Index", "Tags")</li>
+                <li>@Html.ActionLink("Users", "Index", "User")</li>
+                <li>@Html.ActionLink("Badges", "Index", "Badges")</li>
+                <li>@Html.ActionLink("Ask Question", "Ask", "Question")</li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+        <div id="content">
+            @RenderBody()
+        </div>
+    </div>
+    
     @Scripts.Render("~/bundles/jquery")
     @RenderSection("scripts", required: false)
 </body>

@@ -1,13 +1,58 @@
-﻿body {
+﻿* { margin: 0; padding: 0; }
+
+.clear { clear: both; }
+
+.wrapper {
+    width: 960px;
+    margin: 0 auto;
+    overflow: auto;
+}
+
+body {
     font-size: .85em;
     font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
-    color: #232323;
-    background-color: #fff;
+    color: #000;
 }
 
 header, footer, nav, section {
     display: block;
 }
+
+/* HEADER */
+#user {
+    background: #eee;
+    height: 30px;
+    text-align: right;
+}
+#user p { line-height: 30px; }
+#user a { text-decoration: none; }
+
+#logo {
+    height: 35px;
+    width: 250px;
+    margin-top: 10px;
+    float: left;
+}
+
+/* NAVIGATION */
+#navigation { float: left; margin-left: 25px; margin-top: 16px; }
+#navigation ul { list-style-type: none; }
+#navigation ul li {
+    margin-left: 5px;
+    float: left;
+    background: #666;
+    height: 30px;
+}
+#navigation ul li:last-child { background: green; }
+#navigation ul li a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    line-height: 30px;
+    padding: 0 8px 0 8px;
+}
+#navigation ul li:hover { background: #888; }
 
 
 /* Styles for basic forms
