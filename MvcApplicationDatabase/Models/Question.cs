@@ -17,7 +17,7 @@ namespace MvcApplicationDatabase.Models
         public Question()
         {
             this.Posts = new HashSet<Post>();
-            this.Tagged_Questions = new HashSet<Tagged_Questions>();
+            this.Tags = new HashSet<Tag>();
         }
     
         public int Id { get; set; }
@@ -28,7 +28,7 @@ namespace MvcApplicationDatabase.Models
     
         public virtual ICollection<Post> Posts { get; set; }
         public virtual Post Post { get; set; }
-        public virtual ICollection<Tagged_Questions> Tagged_Questions { get; set; }
         public virtual User User { get; set; }
+        public virtual ICollection<Tag> Tags { get; set; }
     }
 }

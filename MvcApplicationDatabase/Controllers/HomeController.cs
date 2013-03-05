@@ -9,7 +9,7 @@ namespace MvcApplicationDatabase.Controllers
 {
     public class HomeController : Controller
     {
-        private StackOverflowDbContext db = new StackOverflowDbContext();
+        private StackOverflowDatabaseContext db = new StackOverflowDatabaseContext();
 
         // GET: /Home/
         //

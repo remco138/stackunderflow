@@ -4,34 +4,39 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="StackOverflowDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="StackOverflowDBModelStoreContainer">
-          <EntitySet Name="Posts" EntityType="StackOverflowDBModel.Store.Posts" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Questions" EntityType="StackOverflowDBModel.Store.Questions" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Tagged_Questions" EntityType="StackOverflowDBModel.Store.Tagged_Questions" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Tags" EntityType="StackOverflowDBModel.Store.Tags" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Users" EntityType="StackOverflowDBModel.Store.Users" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="BelongsToQuestion" Association="StackOverflowDBModel.Store.BelongsToQuestion">
+      <Schema Namespace="StackOverflowDatabaseModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="StackOverflowDatabaseModelStoreContainer">
+          <EntitySet Name="Posts" EntityType="StackOverflowDatabaseModel.Store.Posts" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Questions" EntityType="StackOverflowDatabaseModel.Store.Questions" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Tagged_Questions" EntityType="StackOverflowDatabaseModel.Store.Tagged_Questions" store:Type="Tables" store:Schema="dbo" store:Name="Tagged_Questions">
+            <DefiningQuery>SELECT 
+      [Tagged_Questions].[Question_id] AS [Question_id], 
+      [Tagged_Questions].[Tag_id] AS [Tag_id]
+      FROM [dbo].[Tagged_Questions] AS [Tagged_Questions]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Tags" EntityType="StackOverflowDatabaseModel.Store.Tags" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Users" EntityType="StackOverflowDatabaseModel.Store.Users" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="BelongsToQuestion" Association="StackOverflowDatabaseModel.Store.BelongsToQuestion">
             <End Role="Questions" EntitySet="Questions" />
             <End Role="Posts" EntitySet="Posts" />
           </AssociationSet>
-          <AssociationSet Name="BestAnswerPost_id" Association="StackOverflowDBModel.Store.BestAnswerPost_id">
+          <AssociationSet Name="BestAnswerPost_id" Association="StackOverflowDatabaseModel.Store.BestAnswerPost_id">
             <End Role="Posts" EntitySet="Posts" />
             <End Role="Questions" EntitySet="Questions" />
           </AssociationSet>
-          <AssociationSet Name="QuestionToTag" Association="StackOverflowDBModel.Store.QuestionToTag">
+          <AssociationSet Name="FK_Tagged_Questions_ToTable" Association="StackOverflowDatabaseModel.Store.FK_Tagged_Questions_ToTable">
             <End Role="Questions" EntitySet="Questions" />
             <End Role="Tagged_Questions" EntitySet="Tagged_Questions" />
           </AssociationSet>
-          <AssociationSet Name="ReplyToPost" Association="StackOverflowDBModel.Store.ReplyToPost">
-            <End Role="Posts" EntitySet="Posts" />
-            <End Role="Posts1" EntitySet="Posts" />
-          </AssociationSet>
-          <AssociationSet Name="TheChosenTag" Association="StackOverflowDBModel.Store.TheChosenTag">
+          <AssociationSet Name="FK_Tagged_Questions_ToTable_1" Association="StackOverflowDatabaseModel.Store.FK_Tagged_Questions_ToTable_1">
             <End Role="Tags" EntitySet="Tags" />
             <End Role="Tagged_Questions" EntitySet="Tagged_Questions" />
           </AssociationSet>
-          <AssociationSet Name="UserWhoMadeThisQuestion" Association="StackOverflowDBModel.Store.UserWhoMadeThisQuestion">
+          <AssociationSet Name="ReplyToPost" Association="StackOverflowDatabaseModel.Store.ReplyToPost">
+            <End Role="Posts" EntitySet="Posts" />
+            <End Role="Posts1" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="UserWhoMadeThisQuestion" Association="StackOverflowDatabaseModel.Store.UserWhoMadeThisQuestion">
             <End Role="Users" EntitySet="Users" />
             <End Role="Questions" EntitySet="Questions" />
           </AssociationSet>
@@ -57,13 +62,16 @@
           <Property Name="Content" Type="text" />
           <Property Name="DateCreated" Type="datetime" />
         </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'L:\MIJN DOCUMENTEN\VISUAL STUDIO 2012\PROJECTS\GITHUB\STACKUNDERFLOW\MVCAPPLICATIONDATABASE\APP_DATA\STACKOVERFLOWDATABASE.MDF.dbo.Tagged_Questions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
         <EntityType Name="Tagged_Questions">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="Question_id" />
+            <PropertyRef Name="Tag_id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Question_id" Type="int" />
-          <Property Name="Tag_id" Type="int" />
+          <Property Name="Question_id" Type="int" Nullable="false" />
+          <Property Name="Tag_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Tags">
           <Key>
@@ -86,8 +94,8 @@
           <Property Name="Votes" Type="int" />
         </EntityType>
         <Association Name="BelongsToQuestion">
-          <End Role="Questions" Type="StackOverflowDBModel.Store.Questions" Multiplicity="0..1" />
-          <End Role="Posts" Type="StackOverflowDBModel.Store.Posts" Multiplicity="*" />
+          <End Role="Questions" Type="StackOverflowDatabaseModel.Store.Questions" Multiplicity="0..1" />
+          <End Role="Posts" Type="StackOverflowDatabaseModel.Store.Posts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Questions">
               <PropertyRef Name="Id" />
@@ -98,8 +106,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="BestAnswerPost_id">
-          <End Role="Posts" Type="StackOverflowDBModel.Store.Posts" Multiplicity="0..1" />
-          <End Role="Questions" Type="StackOverflowDBModel.Store.Questions" Multiplicity="*" />
+          <End Role="Posts" Type="StackOverflowDatabaseModel.Store.Posts" Multiplicity="0..1" />
+          <End Role="Questions" Type="StackOverflowDatabaseModel.Store.Questions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Posts">
               <PropertyRef Name="Id" />
@@ -109,9 +117,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="QuestionToTag">
-          <End Role="Questions" Type="StackOverflowDBModel.Store.Questions" Multiplicity="0..1" />
-          <End Role="Tagged_Questions" Type="StackOverflowDBModel.Store.Tagged_Questions" Multiplicity="*" />
+        <Association Name="FK_Tagged_Questions_ToTable">
+          <End Role="Questions" Type="StackOverflowDatabaseModel.Store.Questions" Multiplicity="1" />
+          <End Role="Tagged_Questions" Type="StackOverflowDatabaseModel.Store.Tagged_Questions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Questions">
               <PropertyRef Name="Id" />
@@ -121,21 +129,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ReplyToPost">
-          <End Role="Posts" Type="StackOverflowDBModel.Store.Posts" Multiplicity="0..1" />
-          <End Role="Posts1" Type="StackOverflowDBModel.Store.Posts" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Posts">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Posts1">
-              <PropertyRef Name="ReplyToPost_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="TheChosenTag">
-          <End Role="Tags" Type="StackOverflowDBModel.Store.Tags" Multiplicity="0..1" />
-          <End Role="Tagged_Questions" Type="StackOverflowDBModel.Store.Tagged_Questions" Multiplicity="*" />
+        <Association Name="FK_Tagged_Questions_ToTable_1">
+          <End Role="Tags" Type="StackOverflowDatabaseModel.Store.Tags" Multiplicity="1" />
+          <End Role="Tagged_Questions" Type="StackOverflowDatabaseModel.Store.Tagged_Questions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tags">
               <PropertyRef Name="Id" />
@@ -145,9 +141,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="ReplyToPost">
+          <End Role="Posts" Type="StackOverflowDatabaseModel.Store.Posts" Multiplicity="0..1" />
+          <End Role="Posts1" Type="StackOverflowDatabaseModel.Store.Posts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Posts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Posts1">
+              <PropertyRef Name="ReplyToPost_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="UserWhoMadeThisQuestion">
-          <End Role="Users" Type="StackOverflowDBModel.Store.Users" Multiplicity="0..1" />
-          <End Role="Questions" Type="StackOverflowDBModel.Store.Questions" Multiplicity="*" />
+          <End Role="Users" Type="StackOverflowDatabaseModel.Store.Users" Multiplicity="0..1" />
+          <End Role="Questions" Type="StackOverflowDatabaseModel.Store.Questions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="Id" />
@@ -161,36 +169,31 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="StackOverflowDBModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="StackOverflowDbContext" p1:LazyLoadingEnabled="true">
-          <EntitySet Name="Posts" EntityType="StackOverflowDBModel.Post" />
-          <EntitySet Name="Questions" EntityType="StackOverflowDBModel.Question" />
-          <EntitySet Name="Tagged_Questions" EntityType="StackOverflowDBModel.Tagged_Questions" />
-          <EntitySet Name="Tags" EntityType="StackOverflowDBModel.Tag" />
-          <EntitySet Name="Users" EntityType="StackOverflowDBModel.User" />
-          <AssociationSet Name="BelongsToQuestion" Association="StackOverflowDBModel.BelongsToQuestion">
+      <Schema Namespace="StackOverflowDatabaseModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="StackOverflowDatabaseContext" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Posts" EntityType="StackOverflowDatabaseModel.Post" />
+          <EntitySet Name="Questions" EntityType="StackOverflowDatabaseModel.Question" />
+          <EntitySet Name="Tags" EntityType="StackOverflowDatabaseModel.Tag" />
+          <EntitySet Name="Users" EntityType="StackOverflowDatabaseModel.User" />
+          <AssociationSet Name="BelongsToQuestion" Association="StackOverflowDatabaseModel.BelongsToQuestion">
             <End Role="Questions" EntitySet="Questions" />
             <End Role="Posts" EntitySet="Posts" />
           </AssociationSet>
-          <AssociationSet Name="BestAnswerPost_id" Association="StackOverflowDBModel.BestAnswerPost_id">
+          <AssociationSet Name="BestAnswerPost_id" Association="StackOverflowDatabaseModel.BestAnswerPost_id">
             <End Role="Posts" EntitySet="Posts" />
             <End Role="Questions" EntitySet="Questions" />
           </AssociationSet>
-          <AssociationSet Name="ReplyToPost" Association="StackOverflowDBModel.ReplyToPost">
+          <AssociationSet Name="ReplyToPost" Association="StackOverflowDatabaseModel.ReplyToPost">
             <End Role="Posts" EntitySet="Posts" />
             <End Role="Posts1" EntitySet="Posts" />
           </AssociationSet>
-          <AssociationSet Name="QuestionToTag" Association="StackOverflowDBModel.QuestionToTag">
-            <End Role="Questions" EntitySet="Questions" />
-            <End Role="Tagged_Questions" EntitySet="Tagged_Questions" />
-          </AssociationSet>
-          <AssociationSet Name="UserWhoMadeThisQuestion" Association="StackOverflowDBModel.UserWhoMadeThisQuestion">
+          <AssociationSet Name="UserWhoMadeThisQuestion" Association="StackOverflowDatabaseModel.UserWhoMadeThisQuestion">
             <End Role="Users" EntitySet="Users" />
             <End Role="Questions" EntitySet="Questions" />
           </AssociationSet>
-          <AssociationSet Name="TheChosenTag" Association="StackOverflowDBModel.TheChosenTag">
+          <AssociationSet Name="Tagged_Questions" Association="StackOverflowDatabaseModel.Tagged_Questions">
+            <End Role="Questions" EntitySet="Questions" />
             <End Role="Tags" EntitySet="Tags" />
-            <End Role="Tagged_Questions" EntitySet="Tagged_Questions" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Post">
@@ -203,10 +206,10 @@
           <Property Name="Content" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
           <Property Name="Votes" Type="Int32" />
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Question" Relationship="StackOverflowDBModel.BelongsToQuestion" FromRole="Posts" ToRole="Questions" />
-          <NavigationProperty Name="Questions" Relationship="StackOverflowDBModel.BestAnswerPost_id" FromRole="Posts" ToRole="Questions" />
-          <NavigationProperty Name="Posts1" Relationship="StackOverflowDBModel.ReplyToPost" FromRole="Posts" ToRole="Posts1" />
-          <NavigationProperty Name="Post1" Relationship="StackOverflowDBModel.ReplyToPost" FromRole="Posts1" ToRole="Posts" />
+          <NavigationProperty Name="Question" Relationship="StackOverflowDatabaseModel.BelongsToQuestion" FromRole="Posts" ToRole="Questions" />
+          <NavigationProperty Name="Questions" Relationship="StackOverflowDatabaseModel.BestAnswerPost_id" FromRole="Posts" ToRole="Questions" />
+          <NavigationProperty Name="Posts1" Relationship="StackOverflowDatabaseModel.ReplyToPost" FromRole="Posts" ToRole="Posts1" />
+          <NavigationProperty Name="Post1" Relationship="StackOverflowDatabaseModel.ReplyToPost" FromRole="Posts1" ToRole="Posts" />
         </EntityType>
         <EntityType Name="Question">
           <Key>
@@ -217,20 +220,10 @@
           <Property Name="BestAnswer_id" Type="Int32" />
           <Property Name="Content" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Posts" Relationship="StackOverflowDBModel.BelongsToQuestion" FromRole="Questions" ToRole="Posts" />
-          <NavigationProperty Name="Post" Relationship="StackOverflowDBModel.BestAnswerPost_id" FromRole="Questions" ToRole="Posts" />
-          <NavigationProperty Name="Tagged_Questions" Relationship="StackOverflowDBModel.QuestionToTag" FromRole="Questions" ToRole="Tagged_Questions" />
-          <NavigationProperty Name="User" Relationship="StackOverflowDBModel.UserWhoMadeThisQuestion" FromRole="Questions" ToRole="Users" />
-        </EntityType>
-        <EntityType Name="Tagged_Questions">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="Question_id" Type="Int32" />
-          <Property Name="Tag_id" Type="Int32" />
-          <NavigationProperty Name="Question" Relationship="StackOverflowDBModel.QuestionToTag" FromRole="Tagged_Questions" ToRole="Questions" />
-          <NavigationProperty Name="Tag" Relationship="StackOverflowDBModel.TheChosenTag" FromRole="Tagged_Questions" ToRole="Tags" />
+          <NavigationProperty Name="Posts" Relationship="StackOverflowDatabaseModel.BelongsToQuestion" FromRole="Questions" ToRole="Posts" />
+          <NavigationProperty Name="Post" Relationship="StackOverflowDatabaseModel.BestAnswerPost_id" FromRole="Questions" ToRole="Posts" />
+          <NavigationProperty Name="User" Relationship="StackOverflowDatabaseModel.UserWhoMadeThisQuestion" FromRole="Questions" ToRole="Users" />
+          <NavigationProperty Name="Tags" Relationship="StackOverflowDatabaseModel.Tagged_Questions" FromRole="Questions" ToRole="Tags" />
         </EntityType>
         <EntityType Name="Tag">
           <Key>
@@ -238,7 +231,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
-          <NavigationProperty Name="Tagged_Questions" Relationship="StackOverflowDBModel.TheChosenTag" FromRole="Tags" ToRole="Tagged_Questions" />
+          <NavigationProperty Name="Questions" Relationship="StackOverflowDatabaseModel.Tagged_Questions" FromRole="Tags" ToRole="Questions" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -252,11 +245,11 @@
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
           <Property Name="PermissionLEvel" Type="Int32" />
           <Property Name="Votes" Type="Int32" />
-          <NavigationProperty Name="Questions" Relationship="StackOverflowDBModel.UserWhoMadeThisQuestion" FromRole="Users" ToRole="Questions" />
+          <NavigationProperty Name="Questions" Relationship="StackOverflowDatabaseModel.UserWhoMadeThisQuestion" FromRole="Users" ToRole="Questions" />
         </EntityType>
         <Association Name="BelongsToQuestion">
-          <End Role="Questions" Type="StackOverflowDBModel.Question" Multiplicity="0..1" />
-          <End Role="Posts" Type="StackOverflowDBModel.Post" Multiplicity="*" />
+          <End Role="Questions" Type="StackOverflowDatabaseModel.Question" Multiplicity="0..1" />
+          <End Role="Posts" Type="StackOverflowDatabaseModel.Post" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Questions">
               <PropertyRef Name="Id" />
@@ -267,8 +260,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="BestAnswerPost_id">
-          <End Role="Posts" Type="StackOverflowDBModel.Post" Multiplicity="0..1" />
-          <End Role="Questions" Type="StackOverflowDBModel.Question" Multiplicity="*" />
+          <End Role="Posts" Type="StackOverflowDatabaseModel.Post" Multiplicity="0..1" />
+          <End Role="Questions" Type="StackOverflowDatabaseModel.Question" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Posts">
               <PropertyRef Name="Id" />
@@ -279,8 +272,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="ReplyToPost">
-          <End Role="Posts" Type="StackOverflowDBModel.Post" Multiplicity="0..1" />
-          <End Role="Posts1" Type="StackOverflowDBModel.Post" Multiplicity="*" />
+          <End Role="Posts" Type="StackOverflowDatabaseModel.Post" Multiplicity="0..1" />
+          <End Role="Posts1" Type="StackOverflowDatabaseModel.Post" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Posts">
               <PropertyRef Name="Id" />
@@ -290,21 +283,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="QuestionToTag">
-          <End Role="Questions" Type="StackOverflowDBModel.Question" Multiplicity="0..1" />
-          <End Role="Tagged_Questions" Type="StackOverflowDBModel.Tagged_Questions" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Questions">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Tagged_Questions">
-              <PropertyRef Name="Question_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="UserWhoMadeThisQuestion">
-          <End Role="Users" Type="StackOverflowDBModel.User" Multiplicity="0..1" />
-          <End Role="Questions" Type="StackOverflowDBModel.Question" Multiplicity="*" />
+          <End Role="Users" Type="StackOverflowDatabaseModel.User" Multiplicity="0..1" />
+          <End Role="Questions" Type="StackOverflowDatabaseModel.Question" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="Id" />
@@ -314,26 +295,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="TheChosenTag">
-          <End Role="Tags" Type="StackOverflowDBModel.Tag" Multiplicity="0..1" />
-          <End Role="Tagged_Questions" Type="StackOverflowDBModel.Tagged_Questions" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tags">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Tagged_Questions">
-              <PropertyRef Name="Tag_id" />
-            </Dependent>
-          </ReferentialConstraint>
+        <Association Name="Tagged_Questions">
+          <End Role="Questions" Type="StackOverflowDatabaseModel.Question" Multiplicity="*" />
+          <End Role="Tags" Type="StackOverflowDatabaseModel.Tag" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="StackOverflowDBModelStoreContainer" CdmEntityContainer="StackOverflowDbContext">
+        <EntityContainerMapping StorageEntityContainer="StackOverflowDatabaseModelStoreContainer" CdmEntityContainer="StackOverflowDatabaseContext">
           <EntitySetMapping Name="Posts">
-            <EntityTypeMapping TypeName="StackOverflowDBModel.Post">
+            <EntityTypeMapping TypeName="StackOverflowDatabaseModel.Post">
               <MappingFragment StoreEntitySet="Posts">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Question_id" ColumnName="Question_id" />
@@ -345,7 +318,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Questions">
-            <EntityTypeMapping TypeName="StackOverflowDBModel.Question">
+            <EntityTypeMapping TypeName="StackOverflowDatabaseModel.Question">
               <MappingFragment StoreEntitySet="Questions">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="User_id" ColumnName="User_id" />
@@ -355,17 +328,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tagged_Questions">
-            <EntityTypeMapping TypeName="StackOverflowDBModel.Tagged_Questions">
-              <MappingFragment StoreEntitySet="Tagged_Questions">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Question_id" ColumnName="Question_id" />
-                <ScalarProperty Name="Tag_id" ColumnName="Tag_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Tags">
-            <EntityTypeMapping TypeName="StackOverflowDBModel.Tag">
+            <EntityTypeMapping TypeName="StackOverflowDatabaseModel.Tag">
               <MappingFragment StoreEntitySet="Tags">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -373,7 +337,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="StackOverflowDBModel.User">
+            <EntityTypeMapping TypeName="StackOverflowDatabaseModel.User">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
@@ -386,6 +350,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="Tagged_Questions" TypeName="StackOverflowDatabaseModel.Tagged_Questions" StoreEntitySet="Tagged_Questions">
+            <EndProperty Name="Questions">
+              <ScalarProperty Name="Id" ColumnName="Question_id" />
+            </EndProperty>
+            <EndProperty Name="Tags">
+              <ScalarProperty Name="Id" ColumnName="Tag_id" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
