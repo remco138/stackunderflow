@@ -25,6 +25,7 @@ namespace MvcApplicationDatabase.Models
         public Nullable<int> BestAnswer_id { get; set; }
         public string Content { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
+        public string Title { get; set; }
     
         public virtual ICollection<Post> Posts { get; set; }
         public virtual Post Post { get; set; }
