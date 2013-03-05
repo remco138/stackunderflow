@@ -15,10 +15,10 @@ namespace MvcApplicationDatabase.Controllers
         //
         public ActionResult Index(int page = 1, int pagesize = 15)
         {
-            page = page - 1;    // used for paging numbers
+            page = page - 1;
             var qList = (from q in db.Questions
                          select q).OrderBy(q => q.DateCreated).Skip(page * pagesize).Take(pagesize);
-            ViewBag.PageSize = pagesize; // needed for html paging
+            ViewBag.PageSize = pagesize;
             return View(qList);
         }
 
