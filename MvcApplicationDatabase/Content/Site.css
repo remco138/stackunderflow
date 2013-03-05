@@ -241,7 +241,13 @@ input[type=submit] {
 #question-only-section {
 }
 
-
-
-
+.tag-cell
+{
+    width: 230px;
+    border-bottom: 1px dotted #E0E0E0;
+    padding-bottom: 12px;
+    padding-right: 6px;
+    padding-top: 6px;
+    vertical-align: top;
+}
 
