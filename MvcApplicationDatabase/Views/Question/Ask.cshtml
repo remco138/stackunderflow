@@ -1,8 +1,12 @@
-﻿@{
+﻿@model MvcApplicationDatabase.Models.Question
+@{
     ViewBag.Title = "Ask";
 }
 
-<form id="post-form" class="post-form" action="/questions/ask/submit" method="post">
+
+@using (Html.BeginForm()) {
+   
+    @Html.ValidationSummary(true) 
 
     <div id="question-form">
 
@@ -10,12 +14,8 @@
             <table class="ask-title-table">
                 <tbody>
                     <tr>
-                        <td class="ask-title-cell-key">
-                            <label for="title">Title</label>
-                        </td>
-                        <td class="ask-title-cell-value">
-                            <input class="ask-title-field" name="title" type="text" maxlength="300" tabindex="100"  data-min-length="15" data-max-length="150" autocomplete="off">                        
-                        </td>
+                        <td class="ask-title-cell-key">  @Html.LabelFor(q => q.Title) </td>
+                        <td class="ask-title-cell-value">@Html.TextBoxFor(q => q.Title, new { @class = "ask-title-field" }) </td>
                     </tr>
                 </tbody>
             </table>
@@ -23,23 +23,26 @@
 
 
         <div class="form-item">
-            <textarea class="post-editor" name="post-text"></textarea>
+            @Html.TextAreaFor(q => q.Content, new { @class = "post-editor" })
         </div>
 
         
         <div class="form-item">
-            <label>Tags</label>             
+            @Html.LabelFor(q => q.Tags)
             <input id="tagnames" name="tagnames" type="text" size="60" value="" tabindex="103">
         </div>
         
         
-        <div id="question-only-section">
+        <div id="question-only-section"> 
             <div class="form-submit clear">
-                <input id="submit-button" type="submit" value="Post Your Question" tabindex="120">
-                <a href="#" class="discard-question dno">discard</a>              
+                <input type="submit" id="submit-button"  value="Post Your Question" tabindex="120">
+                <a href="#" class="discard-question dno">discard</a>
             </div>
         </div>
 
     </div>
-        
-</form>​
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

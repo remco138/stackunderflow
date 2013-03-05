@@ -16,26 +16,57 @@ namespace MvcApplicationDatabase.Controllers
         public ActionResult Index(int page = 1, int pagesize = 15)
         {
             page = page - 1;
-            var qList = (from q in db.Questions
-                         select q).OrderBy(q => q.DateCreated).Skip(page * pagesize).Take(pagesize);
+            var questionList = db.Questions.OrderBy(q => q.DateCreated)
+                                           .Skip(page * pagesize)
+                                           .Take(pagesize);
             ViewBag.PageSize = pagesize;
-            return View(qList);
+            return View(questionList);
         }
 
-        public ActionResult Edit(int Question_id)
+
+        public ActionResult Ask()
         {
-            var question = from q in db.Questions
-                           where q.Id == Question_id
-                           select q;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Ask(Question question, String tagnames)
+        {
+            // TODO: Moet nog uitzoeken hoe de tags werken
+
+            if (ModelState.IsValid)
+            {
+                db.Questions.Add(question);
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
 
             return View(question);
         }
 
-        public ActionResult Ask()
-        {
 
-            return View();
+        public ActionResult Edit(int id)
+        {
+            var question = db.Questions.Single(q => q.Id == id);
+
+            return View(question);
         }
+
+        [HttpPost]
+        public ActionResult Edit(Question question)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(question).State = System.Data.EntityState.Modified;
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+
+            return View(question);
+        }
+
         
 
     }
