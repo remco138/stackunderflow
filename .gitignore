@@ -62,3 +62,10 @@ packages/
 
 #Test files
 *.testsettings
+MvcApplicationDatabase/bin/MvcApplicationDatabase.dll
+MvcApplicationDatabase/bin/MvcApplicationDatabase.pdb
+MvcApplicationDatabase/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+MvcApplicationDatabase/obj/Debug/MvcApplicationDatabase.dll
+MvcApplicationDatabase/obj/Debug/MvcApplicationDatabase.pdb
+MvcApplicationDatabase/obj/Debug/StackUnderflow.csproj.FileListAbsolute.txt
+MvcApplicationDatabase/obj/Debug/StackUnderflow.csprojResolveAssemblyReference.cache

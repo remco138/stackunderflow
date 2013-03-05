@@ -15,17 +15,21 @@
         </div>
     </div>
     <div class="wrapper">
-        <div id="logo"><a href="/"><img src="~/Content/themes/layout/logo.png" alt="logo" /></a></div>
-        <div id="navigation">
-            <ul>
-                <li>@Html.ActionLink("Questions", "Index", "Question")</li>
-                <li>@Html.ActionLink("Tags", "Index", "Tags")</li>
-                <li>@Html.ActionLink("Users", "Index", "User")</li>
-                <li>@Html.ActionLink("Badges", "Index", "Badges")</li>
-                <li>@Html.ActionLink("Ask Question", "Ask", "Question")</li>
-            </ul>
+
+        <div id="header">
+            <div id="logo"><a href="/"><img src="~/Content/themes/layout/logo.png" alt="logo" /></a></div>
+            <div id="navigation">
+                <ul>
+                    <li>@Html.ActionLink("Questions", "Index", "Question")</li>
+                    <li>@Html.ActionLink("Tags", "Index", "Tags")</li>
+                    <li>@Html.ActionLink("Users", "Index", "User")</li>
+                    <li>@Html.ActionLink("Badges", "Index", "Badges")</li>
+                    <li>@Html.ActionLink("Ask Question", "Ask", "Question")</li>
+                </ul>
+            </div>
+            <div class="clear"></div>
         </div>
-        <div class="clear"></div>
+
         <div id="content">
             @RenderBody()
         </div>
