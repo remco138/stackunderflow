@@ -58,3 +58,33 @@ D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplic
 D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\obj\Debug\StackUnderflow.csprojResolveAssemblyReference.cache
 D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\obj\Debug\MvcApplicationDatabase.dll
 D:\User\My Documents\Visual Studio 2012\Projects\Github\stackunderflow\MvcApplicationDatabase\obj\Debug\MvcApplicationDatabase.pdb
+C:\git\stackunderflow\MvcApplicationDatabase\bin\MvcApplicationDatabase.dll
+C:\git\stackunderflow\MvcApplicationDatabase\bin\MvcApplicationDatabase.pdb
+C:\git\stackunderflow\MvcApplicationDatabase\bin\Antlr3.Runtime.dll
+C:\git\stackunderflow\MvcApplicationDatabase\bin\EntityFramework.dll
+C:\git\stackunderflow\MvcApplicationDatabase\bin\Microsoft.Web.Infrastructure.dll
+C:\git\stackunderflow\MvcApplicationDatabase\bin\Newtonsoft.Json.dll
+C:\git\stackunderflow\MvcApplicationDatabase\bin\System.Net.Http.Formatting.dll
+C:\git\stackunderflow\MvcApplicationDatabase\bin\System.Web.Http.dll
+C:\git\stackunderflow\MvcApplicationDatabase\bin\System.Web.Http.WebHost.dll
+C:\git\stackunderflow\MvcApplicationDatabase\bin\System.Web.Mvc.dll
+C:\git\stackunderflow\MvcApplicationDatabase\bin\System.Web.Optimization.dll
+C:\git\stackunderflow\MvcApplicationDatabase\bin\System.Web.Providers.dll
+C:\git\stackunderflow\MvcApplicationDatabase\bin\System.Web.Razor.dll
+C:\git\stackunderflow\MvcApplicationDatabase\bin\System.Web.WebPages.Deployment.dll
+C:\git\stackunderflow\MvcApplicationDatabase\bin\System.Web.WebPages.dll
+C:\git\stackunderflow\MvcApplicationDatabase\bin\System.Web.WebPages.Razor.dll
+C:\git\stackunderflow\MvcApplicationDatabase\bin\WebGrease.dll
+C:\git\stackunderflow\MvcApplicationDatabase\bin\EntityFramework.xml
+C:\git\stackunderflow\MvcApplicationDatabase\bin\Newtonsoft.Json.xml
+C:\git\stackunderflow\MvcApplicationDatabase\bin\System.Net.Http.Formatting.xml
+C:\git\stackunderflow\MvcApplicationDatabase\bin\System.Web.Http.xml
+C:\git\stackunderflow\MvcApplicationDatabase\bin\System.Web.Http.WebHost.xml
+C:\git\stackunderflow\MvcApplicationDatabase\bin\System.Web.Mvc.xml
+C:\git\stackunderflow\MvcApplicationDatabase\bin\System.Web.Razor.xml
+C:\git\stackunderflow\MvcApplicationDatabase\bin\System.Web.WebPages.xml
+C:\git\stackunderflow\MvcApplicationDatabase\bin\System.Web.WebPages.Deployment.xml
+C:\git\stackunderflow\MvcApplicationDatabase\bin\System.Web.WebPages.Razor.xml
+C:\git\stackunderflow\MvcApplicationDatabase\obj\Debug\StackUnderflow.csprojResolveAssemblyReference.cache
+C:\git\stackunderflow\MvcApplicationDatabase\obj\Debug\MvcApplicationDatabase.dll
+C:\git\stackunderflow\MvcApplicationDatabase\obj\Debug\MvcApplicationDatabase.pdb
