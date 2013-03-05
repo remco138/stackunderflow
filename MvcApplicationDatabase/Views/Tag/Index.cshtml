@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Top tags";
+}
+
+
+
+<h2>@ViewBag.Title</h2>
+
+@foreach(var t in ViewBag.tagList) {
+    <div class="tag-cell">
+        <a href="http://www.google.com">@t.Name</a> @t.Occurrences
+        <br />@t.Summary
+    </div>
+}
