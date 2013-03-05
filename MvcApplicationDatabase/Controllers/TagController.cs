@@ -9,22 +9,15 @@ namespace MvcApplicationDatabase.Controllers
 {
     public class TagController : Controller
     {
-
-
-
-
         private StackOverflowDatabaseContext db = new StackOverflowDatabaseContext();
 
-        //
         // GET: /Tag/
-
+        //
         public ActionResult Index()
         {
-            List<Tag> tagList = db.Tags.ToList();
-            tagList.OrderByDescending(x => x.Questions.Count);  //I've got not clue whether this works or not 
-            ViewBag.tagList = tagList;
- 
-            return View();  //(tagNameList);
+            List<Tag> tagList = db.Tags.OrderByDescending(x => x.Questions.Count).ToList();  //I've got not clue whether this works or not 
+                
+            return View(tagList);
         }
 
     }
