@@ -327,13 +327,32 @@ input[type=submit] {
 #question-only-section {
 }
 
-.tag-cell
-{
+.tag-cell {
     width: 230px;
+    height: 100px;
     border-bottom: 1px dotted #E0E0E0;
     padding-bottom: 12px;
     padding-right: 6px;
     padding-top: 6px;
     vertical-align: top;
+    overflow: hidden;
+}
+.post-tag {
+    color:#3E6D8E;
+    background-color:#E0EAF1;
+    border-bottom:1px solid #b3cee1;
+    border-right:1px solid #b3cee1;
+    padding:4px 4px 3px 4px;
+    margin:2px 2px 2px 0;
+    text-decoration:none;
+    font-size:90%;
+    line-height:2.4;
+    white-space:nowrap;
 }
 
+.excerpt
+{
+    font-family: Arial,Liberation Sans,DejaVu Sans,sans-serif;  
+    font-size: 12px;
+    color: #888;     
+}
