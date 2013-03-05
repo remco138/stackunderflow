@@ -7,9 +7,9 @@
 <h2>@ViewBag.Title</h2>
 
 @foreach(var t in ViewBag.tagList) {
-    <div style="width:25%; float:right">
+    <div style="width:25%; float:left">
         <div class="tag-cell">
-            <a href="http://www.google.com" class="post-tag">@t.Name</a>  <span class="excerpt"> #@t.Occurrences
+            <a href="http://www.google.com" class="post-tag">@t.Name</a>  <span class="excerpt"> #@t.Questions.Count
             <br /> 
            @t.Summary </span>
         </div>
