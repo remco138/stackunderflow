@@ -6,9 +6,43 @@
 
 <h2>All @ViewBag.Title</h2>
 
-<p>
+<p class="dno">
     @Html.ActionLink("Create New", "Create")
 </p>
+
+<div id="question-list">
+    @foreach (var item in Model) {
+    <div class="question-summary" id="question-summary-@item.Id">
+        <div class="cp">
+            <div class="votes">
+                <div class="count">0</div>
+                <div>votes</div>
+            </div>
+            <div class="answers">
+                <div class="count">0</div>
+                <div>answers</div>
+            </div>
+            <div class="views">
+                <div class="count">0</div>
+                <div>views</div>
+            </div>
+        </div>
+        <div class="summary">
+            <h3><a href="#">@Html.DisplayFor(modelItem => item.Title)</a></h3>
+            <div class="tags">
+                <!-- TEST TAGS -->
+                <a href="#" class="post-tag">C#</a>
+                <a href="#" class="post-tag">Javascript</a>
+                @foreach (var tag in item.Tags)
+                {
+                    <a href="#">@Html.DisplayFor(modelItem => tag.Name)</a>
+                }
+            </div>
+        </div>
+    </div>
+    }
+</div>
+<!--
 <table>
     <tr>
         <th>
@@ -48,7 +82,7 @@
     </tr>
 }
 
-</table>
+</table>-->
 <p>
     @for (int i = 1; i <= Math.Abs(Model.Count()/ViewBag.PageSize); i++)
     {

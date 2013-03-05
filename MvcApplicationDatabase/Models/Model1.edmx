@@ -61,9 +61,10 @@
           <Property Name="BestAnswer_id" Type="int" />
           <Property Name="Content" Type="text" />
           <Property Name="DateCreated" Type="datetime" />
+          <Property Name="Title" Type="nvarchar(max)" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'L:\MIJN DOCUMENTEN\VISUAL STUDIO 2012\PROJECTS\GITHUB\STACKUNDERFLOW\MVCAPPLICATIONDATABASE\APP_DATA\STACKOVERFLOWDATABASE.MDF.dbo.Tagged_Questions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view '17AC21E954199D7E75EFB0CBFFFE9EFC_ROJECTS\STACKUNDERFLOW\STACKUNDERFLOW\MVCAPPLICATIONDATABASE\APP_DATA\STACKOVERFLOWDATABASE.MDF.dbo.Tagged_Questions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="Tagged_Questions">
           <Key>
@@ -224,6 +225,7 @@
           <NavigationProperty Name="Post" Relationship="StackOverflowDatabaseModel.BestAnswerPost_id" FromRole="Questions" ToRole="Posts" />
           <NavigationProperty Name="User" Relationship="StackOverflowDatabaseModel.UserWhoMadeThisQuestion" FromRole="Questions" ToRole="Users" />
           <NavigationProperty Name="Tags" Relationship="StackOverflowDatabaseModel.Tagged_Questions" FromRole="Questions" ToRole="Tags" />
+          <Property Type="String" Name="Title" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Tag">
           <Key>
@@ -321,6 +323,7 @@
           <EntitySetMapping Name="Questions">
             <EntityTypeMapping TypeName="StackOverflowDatabaseModel.Question">
               <MappingFragment StoreEntitySet="Questions">
+                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="User_id" ColumnName="User_id" />
                 <ScalarProperty Name="BestAnswer_id" ColumnName="BestAnswer_id" />
