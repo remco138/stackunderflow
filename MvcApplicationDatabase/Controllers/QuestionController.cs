@@ -13,12 +13,13 @@ namespace MvcApplicationDatabase.Controllers
 
         // GET: /Question/
         //
-        public ActionResult Index()
+        public ActionResult Index(int page = 1, int pagesize = 15)
         {
-            var Questions = db.Questions.OrderBy(q => q.DateCreated)
-                                        .Take(50); 
-
-            return View();
+            page = page - 1;    // used for paging numbers
+            var qList = (from q in db.Questions
+                         select q).OrderBy(q => q.DateCreated).Skip(page * pagesize).Take(pagesize);
+            ViewBag.PageSize = pagesize; // needed for html paging
+            return View(qList);
         }
 
         public ActionResult Edit(int Question_id)

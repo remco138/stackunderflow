@@ -15,8 +15,6 @@ namespace MvcApplicationDatabase.Controllers
         //
         public ActionResult Index()
         {
-            ViewBag.SLKDJFLKSDJFLk = "kjlkdlfkjsdfl";
-
             return View(db.Questions.ToList());
         }
 
