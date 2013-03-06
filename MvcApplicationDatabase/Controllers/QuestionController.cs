@@ -32,10 +32,18 @@ namespace MvcApplicationDatabase.Controllers
         [HttpPost]
         public ActionResult Ask(Question question, String tagnames)
         {
-            // TODO: Moet nog uitzoeken hoe de tags werken
-
             if (ModelState.IsValid)
             {
+                // Was unable to add Tags, but fixed this by following the steps under 'Issues With Views': http://oyonti.wordpress.com/2011/05/26/unable-to-update-the-entityset-because-it-has-a-definingquery/
+                //
+                var tagNames = tagnames.Split(' ');
+                var tagList = db.Tags.Where(t => tagNames.Contains(t.Name));
+
+                foreach (Tag tag in tagList)
+                {
+                    question.Tags.Add(tag);
+                }
+
                 db.Questions.Add(question);
                 db.SaveChanges();
 
