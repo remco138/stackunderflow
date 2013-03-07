@@ -4,15 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="9087f56692a14a76a0120a69d338ad68" Name="Diagram1">
-        <EntityTypeShape EntityType="StackOverflowDatabaseModel.Post" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="StackOverflowDatabaseModel.Question" Width="1.5" PointX="3" PointY="2.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="StackOverflowDatabaseModel.Tag" Width="1.5" PointX="5.25" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="StackOverflowDatabaseModel.User" Width="1.5" PointX="0.75" PointY="2.375" IsExpanded="true" />
+      <Diagram DiagramId="614da71cf83442f8b6246c264d3da420" Name="Diagram1">
+        <EntityTypeShape EntityType="StackOverflowDatabaseModel.Post" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="StackOverflowDatabaseModel.Question" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="StackOverflowDatabaseModel.Tag" Width="1.5" PointX="7.5" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="StackOverflowDatabaseModel.User" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
         <AssociationConnector Association="StackOverflowDatabaseModel.BelongsToQuestion" ManuallyRouted="false" />
         <AssociationConnector Association="StackOverflowDatabaseModel.BestAnswerPost_id" ManuallyRouted="false" />
         <AssociationConnector Association="StackOverflowDatabaseModel.ReplyToPost" ManuallyRouted="false" />
         <AssociationConnector Association="StackOverflowDatabaseModel.UserWhoMadeThisQuestion" ManuallyRouted="false" />
+        <AssociationConnector Association="StackOverflowDatabaseModel.UserWhoPosted" ManuallyRouted="false" />
         <AssociationConnector Association="StackOverflowDatabaseModel.Tagged_Questions" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
