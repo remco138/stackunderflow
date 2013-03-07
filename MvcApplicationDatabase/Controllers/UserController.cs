@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MvcApplicationDatabase.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +9,7 @@ namespace MvcApplicationDatabase.Controllers
 {
     public class UserController : Controller
     {
+        private StackOverflowDatabaseContext db = new StackOverflowDatabaseContext();
         //
         // GET: /User/
 
@@ -36,18 +38,17 @@ namespace MvcApplicationDatabase.Controllers
         // POST: /User/Create
 
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(User user)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                user.DateCreated = DateTime.Now;
+                user.PermissionLEvel = 0;
+                user.Votes = 0;
+                db.Users.Add(user);
+                db.SaveChanges();
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
         //
@@ -76,6 +77,28 @@ namespace MvcApplicationDatabase.Controllers
             }
         }
 
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        //
+        // POST: /User/Edit/5
+
+        [HttpPost]
+        public ActionResult Login(FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add update logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
         //
         // GET: /User/Delete/5
 
