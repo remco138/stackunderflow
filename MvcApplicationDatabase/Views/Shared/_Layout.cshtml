@@ -25,7 +25,7 @@ string act = ViewContext.RouteData.Values["action"].ToString().ToLower();
             <div id="navigation">
                 <ul>
                 <li@(ctrl.Equals("question") && !act.Equals("ask") ? " class=active" : "")>@Html.ActionLink("Questions", "Index", "Question")</li>
-                <li>@Html.ActionLink("Tags", "Index", "Tag")</li>
+                <li@(ctrl.Equals("tag") ? " class=active" : "")>@Html.ActionLink("Tags", "Index", "Tag")</li>
                 <li@(ctrl.Equals("user") ? " class=active" : "")>@Html.ActionLink("Users", "Index", "User")</li>
                 <li@(ctrl.Equals("badges") ? " class=active" : "")>@Html.ActionLink("Badges", "Index", "Badges")</li>
                 <li@(ctrl.Equals("question") && act.Equals("ask") ? " class=active" : "")>@Html.ActionLink("Ask Question", "Ask", "Question")</li>

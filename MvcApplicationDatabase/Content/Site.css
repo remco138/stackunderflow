@@ -135,24 +135,6 @@ a:visited { color: #4a6b82; }
     width: 730px;
     float: left;
 }
-.post-tag {
-    color: #3E6D8E;
-    background-color: #E0EAF1;
-    border-bottom: 1px solid #b3cee1;
-    border-right: 1px solid #b3cee1;
-    padding: 3px 4px 3px 4px;
-    margin: 2px 2px 2px 0;
-    text-decoration: none;
-    font-size: 90%;
-    line-height: 2.4;
-    white-space: nowrap;
-}
-.post-tag:hover {
-    background-color: #c4dae9;
-    border-bottom: 1px solid #c4dae9;
-    border-right: 1px solid #c4dae9;
-    text-decoration: none;
-}
 .votes {
     background: transparent;
     float: left;
@@ -359,6 +341,12 @@ input[type=submit] {
     font-size:90%;
     line-height:2.4;
     white-space:nowrap;
+}
+.post-tag:hover {
+    background-color: #c4dae9;
+    border-bottom: 1px solid #c4dae9;
+    border-right: 1px solid #c4dae9;
+    text-decoration: none;
 }
 
 .tag-excerpt {
