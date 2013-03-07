@@ -16,7 +16,7 @@ namespace MvcApplicationDatabase.Models
     {
         public User()
         {
-            this.Questions = new HashSet<Question>();
+            this.Posts = new HashSet<Post>();
         }
     
         public int Id { get; set; }
@@ -28,6 +28,6 @@ namespace MvcApplicationDatabase.Models
         public Nullable<int> PermissionLEvel { get; set; }
         public Nullable<int> Votes { get; set; }
     
-        public virtual ICollection<Question> Questions { get; set; }
+        public virtual ICollection<Post> Posts { get; set; }
     }
 }
