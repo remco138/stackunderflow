@@ -244,8 +244,8 @@
           <Property Name="Title" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="Views" Type="Int32" />
           <NavigationProperty Name="Posts" Relationship="StackOverflowDatabaseModel.BelongsToQuestion" FromRole="Questions" ToRole="Posts" />
-          <NavigationProperty Name="Post" Relationship="StackOverflowDatabaseModel.BestAnswerPost_id" FromRole="Questions" ToRole="Posts" />
-          <NavigationProperty Name="Post1" Relationship="StackOverflowDatabaseModel.UserWhoMadeThisQuestion" FromRole="Questions" ToRole="Posts" />
+          <NavigationProperty Name="BestAnswer" Relationship="StackOverflowDatabaseModel.BestAnswerPost_id" FromRole="Questions" ToRole="Posts" />
+          <NavigationProperty Name="OpeningPost" Relationship="StackOverflowDatabaseModel.UserWhoMadeThisQuestion" FromRole="Questions" ToRole="Posts" />
           <NavigationProperty Name="Tags" Relationship="StackOverflowDatabaseModel.Tagged_Questions" FromRole="Questions" ToRole="Tags" />
         </EntityType>
         <EntityType Name="Tag">
