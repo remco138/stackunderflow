@@ -70,10 +70,10 @@ a:visited { color: #4a6b82; }
 
 #user {
     background: #eee;
-    height: 30px;
+    height: 40px;
     text-align: right;
 }
-#user p { line-height: 30px; }
+#user p { line-height: 40px; }
 #user a { text-decoration: none; }
 
 #logo {
@@ -113,7 +113,7 @@ a:visited { color: #4a6b82; }
 #content {
     margin-top: 15px;
 }
-#content h2 { border-bottom: 1px solid #333; margin-bottom: 20px; }
+#content h2.title { margin-bottom: -30px; }
 
 
 /* QuestionList (bijna alles van stackoverflow.com)
@@ -351,4 +351,43 @@ input[type=submit] {
 
 .tag-excerpt {
     color: #888;     
+}
+
+/* Tabs
+-----------------------------------------------------------*/
+.subheader {
+    border-bottom: 1px solid #cccccc;
+    height: 34px;
+    clear: both;
+    margin-bottom: 15px
+}
+#tabs {
+    float: right;
+    font-weight: normal;
+}
+
+#tabs a {
+    background: inherit;
+    border: 1px solid #fff;
+    color: #777;
+    display: block;
+    float: left;
+    font-size: 90%;
+    height: 24px;
+    line-height: 22px;
+    margin: 8px 8px 0 0;
+    padding: 0 11px 0 11px;
+    text-decoration: none;
+}
+
+#tabs a.youarehere {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-bottom-color: #ffffff;
+    color: black;
+    font-size: 120%;
+    height: 30px;
+    line-height: 28px;
+    margin-top: 3px;
+    padding: 0px 11px 0px 11px;
 }
