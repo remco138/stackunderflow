@@ -23,6 +23,17 @@ namespace MvcApplicationDatabase.Controllers
             return View(questionList);
         }
 
+        public ActionResult Tagged(string id, int page = 1, int pagesize = 15)
+        {
+            page = page - 1;
+            var questionList = db.Questions.OrderBy(q => q.DateCreated)
+                                           .Where(q => q.Tags.Any(w => w.Name == id))
+                                           .Skip(page * pagesize)
+                                           .Take(pagesize);
+
+            ViewBag.PageSize = pagesize;
+            return View("Index", questionList);
+        }
 
         public ActionResult Ask()
         {
