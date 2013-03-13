@@ -69,7 +69,7 @@
           <Property Name="Views" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view '5A7C080083116555DE1F6CEF96826E3C_ROJECTS\STACKUNDERFLOW\STACKUNDERFLOW\MVCAPPLICATIONDATABASE\APP_DATA\STACKOVERFLOWDATABASE.MDF.dbo.Tagged_Questions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view '17AC21E954199D7E75EFB0CBFFFE9EFC_ROJECTS\STACKUNDERFLOW\STACKUNDERFLOW\MVCAPPLICATIONDATABASE\APP_DATA\STACKOVERFLOWDATABASE.MDF.dbo.Tagged_Questions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="Tagged_Questions">
           <Key>

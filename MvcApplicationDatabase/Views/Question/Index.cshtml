@@ -52,16 +52,26 @@
     </div>
     }
 </div>
-<p>
-    @for (int i = 1; i <= Math.Abs(ViewBag.QuestionCount/ViewBag.PageSize); i++)
+<div id="toptags">
+    <h2>Recent Tags</h2>
+    @foreach (var tag in ViewBag.RecentTags)
     {
-        @Html.ActionLink(i.ToString() + " | ", "Index", new { page=i })
+       <p><a href="@Html.Raw("/Question/Tagged/" + Uri.EscapeDataString(tag.Name))" class="post-tag">@tag.Name</a> x @tag.Questions.Count</p> 
     }
-</p>
-<p>
-    <b>Pagesize:</b>
-    @Html.ActionLink("5", "Index", new { pagesize=5 }) | 
-    @Html.ActionLink("10", "Index", new { pagesize=10 })  | 
-    @Html.ActionLink("15", "Index", new { pagesize=15 })
-</p>
+</div>
+<div class="clear"></div>
+<div id="pager">
+    <p>
+        @for (int i = 1; i <= Math.Abs(ViewBag.QuestionCount/ViewBag.PageSize); i++)
+        {
+            @Html.ActionLink(i.ToString() + " | ", "Index", new { page=i })
+        }
+    </p>
+    <p>
+        <b>Pagesize:</b>
+        @Html.ActionLink("5", "Index", new { pagesize=5 }) | 
+        @Html.ActionLink("10", "Index", new { pagesize=10 })  | 
+        @Html.ActionLink("15", "Index", new { pagesize=15 })
+    </p>
+</div>
 <br />
