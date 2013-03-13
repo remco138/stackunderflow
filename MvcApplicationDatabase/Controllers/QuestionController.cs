@@ -13,7 +13,7 @@ namespace MvcApplicationDatabase.Controllers
 
         // GET: /Question/
         //
-        public ActionResult Index(int page = 1, int pagesize = 15)
+        public ActionResult Index(int page = 1, int pagesize = 15, string sort = "newest")
         {
             page = page - 1;
             var questionList = db.Questions.OrderByDescending(q => q.DateCreated)

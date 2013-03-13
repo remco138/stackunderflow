@@ -10,24 +10,13 @@ namespace MvcApplicationDatabase.Controllers
     public class HomeController : Controller
     {
         private StackOverflowDatabaseContext db = new StackOverflowDatabaseContext();
+        private QuestionController question = new QuestionController();
 
         // GET: /Home/
         //
-        public ActionResult Index()
+        public ActionResult Index(int page = 1, int pagesize = 15, string sort = "newest")
         {
-            // Voorbeeld: Om alle tags op te vragen die bij een bepaalde question horen:
-            //
-            var tagList = db.Questions.ToList()[0].Tags;
-            // Werkt ook omgekeerd 
-            var randomTag = new Tag();
-            var QuestionList = randomTag.Questions.ToList();
-
-
-
-            return View(db.Questions.ToList());
-            
+            return View(question.Index(page, pagesize, sort));
         }
-
-
     }
 }

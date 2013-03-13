@@ -1,52 +1,66 @@
 ﻿@model IEnumerable<MvcApplicationDatabase.Models.Question>
 
 @{
-    ViewBag.Title = "Home";
+    string act = ViewContext.RouteData.Values["action"].ToString().ToLower();
+    act = act.Equals("index") ? "newest" : act;
+    ViewBag.Title = "Questions";
+    string[] tabs = {"newest", "faq", "votes", "active", "unanswered"};
 }
 
-<h2>Top Questions</h2>
-
-<p>
+<h2 class="title">Top @ViewBag.Title</h2>
+<div class="subheader">
+    <div id="tabs">
+        @foreach(string tab in tabs) {
+            <a href="question/@tab" @(act == @tab ? "class=youarehere" : "")>@tab</a>
+        }
+    </div>
+</div>
+<p class="dno">
     @Html.ActionLink("Create New", "Create")
-    @ViewBag.SLKDJFLKSDJFLk;
 </p>
-<table>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.User_id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BestAnswer_id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Content)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.User_id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BestAnswer_id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Content)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateCreated)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
-</table>
+<div id="question-list">
+    @foreach (var item in Model) {
+    <div class="question-summary" id="question-summary-@item.Id">
+        <div class="cp">
+            <div class="votes">
+                <div class="count">0</div>
+                <div>votes</div>
+            </div>
+            <div class="answers">
+                <div class="count">0</div>
+                <div>answers</div>
+            </div>
+            <div class="views">
+                <div class="count">0</div>
+                <div>views</div>
+            </div>
+        </div>
+        <div class="summary">
+            <h3>@Html.ActionLink(item.Title, item.Id.ToString(), "question")</h3>
+            <div class="tags">
+                <!-- TEST TAGS -->
+               <!-- <a href="#" class="post-tag">C#</a>
+                <a href="#" class="post-tag">Javascript</a> -->
+                @foreach (var tag in item.Tags)
+                {
+                    @Html.ActionLink(@tag.Name, @tag.Name.ToLower(), new { controller = "question/tagged" }, new { @class = "post-tag", })
+                }
+            </div>
+        </div>
+    </div>
+    }
+</div>
+<p>
+    @for (int i = 1; i <= Math.Abs(ViewBag.QuestionCount/ViewBag.PageSize); i++)
+    {
+        @Html.ActionLink(i.ToString() + " | ", "Index", new { page=i })
+    }
+</p>
+<p>
+    <b>Pagesize:</b>
+    @Html.ActionLink("5", "Index", new { pagesize=5 }) | 
+    @Html.ActionLink("10", "Index", new { pagesize=10 })  | 
+    @Html.ActionLink("15", "Index", new { pagesize=15 })
+</p>
+<br />
