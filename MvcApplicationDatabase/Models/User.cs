@@ -25,8 +25,9 @@ namespace MvcApplicationDatabase.Models
         public string Password { get; set; }
         public string Email { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
-        public Nullable<int> PermissionLEvel { get; set; }
-        public Nullable<int> Votes { get; set; }
+        public int PermissionLEvel { get; set; }
+        public int Votes { get; set; }
+        public string Username { get; set; }
     
         public virtual ICollection<Post> Posts { get; set; }
     }
