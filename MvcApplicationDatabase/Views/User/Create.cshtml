@@ -12,6 +12,14 @@
     <fieldset>
         <legend>User</legend>
 
+          <div class="editor-label">
+            @Html.LabelFor(model => model.Username)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Username)
+            @Html.ValidationMessageFor(model => model.Username)
+        </div>
+
         <div class="editor-label">
             @Html.LabelFor(model => model.FirstName)
         </div>
@@ -42,6 +50,30 @@
         <div class="editor-field">
             @Html.EditorFor(model => model.Email)
             @Html.ValidationMessageFor(model => model.Email)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DateCreated)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DateCreated)
+            @Html.ValidationMessageFor(model => model.DateCreated)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PermissionLEvel)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PermissionLEvel)
+            @Html.ValidationMessageFor(model => model.PermissionLEvel)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Votes)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Votes)
+            @Html.ValidationMessageFor(model => model.Votes)
         </div>
 
         <p>

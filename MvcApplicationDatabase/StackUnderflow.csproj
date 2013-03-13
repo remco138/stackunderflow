@@ -275,8 +275,8 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\Tag\Index.cshtml" />
-    <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\User\Create.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
