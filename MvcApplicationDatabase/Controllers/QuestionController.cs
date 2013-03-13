@@ -33,7 +33,6 @@ namespace MvcApplicationDatabase.Controllers
             }
             ViewBag.PageSize = pagesize;
             ViewBag.QuestionCount = questionCount;
-            /* get recent tags */
             ViewBag.RecentTags = db.Tags.OrderByDescending(x => x.Questions.Count).ToArray();
             return View(questionList);
         }
@@ -54,7 +53,7 @@ namespace MvcApplicationDatabase.Controllers
 
             ViewBag.QuestionCount = db.Questions.Count();
             ViewBag.PageSize = pagesize;
-            ViewBag.QuestionCount = db.Questions.Count();
+            ViewBag.RecentTags = db.Tags.OrderByDescending(x => x.Questions.Count).ToArray();
             return View("Index", questionList);
         }
 

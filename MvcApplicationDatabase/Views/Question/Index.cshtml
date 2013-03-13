@@ -56,7 +56,7 @@
     <h2>Recent Tags</h2>
     @foreach (var tag in ViewBag.RecentTags)
     {
-       <p><a href="@Html.Raw("/Question/Tagged/" + Uri.EscapeDataString(tag.Name))" class="post-tag">@tag.Name</a> x @tag.Questions.Count</p> 
+       <p><a href="@Html.Raw("/question/tagged/" + Uri.EscapeDataString(tag.Name.ToLower()))" class="post-tag">@tag.Name</a> x @tag.Questions.Count</p> 
     }
 </div>
 <div class="clear"></div>

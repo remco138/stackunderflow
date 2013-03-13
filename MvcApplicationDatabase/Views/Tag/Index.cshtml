@@ -9,7 +9,7 @@
     @foreach (var t in Model)
     {
         <div class="tag-item">
-            <a href="@Html.Raw("/Question/Tagged/" + Uri.EscapeDataString(t.Name))" class="post-tag">@t.Name</a>  
+            <a href="@Html.Raw("/question/tagged/" + Uri.EscapeDataString(t.Name.ToLower()))" class="post-tag">@t.Name</a>  
             <span class="tag-excerpt"> 
                 #@t.Questions.Count
                 <br /> 
