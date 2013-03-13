@@ -1,8 +1,11 @@
 ﻿@model IEnumerable<MvcApplicationDatabase.Models.Question>
 
 @{
-    string act = ViewContext.RouteData.Values["action"].ToString().ToLower();
-    act = act.Equals("index") ? "newest" : act;
+    string sort = Request["sort"];
+    if (sort.IsEmpty())
+    {
+        sort = "newest";
+    }
     ViewBag.Title = "Questions";
     string[] tabs = {"newest", "faq", "votes", "active", "unanswered"};
 }
@@ -11,7 +14,7 @@
 <div class="subheader">
     <div id="tabs">
         @foreach(string tab in tabs) {
-            <a href="question/@tab" @(act == @tab ? "class=youarehere" : "")>@tab</a>
+            <a href="?sort=@tab" @(sort == @tab ? "class=youarehere" : "")>@tab</a>
         }
     </div>
 </div>

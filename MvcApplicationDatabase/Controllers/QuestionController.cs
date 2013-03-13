@@ -13,13 +13,24 @@ namespace MvcApplicationDatabase.Controllers
 
         // GET: /Question/
         //
-        public ActionResult Index(int page = 1, int pagesize = 15, string sort = "newest")
+        public ActionResult Index(string sort = "", int page = 1, int pagesize = 15)
         {
             page = page - 1;
-            var questionList = db.Questions.OrderByDescending(q => q.DateCreated)
+            int questionCount = db.Questions.Count();
+            IQueryable questionList;
+            switch (sort)
+            {
+                case "faq":
+                    questionList = db.Questions.OrderByDescending(q => q.Views)
                                            .Skip(page * pagesize)
                                            .Take(pagesize);
-            int questionCount = db.Questions.Count();
+                    break;
+                default:
+                    questionList = db.Questions.OrderByDescending(q => q.DateCreated)
+                                           .Skip(page * pagesize)
+                                           .Take(pagesize);
+                    break;
+            }
             ViewBag.PageSize = pagesize;
             ViewBag.QuestionCount = questionCount;
             return View(questionList);

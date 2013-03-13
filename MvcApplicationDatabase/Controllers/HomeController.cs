@@ -14,9 +14,9 @@ namespace MvcApplicationDatabase.Controllers
 
         // GET: /Home/
         //
-        public ActionResult Index(int page = 1, int pagesize = 15, string sort = "newest")
+        public ActionResult Index(string sort = "", int page = 1, int pagesize = 15)
         {
-            return question.Index(page, pagesize, sort);
+            return question.Index(sort, page, pagesize);
         }
     }
 }
