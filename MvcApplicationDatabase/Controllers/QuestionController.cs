@@ -50,6 +50,7 @@ namespace MvcApplicationDatabase.Controllers
                                            .Skip(page * pagesize)
                                            .Take(pagesize);
 
+            ViewBag.QuestionCount = db.Questions.Count();
             ViewBag.PageSize = pagesize;
             ViewBag.QuestionCount = db.Questions.Count();
             return View("Index", questionList);
