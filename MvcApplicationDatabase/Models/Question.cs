@@ -28,8 +28,8 @@ namespace MvcApplicationDatabase.Models
         public Nullable<int> Views { get; set; }
     
         public virtual ICollection<Post> Posts { get; set; }
-        public virtual Post Post { get; set; }
-        public virtual Post Post1 { get; set; }
+        public virtual Post BestAnswer { get; set; }
+        public virtual Post OpeningPost { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }
     }
 }
