@@ -77,25 +77,50 @@ a:visited { color: #4a6b82; }
 #user a { text-decoration: none; }
 
 #logo {
+    background: url(themes/layout/logo.png) no-repeat left center;
     height: 35px;
-    width: 250px;
+    width: 100%;
     margin-top: 10px;
-    float: left;
+    text-align: center;
 }
+
+.homebox {
+    width: 948px;
+    padding: 10px;
+    background: #eee;
+    padding: 5px;
+    color: #333;
+    border: 1px solid #000;
+    margin-bottom: 10px;
+    overflow: auto;
+}
+.homebox h2 {
+    text-decoration: underline;
+}
+.homebox p, h2 {
+    padding: 0;
+    margin: 0;
+}
+.homebox p, h2 {
+}
+.homebox p:last-child {
+    margin: 0;
+}
+
 
 
 /* Navigation
 -----------------------------------------------------------*/
 
-#navigation { float: left; margin-left: 25px; margin-top: 16px; }
+#navigation { margin-top: 16px; width: 100%; background: #ddd; height: 30px; }
 #navigation ul { list-style-type: none; }
 #navigation ul li {
-    margin-left: 5px;
+    border-right: 1px solid #fff;
     float: left;
     background: #666;
     height: 30px;
 }
-#navigation ul li:last-child { background: green; }
+#navigation ul li:last-child { background: green; float: right; }
 #navigation ul li a {
     display: block;
     color: #fff;

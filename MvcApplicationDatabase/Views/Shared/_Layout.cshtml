@@ -13,7 +13,7 @@ string act = ViewContext.RouteData.Values["action"].ToString().ToLower();
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div id="user">
+    <div id="user" class="dno">
         <div class="wrapper">
             <p><a href="#">Username</a> <input type="text" size="30" name="search" placeholder="search" /></p>
         </div>
@@ -21,9 +21,11 @@ string act = ViewContext.RouteData.Values["action"].ToString().ToLower();
     <div class="wrapper">
 
         <div id="header">
-            <div id="logo"><a href="/"><img src="~/Content/themes/layout/logo.png" alt="logo" /></a></div>
+            <div id="logo"><h1>Stack Underflow</h1></div>
+            <div class="clear"></div>
             <div id="navigation">
                 <ul>
+                <li@(ctrl.Equals("home") ? " class=active" : "")>@Html.ActionLink("Home", "Index", "Home")</li>
                 <li@(ctrl.Equals("question") && !act.Equals("ask") ? " class=active" : "")>@Html.ActionLink("Questions", "Index", "Question")</li>
                 <li@(ctrl.Equals("tag") ? " class=active" : "")>@Html.ActionLink("Tags", "Index", "Tag")</li>
                 <li@(ctrl.Equals("user") ? " class=active" : "")>@Html.ActionLink("Users", "Index", "User")</li>
@@ -33,7 +35,7 @@ string act = ViewContext.RouteData.Values["action"].ToString().ToLower();
             </div>
             <div class="clear"></div>
         </div>
-
+        <div class="clear"></div>
         <div id="content">
             @RenderBody()
         </div>

@@ -14,9 +14,10 @@ namespace MvcApplicationDatabase.Controllers
 
         // GET: /Home/
         //
-        public ActionResult Index(string sort = "", int page = 1, int pagesize = 15)
+        public ActionResult Index()
         {
-            return question.Index(sort, page, pagesize);
+            var hottopics = db.Questions.OrderByDescending(q => q.DateCreated).Take(5);
+            return View(hottopics);
         }
     }
 }

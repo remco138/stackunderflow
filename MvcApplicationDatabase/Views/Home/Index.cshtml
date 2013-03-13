@@ -9,41 +9,18 @@
     ViewBag.Title = "Questions";
     string[] tabs = {"newest", "faq", "votes", "active", "unanswered"};
 }
-
-<h2 class="title">Top @ViewBag.Title</h2>
-<div class="subheader">
-    <div id="tabs">
-        @foreach(string tab in tabs) {
-            <a href="?sort=@tab" @(sort == @tab ? "class=youarehere" : "")>@tab</a>
-        }
-    </div>
+<div class="homebox">
+    <h2>About Stack Underflow</h2>
+    <p>Stack Underflow is a question and answer site for professional and enthusiast programmers. It's built and run by you as part of the Stack Exchange network of Q&A sites. With your help, we're working together to build a library of detailed answers to every question about programming.</p>
 </div>
-<p class="dno">
-    @Html.ActionLink("Create New", "Create")
-</p>
-
-<div id="question-list">
+<div class="homebox">
+    <h2>5 Newest Topics</h2>
+    @{int count = 1;}
     @foreach (var item in Model) {
     <div class="question-summary" id="question-summary-@item.Id">
-        <div class="cp">
-            <div class="votes">
-                <div class="count">0</div>
-                <div>votes</div>
-            </div>
-            <div class="answers">
-                <div class="count">0</div>
-                <div>answers</div>
-            </div>
-            <div class="views">
-                <div>0 views</div>
-            </div>
-        </div>
         <div class="summary">
-            <h3>@Html.ActionLink(item.Title, item.Id.ToString(), "question/details")</h3>
+            <h3>@count@{count++;}. @Html.ActionLink(item.Title, item.Id.ToString(), "question/details")</h3>
             <div class="tags">
-                <!-- TEST TAGS -->
-               <!-- <a href="#" class="post-tag">C#</a>
-                <a href="#" class="post-tag">Javascript</a> -->
                 @foreach (var tag in item.Tags)
                 {
                     @Html.ActionLink(@tag.Name, @tag.Name.ToLower(), new { controller = "question/tagged" }, new { @class = "post-tag", })
@@ -53,16 +30,4 @@
     </div>
     }
 </div>
-<p>
-    @for (int i = 1; i <= Math.Abs(ViewBag.QuestionCount/ViewBag.PageSize); i++)
-    {
-        @Html.ActionLink(i.ToString() + " | ", "Index", new { page=i })
-    }
-</p>
-<p>
-    <b>Pagesize:</b>
-    @Html.ActionLink("5", "Index", new { pagesize=5 }) | 
-    @Html.ActionLink("10", "Index", new { pagesize=10 })  | 
-    @Html.ActionLink("15", "Index", new { pagesize=15 })
-</p>
 <br />
