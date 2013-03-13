@@ -16,7 +16,7 @@ namespace MvcApplicationDatabase.Controllers
         //
         public ActionResult Index(int page = 1, int pagesize = 15, string sort = "newest")
         {
-            return View(question.Index(page, pagesize, sort));
+            return question.Index(page, pagesize, sort);
         }
     }
 }
