@@ -20,22 +20,17 @@ string act = ViewContext.RouteData.Values["action"].ToString().ToLower();
     </div>
     <div class="wrapper">
 
-        <div id="header">
-            <div id="logo"><h1>Stack Underflow</h1></div>
-            <div class="clear"></div>
-            <div id="navigation">
-                <ul>
-                <li@(ctrl.Equals("home") ? " class=active" : "")>@Html.ActionLink("Home", "Index", "Home")</li>
-                <li@(ctrl.Equals("question") && !act.Equals("ask") ? " class=active" : "")>@Html.ActionLink("Questions", "Index", "Question")</li>
-                <li@(ctrl.Equals("tag") ? " class=active" : "")>@Html.ActionLink("Tags", "Index", "Tag")</li>
-                <li@(ctrl.Equals("user") ? " class=active" : "")>@Html.ActionLink("Users", "Index", "User")</li>
-                <li@(ctrl.Equals("badges") ? " class=active" : "")>@Html.ActionLink("Badges", "Index", "Badges")</li>
-                <li@(ctrl.Equals("question") && act.Equals("ask") ? " class=active" : "")>@Html.ActionLink("Ask Question", "Ask", "Question")</li>
-                </ul>
-            </div>
-            <div class="clear"></div>
+        <div id="logo"><h1>Stack Underflow</h1></div>
+        <div id="navigation">
+            <ul>
+            <li@(ctrl.Equals("home") ? " class=active" : "")>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li@(ctrl.Equals("question") && !act.Equals("ask") ? " class=active" : "")>@Html.ActionLink("Questions", "Index", "Question")</li>
+            <li@(ctrl.Equals("tag") ? " class=active" : "")>@Html.ActionLink("Tags", "Index", "Tag")</li>
+            <li@(ctrl.Equals("user") ? " class=active" : "")>@Html.ActionLink("Users", "Index", "User")</li>
+            <li@(ctrl.Equals("badges") ? " class=active" : "")>@Html.ActionLink("Badges", "Index", "Badges")</li>
+            <li@(ctrl.Equals("question") && act.Equals("ask") ? " class=active" : "")>@Html.ActionLink("Ask Question", "Ask", "Question")</li>
+            </ul>
         </div>
-        <div class="clear"></div>
         <div id="content">
             @RenderBody()
         </div>
