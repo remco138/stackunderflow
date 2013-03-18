@@ -47,9 +47,9 @@
         </EntityContainer>
         <EntityType Name="Posts">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="Post_id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Post_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Question_id" Type="int" />
           <Property Name="ReplyToPost_id" Type="int" />
           <Property Name="Content" Type="text" />
@@ -59,17 +59,17 @@
         </EntityType>
         <EntityType Name="Questions">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="Question_id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Question_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="OpeningPost_id" Type="int" />
           <Property Name="BestAnswer_id" Type="int" />
           <Property Name="DateCreated" Type="datetime" />
-          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="Title" Type="varchar" MaxLength="150" />
           <Property Name="Views" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view '17AC21E954199D7E75EFB0CBFFFE9EFC_ROJECTS\STACKUNDERFLOW\STACKUNDERFLOW\MVCAPPLICATIONDATABASE\APP_DATA\STACKOVERFLOWDATABASE.MDF.dbo.Tagged_Questions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'D0D1A7492B5773A519C4159791D29A02_O 2012\PROJECTS\GITHUB\STACKUNDERFLOW\MVCAPPLICATIONDATABASE\APP_DATA\STACKOVERFLOWDATABASE.MDF.dbo.Tagged_Questions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="Tagged_Questions">
           <Key>
@@ -81,32 +81,35 @@
         </EntityType>
         <EntityType Name="Tags">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="Tag_id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="varchar" MaxLength="10" />
+          <Property Name="Tag_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" MaxLength="25" />
           <Property Name="Summary" Type="text" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="User_id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="nchar" MaxLength="10" />
-          <Property Name="LastName" Type="nchar" MaxLength="10" />
-          <Property Name="Password" Type="nchar" MaxLength="10" />
-          <Property Name="Email" Type="nchar" MaxLength="10" />
+          <Property Name="User_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="255" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
           <Property Name="DateCreated" Type="datetime" />
           <Property Name="PermissionLEvel" Type="int" Nullable="false" />
           <Property Name="Votes" Type="int" Nullable="false" />
           <Property Name="Username" Type="varchar" MaxLength="50" />
+          <Property Name="Address" Type="varchar" MaxLength="50" />
+          <Property Name="Zip" Type="varchar" MaxLength="6" />
+          <Property Name="Photo" Type="varchar" MaxLength="255" />
         </EntityType>
         <Association Name="BelongsToQuestion">
           <End Role="Questions" Type="StackOverflowDatabaseModel.Store.Questions" Multiplicity="0..1" />
           <End Role="Posts" Type="StackOverflowDatabaseModel.Store.Posts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Questions">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="Question_id" />
             </Principal>
             <Dependent Role="Posts">
               <PropertyRef Name="Question_id" />
@@ -118,7 +121,7 @@
           <End Role="Questions" Type="StackOverflowDatabaseModel.Store.Questions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Posts">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="Post_id" />
             </Principal>
             <Dependent Role="Questions">
               <PropertyRef Name="BestAnswer_id" />
@@ -130,7 +133,7 @@
           <End Role="Tagged_Questions" Type="StackOverflowDatabaseModel.Store.Tagged_Questions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Questions">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="Question_id" />
             </Principal>
             <Dependent Role="Tagged_Questions">
               <PropertyRef Name="Question_id" />
@@ -142,7 +145,7 @@
           <End Role="Tagged_Questions" Type="StackOverflowDatabaseModel.Store.Tagged_Questions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tags">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="Tag_id" />
             </Principal>
             <Dependent Role="Tagged_Questions">
               <PropertyRef Name="Tag_id" />
@@ -154,7 +157,7 @@
           <End Role="Posts1" Type="StackOverflowDatabaseModel.Store.Posts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Posts">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="Post_id" />
             </Principal>
             <Dependent Role="Posts1">
               <PropertyRef Name="ReplyToPost_id" />
@@ -166,7 +169,7 @@
           <End Role="Questions" Type="StackOverflowDatabaseModel.Store.Questions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Posts">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="Post_id" />
             </Principal>
             <Dependent Role="Questions">
               <PropertyRef Name="OpeningPost_id" />
@@ -178,7 +181,7 @@
           <End Role="Posts" Type="StackOverflowDatabaseModel.Store.Posts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="User_id" />
             </Principal>
             <Dependent Role="Posts">
               <PropertyRef Name="User_id" />
@@ -221,9 +224,9 @@
         </EntityContainer>
         <EntityType Name="Post">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="Post_id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Post_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="Question_id" Type="Int32" />
           <Property Name="ReplyToPost_id" Type="Int32" />
           <Property Name="Content" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
@@ -233,55 +236,58 @@
           <NavigationProperty Name="Question" Relationship="StackOverflowDatabaseModel.BelongsToQuestion" FromRole="Posts" ToRole="Questions" />
           <NavigationProperty Name="Questions" Relationship="StackOverflowDatabaseModel.BestAnswerPost_id" FromRole="Posts" ToRole="Questions" />
           <NavigationProperty Name="Posts1" Relationship="StackOverflowDatabaseModel.ReplyToPost" FromRole="Posts" ToRole="Posts1" />
-          <NavigationProperty Name="Post1" Relationship="StackOverflowDatabaseModel.ReplyToPost" FromRole="Posts1" ToRole="Posts" />
+          <NavigationProperty Name="ReplyToPost" Relationship="StackOverflowDatabaseModel.ReplyToPost" FromRole="Posts1" ToRole="Posts" />
           <NavigationProperty Name="Questions1" Relationship="StackOverflowDatabaseModel.UserWhoMadeThisQuestion" FromRole="Posts" ToRole="Questions" />
           <NavigationProperty Name="User" Relationship="StackOverflowDatabaseModel.UserWhoPosted" FromRole="Posts" ToRole="Users" />
         </EntityType>
         <EntityType Name="Question">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="Question_id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Question_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="OpeningPost_id" Type="Int32" />
           <Property Name="BestAnswer_id" Type="Int32" />
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
-          <Property Name="Title" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Title" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
           <Property Name="Views" Type="Int32" />
           <NavigationProperty Name="Posts" Relationship="StackOverflowDatabaseModel.BelongsToQuestion" FromRole="Questions" ToRole="Posts" />
-          <NavigationProperty Name="BestAnswer" Relationship="StackOverflowDatabaseModel.BestAnswerPost_id" FromRole="Questions" ToRole="Posts" />
+          <NavigationProperty Name="BestAnswerPost" Relationship="StackOverflowDatabaseModel.BestAnswerPost_id" FromRole="Questions" ToRole="Posts" />
           <NavigationProperty Name="OpeningPost" Relationship="StackOverflowDatabaseModel.UserWhoMadeThisQuestion" FromRole="Questions" ToRole="Posts" />
           <NavigationProperty Name="Tags" Relationship="StackOverflowDatabaseModel.Tagged_Questions" FromRole="Questions" ToRole="Tags" />
         </EntityType>
         <EntityType Name="Tag">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="Tag_id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="Tag_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
           <Property Name="Summary" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Questions" Relationship="StackOverflowDatabaseModel.Tagged_Questions" FromRole="Tags" ToRole="Questions" />
         </EntityType>
         <EntityType Name="User">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="User_id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
-          <Property Name="LastName" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
-          <Property Name="Password" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
-          <Property Name="Email" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+          <Property Name="User_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Password" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="Email" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
           <Property Name="PermissionLEvel" Type="Int32" Nullable="false" />
           <Property Name="Votes" Type="Int32" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Posts" Relationship="StackOverflowDatabaseModel.UserWhoPosted" FromRole="Users" ToRole="Posts" />
-          <Property Type="String" Name="Username" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Address" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Zip" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Photo" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="BelongsToQuestion">
           <End Role="Questions" Type="StackOverflowDatabaseModel.Question" Multiplicity="0..1" />
           <End Role="Posts" Type="StackOverflowDatabaseModel.Post" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Questions">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="Question_id" />
             </Principal>
             <Dependent Role="Posts">
               <PropertyRef Name="Question_id" />
@@ -293,7 +299,7 @@
           <End Role="Questions" Type="StackOverflowDatabaseModel.Question" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Posts">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="Post_id" />
             </Principal>
             <Dependent Role="Questions">
               <PropertyRef Name="BestAnswer_id" />
@@ -305,7 +311,7 @@
           <End Role="Posts1" Type="StackOverflowDatabaseModel.Post" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Posts">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="Post_id" />
             </Principal>
             <Dependent Role="Posts1">
               <PropertyRef Name="ReplyToPost_id" />
@@ -317,7 +323,7 @@
           <End Role="Questions" Type="StackOverflowDatabaseModel.Question" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Posts">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="Post_id" />
             </Principal>
             <Dependent Role="Questions">
               <PropertyRef Name="OpeningPost_id" />
@@ -329,7 +335,7 @@
           <End Role="Posts" Type="StackOverflowDatabaseModel.Post" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="User_id" />
             </Principal>
             <Dependent Role="Posts">
               <PropertyRef Name="User_id" />
@@ -349,7 +355,7 @@
           <EntitySetMapping Name="Posts">
             <EntityTypeMapping TypeName="StackOverflowDatabaseModel.Post">
               <MappingFragment StoreEntitySet="Posts">
-                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Post_id" ColumnName="Post_id" />
                 <ScalarProperty Name="Question_id" ColumnName="Question_id" />
                 <ScalarProperty Name="ReplyToPost_id" ColumnName="ReplyToPost_id" />
                 <ScalarProperty Name="Content" ColumnName="Content" />
@@ -362,7 +368,7 @@
           <EntitySetMapping Name="Questions">
             <EntityTypeMapping TypeName="StackOverflowDatabaseModel.Question">
               <MappingFragment StoreEntitySet="Questions">
-                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Question_id" ColumnName="Question_id" />
                 <ScalarProperty Name="OpeningPost_id" ColumnName="OpeningPost_id" />
                 <ScalarProperty Name="BestAnswer_id" ColumnName="BestAnswer_id" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
@@ -374,7 +380,7 @@
           <EntitySetMapping Name="Tags">
             <EntityTypeMapping TypeName="StackOverflowDatabaseModel.Tag">
               <MappingFragment StoreEntitySet="Tags">
-                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Tag_id" ColumnName="Tag_id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Summary" ColumnName="Summary" />
               </MappingFragment>
@@ -383,8 +389,10 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="StackOverflowDatabaseModel.User">
               <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="User_id" ColumnName="User_id" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
@@ -392,15 +400,16 @@
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="PermissionLEvel" ColumnName="PermissionLEvel" />
                 <ScalarProperty Name="Votes" ColumnName="Votes" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <AssociationSetMapping Name="Tagged_Questions" TypeName="StackOverflowDatabaseModel.Tagged_Questions" StoreEntitySet="Tagged_Questions">
             <EndProperty Name="Questions">
-              <ScalarProperty Name="Id" ColumnName="Question_id" />
+              <ScalarProperty Name="Question_id" ColumnName="Question_id" />
             </EndProperty>
             <EndProperty Name="Tags">
-              <ScalarProperty Name="Id" ColumnName="Tag_id" />
+              <ScalarProperty Name="Tag_id" ColumnName="Tag_id" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

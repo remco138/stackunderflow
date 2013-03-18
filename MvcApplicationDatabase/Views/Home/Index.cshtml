@@ -17,9 +17,9 @@
     <h2>5 Newest Questions</h2>
     @{int count = 1;}
     @foreach (var item in Model) {
-    <div class="question-summary" id="question-summary-@item.Id">
+    <div class="question-summary" id="question-summary-@item.Question_id">
         <div class="summary">
-            <h3>@count@{count++;}. @Html.ActionLink(item.Title, item.Id.ToString(), "question/details")</h3>
+            <h3>@count@{count++;}. @Html.ActionLink(item.Title, item.Question_id.ToString(), "question/details")</h3>
             <div class="tags">
                 @foreach (var tag in item.Tags)
                 {

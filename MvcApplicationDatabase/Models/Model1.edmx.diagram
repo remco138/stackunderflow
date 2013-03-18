@@ -4,11 +4,11 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="aa44d23107744831b54f9da937eaf1e0" Name="Diagram1">
+      <Diagram DiagramId="e2ae979664b043a79b44055377c2e213" Name="Diagram1">
         <EntityTypeShape EntityType="StackOverflowDatabaseModel.Post" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="StackOverflowDatabaseModel.Question" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="StackOverflowDatabaseModel.Tag" Width="1.5" PointX="7.5" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="StackOverflowDatabaseModel.User" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="StackOverflowDatabaseModel.User" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
         <AssociationConnector Association="StackOverflowDatabaseModel.BelongsToQuestion" ManuallyRouted="false" />
         <AssociationConnector Association="StackOverflowDatabaseModel.BestAnswerPost_id" ManuallyRouted="false" />
         <AssociationConnector Association="StackOverflowDatabaseModel.ReplyToPost" ManuallyRouted="false" />

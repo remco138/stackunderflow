@@ -21,7 +21,7 @@ namespace MvcApplicationDatabase.Models
             this.Questions1 = new HashSet<Question>();
         }
     
-        public int Id { get; set; }
+        public int Post_id { get; set; }
         public Nullable<int> Question_id { get; set; }
         public Nullable<int> ReplyToPost_id { get; set; }
         public string Content { get; set; }
@@ -32,7 +32,7 @@ namespace MvcApplicationDatabase.Models
         public virtual Question Question { get; set; }
         public virtual ICollection<Question> Questions { get; set; }
         public virtual ICollection<Post> Posts1 { get; set; }
-        public virtual Post Post1 { get; set; }
+        public virtual Post ReplyToPost { get; set; }
         public virtual ICollection<Question> Questions1 { get; set; }
         public virtual User User { get; set; }
     }
