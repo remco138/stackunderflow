@@ -4,6 +4,34 @@
 
 .clear { clear: both; }
 
+/**
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    contenteditable attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that are clearfixed.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf {
+    *zoom: 1;
+}
+
+
 .dno {
     display: none;
 }
@@ -293,6 +321,31 @@ input[type=submit] {
 }
 
 
+/* Answers / Posts
+-----------------------------------------------------------*/
+
+.post-left {
+    float: left;
+    width: 60px;
+}
+
+.post-right {
+    float: left;
+}
+
+
+/* Votes block in each post */
+.vote-up-off,
+.vote-up-on,
+.vote-down-off,
+.vote-down-on,
+.comment-up-off,
+.comment-up-on, .vote-accepted-off, .vote-accepted-on {
+    text-indent: 9999em;
+    font-size: 1px;   
+}
+
+
 /* <form> Ask A Question
 -----------------------------------------------------------*/
 
@@ -424,7 +477,10 @@ input[type=submit] {
     padding: 0px 11px 0px 11px;
 }
 
-/* MARKDOWN EDITOR CSS */
+
+/* MARKDOWN EDITOR CSS
+-----------------------------------------------------------*/
+
 blockquote {
 	border-left: 2px dotted #888;
 	padding-left: 5px;
@@ -453,6 +509,7 @@ width: 660px;
 .wmd-preview 
 { 
 	background-color: #c0e0ff; 
+    text-align: left;
 }
 
 .wmd-button-row 

@@ -162,15 +162,16 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\QuestionFormViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\StackOverflowDatabase.mdf" />
     <Content Include="App_Data\StackOverflowDatabase_log.ldf">
       <DependentUpon>StackOverflowDatabase.mdf</DependentUpon>
     </Content>
-    <Content Include="Content\js\Markdown.Converter.js" />
-    <Content Include="Content\js\Markdown.Editor.js" />
-    <Content Include="Content\js\Markdown.Sanitizer.js" />
+    <Content Include="Scripts\Markdown.Converter.js" />
+    <Content Include="Scripts\Markdown.Editor.js" />
+    <Content Include="Scripts\Markdown.Sanitizer.js" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -262,6 +263,7 @@
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\runMarkdown.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -286,7 +288,9 @@
     <Content Include="Views\Question\Edit.cshtml" />
     <Content Include="Views\Question\Details.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Content\js\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
