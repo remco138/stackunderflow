@@ -99,14 +99,13 @@ namespace MvcApplicationDatabase.Controllers
                     break;
                 }
             }
-
-            Session["login"] = loginCheck;
+            Session.Add("login", loginCheck);
             try
             {
                 if ( (bool)Session["login"] == true )
                 {
-                    Session["Username"] = user.Username;
-                    Session["Password"] = user.Password;
+                    Session.Add("Username", user.Username);
+                    Session.Add("Password", user.Password);
                     return RedirectToAction("create");
                 }
                 return null;

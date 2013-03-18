@@ -60,6 +60,11 @@ namespace MvcApplicationDatabase.Controllers
 
         public ActionResult Ask()
         {
+
+            if ((bool)Session["login"] == true)
+            {
+                return RedirectToAction("index");
+            }
             return View();
         }
 
