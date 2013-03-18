@@ -1,4 +1,5 @@
 ﻿using MvcApplicationDatabase.Models;
+using MvcApplicationDatabase.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,11 +55,16 @@ namespace MvcApplicationDatabase.Controllers
 
         public ActionResult Ask()
         {
+
+            if ((bool)Session["login"] == true)
+            {
+                return RedirectToAction("index");
+            }
             return View();
         }
 
         [HttpPost]
-        public ActionResult Ask(Question question, String tagnames)
+        public ActionResult Ask(Question question)
         {
             if (ModelState.IsValid)
             {
@@ -71,13 +77,27 @@ namespace MvcApplicationDatabase.Controllers
                 
                 // Was unable to add Tags, but fixed this by following the steps under 'Issues With Views': http://oyonti.wordpress.com/2011/05/26/unable-to-update-the-entityset-because-it-has-a-definingquery/
                 //
-                var tagNames = tagnames.Split(' ');
-                var tagList = db.Tags.Where(t => tagNames.Contains(t.Name)); // Find existing tags in database
+                string[] tagNames = Request.Form["Tag.Name"].Split(' ');
+                List<Tag> tagDb = db.Tags.Where(t => tagNames.Contains(t.Name)).ToList(); // Find existing tags in database
+                Tag[] tagList = new Tag[tagNames.Count()];
 
+                for (int i=0; i < tagNames.Count(); i++)
+                {
+                    tagList[i].Name = tagNames[i];
+                }
+
+                foreach (Tag tag in tagList)
+                {
+                    if(!tagDb.Contains(tag))
+                        question.Tags.Add(tag);
+                }
+
+                /*
                 foreach (Tag tag in tagList)
                 {
                     question.Tags.Add(tag);
                 }
+                 * */
 
                 db.Questions.Add(question);
                 db.SaveChanges();

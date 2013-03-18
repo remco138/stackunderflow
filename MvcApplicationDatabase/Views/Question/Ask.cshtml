@@ -1,12 +1,13 @@
-﻿@model MvcApplicationDatabase.Models.Question
+﻿@model MvcApplicationDatabase.ViewModels.QuestionFormViewModel
 @{
     ViewBag.Title = "Ask";
+    Html.EnableClientValidation();
 }
-    @Scripts.Render("~/Content/js/Markdown.Converter.js")
-    @Scripts.Render("~/Content/js/Markdown.Editor.js")
-    @Scripts.Render("~/Content/js/Markdown.Sanitizer.js")
-
-@using (Html.BeginForm()) {
+@Scripts.Render("~/Scripts/Markdown.Converter.js")
+@Scripts.Render("~/Scripts/Markdown.Editor.js")
+@Scripts.Render("~/Scripts/Markdown.Sanitizer.js")
+@using (Html.BeginForm())
+{
    
     @Html.ValidationSummary(true) 
     <center>
@@ -16,8 +17,9 @@
             <table class="ask-title-table">
                 <tbody>
                     <tr>
-                        <td class="ask-title-cell-key">  @Html.LabelFor(q => q.Title) </td>
-                        <td class="ask-title-cell-value">@Html.TextBoxFor(q => q.Title, new { @class = "ask-title-field" }) </td>
+                        <td class="ask-title-cell-key">@Html.LabelFor(q => q.Question.Title)</td>
+                        <td class="ask-title-cell-value">@Html.TextBoxFor(q => q.Question.Title, new { @class = "ask-title-field" }) </td>
+                        @Html.ValidationMessageFor(q => q.Question.Title)
                     </tr>
                 </tbody>
             </table>
@@ -26,15 +28,15 @@
         <div class="form-item">
             <div class="wmd-panel">
                 <div id="wmd-button-bar"></div>
-                @Html.TextArea("content", new { @class = "post-editor wmd-input", @id = "wmd-input" })
+                @Html.TextAreaFor(p => p.Post.Content, new { @class = "post-editor wmd-input", @id = "wmd-input" })
+                @Html.ValidationMessageFor(p => p.Post.Content)
             </div>
             <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
         </div>
-
         
         <div class="form-item">
-            @Html.LabelFor(q => q.Tags)
-            <input id="tagnames" name="tagnames" type="text" style="width: 650px;" value="" tabindex="103">
+            <div>@Html.TextBoxFor(t => t.Tag.Name, new { @id = "tagnames", @type = "text", @style = "width: 650px;", @value = "", @tabindex = "103" } )</div>
+            <div>@Html.ValidationMessageFor(t => t.Tag.Name, "Minimaal 1 tag is verplicht")</div>
         </div>
         
         
@@ -47,21 +49,7 @@
 
     </div>
     </center>
-<script type="text/javascript">
-    (function () {
-        var converter1 = Markdown.getSanitizingConverter();
-
-        converter1.hooks.chain("preBlockGamut", function (text, rbg) {
-            return text.replace(/^ {0,3}""" *\n((?:.*?\n)+?) {0,3}""" *$/gm, function (whole, inner) {
-                return "<blockquote>" + rbg(inner) + "</blockquote>\n";
-            });
-        });
-
-        var editor1 = new Markdown.Editor(converter1);
-
-        editor1.run();
-    })();
-</script>
+    @Scripts.Render("~/Scripts/runMarkdown.js")
 }
 
 @section Scripts {

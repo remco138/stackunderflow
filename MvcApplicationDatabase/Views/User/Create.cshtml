@@ -1,0 +1,88 @@
+﻿@model MvcApplicationDatabase.Models.User
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+   
+    <fieldset>
+        <legend>Registration form</legend>
+            <div class="UserControl_RegistrationContainer">
+                <p class="UserControl_Title">Account information.</p>
+
+                <div class="editor-label">
+                     <a class="tooltip" href="#">Username:<span class="classic">The name you wish to be called, also your login name.</span></a>
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Username)
+                    @Html.ValidationMessageFor(model => model.Username)
+                </div>
+
+                <div class="editor-label">
+                   <a class="tooltip" href="#">Password:<span class="classic">The password you will use to login.</span></a>
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Password)
+                    @Html.ValidationMessageFor(model => model.Password)
+                </div>
+        
+                <div class="editor-label">
+                <a class="tooltip" href="#">Email:<span class="classic">Used only to keep you up to date.</span></a>
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Email)
+                    @Html.ValidationMessageFor(model => model.Email)
+                </div>
+            </div>
+
+        <div class="UserControl_RegistrationContainer">
+            <p class="UserControl_Title">Personal information.</p>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.FirstName)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.FirstName)
+                @Html.ValidationMessageFor(model => model.FirstName)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.LastName)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.LastName)
+                @Html.ValidationMessageFor(model => model.LastName)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Address)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Address)
+                @Html.ValidationMessageFor(model => model.Address)
+            </div>
+            <div class="editor-label">
+                <a class="tooltip" href="#">Zipcode<span class="classic">ZIP codes are a system of postal codes used by the United States Postal Service (USPS) since 1963. The term ZIP, an acronym for Zone Improvement Plan</span></a>
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Zip)
+                @Html.ValidationMessageFor(model => model.Zip)
+            </div>
+        </div>
+
+
+        <br />
+        <div class="UserControl_CenterButton">
+            <input type="submit" value="Register" />
+        </div>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to Homepage", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
