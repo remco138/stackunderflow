@@ -9,12 +9,7 @@
           <EntitySet Name="Comments" EntityType="StackOverflowDatabaseModel.Store.Comments" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Posts" EntityType="StackOverflowDatabaseModel.Store.Posts" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Questions" EntityType="StackOverflowDatabaseModel.Store.Questions" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Tagged_Questions" EntityType="StackOverflowDatabaseModel.Store.Tagged_Questions" store:Type="Tables" store:Schema="dbo" store:Name="Tagged_Questions">
-            <DefiningQuery>SELECT 
-      [Tagged_Questions].[Question_id] AS [Question_id], 
-      [Tagged_Questions].[Tag_id] AS [Tag_id]
-      FROM [dbo].[Tagged_Questions] AS [Tagged_Questions]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="Tagged_Questions" EntityType="StackOverflowDatabaseModel.Store.Tagged_Questions" store:Type="Tables" Schema="dbo" store:Name="Tagged_Questions"></EntitySet>
           <EntitySet Name="Tags" EntityType="StackOverflowDatabaseModel.Store.Tags" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Users" EntityType="StackOverflowDatabaseModel.Store.Users" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="BelongsToQuestion" Association="StackOverflowDatabaseModel.Store.BelongsToQuestion">
