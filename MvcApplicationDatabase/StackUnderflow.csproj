@@ -270,7 +270,6 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Question\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Question\Edit.cshtml" />
     <Content Include="Views\Question\Ask.cshtml">
       <SubType>Code</SubType>
     </Content>
@@ -278,6 +277,7 @@
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\Question\Details.cshtml" />
+    <Content Include="Views\Question\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

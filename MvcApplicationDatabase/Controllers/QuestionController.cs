@@ -57,6 +57,7 @@ namespace MvcApplicationDatabase.Controllers
             return View("Index", questionList);
         }
 
+
         public ActionResult Ask()
         {
             return View();
@@ -68,26 +69,23 @@ namespace MvcApplicationDatabase.Controllers
             if (ModelState.IsValid)
             {
                 question.DateCreated = DateTime.Now;
-                db.Questions.Add(question);
-                db.SaveChanges();
-
+                
                 db.Posts.Add(question.OpeningPost = new Post()
-                {
-                    Question = question,
-                    Content = Request.Form["content"],             
-                });
-                db.SaveChanges();
+                    {
+                        Content = Request.Form["content"],             
+                    });           
                 
                 // Was unable to add Tags, but fixed this by following the steps under 'Issues With Views': http://oyonti.wordpress.com/2011/05/26/unable-to-update-the-entityset-because-it-has-a-definingquery/
                 //
                 var tagNames = tagnames.Split(' ');
-                var tagList = db.Tags.Where(t => tagNames.Contains(t.Name));
+                var tagList = db.Tags.Where(t => tagNames.Contains(t.Name)); // Find existing tags in database
 
                 foreach (Tag tag in tagList)
                 {
                     question.Tags.Add(tag);
                 }
 
+                db.Questions.Add(question);
                 db.SaveChanges();
 
                 return RedirectToAction("Index");
