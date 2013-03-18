@@ -453,6 +453,7 @@ width: 660px;
 .wmd-preview 
 { 
 	background-color: #c0e0ff; 
+    text-align: left;
 }
 
 .wmd-button-row 
