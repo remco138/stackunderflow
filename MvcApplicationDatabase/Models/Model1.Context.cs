@@ -25,6 +25,7 @@ namespace MvcApplicationDatabase.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public DbSet<Comment> Comments { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Tag> Tags { get; set; }

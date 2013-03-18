@@ -11,25 +11,17 @@ namespace MvcApplicationDatabase.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
-    public partial class Question
+    public partial class Comment
     {
-        public Question()
-        {
-            this.Posts = new HashSet<Post>();
-            this.Tags = new HashSet<Tag>();
-        }
-    
-        public int Question_id { get; set; }
-        public Nullable<int> BestAnswer_id { get; set; }
+        public int Comment_Id { get; set; }
+        public int Post_id { get; set; }
+        public int User_id { get; set; }
+        public string Content { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
-        [Required]
-        public string Title { get; set; }
-        public Nullable<int> Views { get; set; }
+        public Nullable<int> Votes { get; set; }
     
-        public virtual ICollection<Post> Posts { get; set; }
         public virtual Post Post { get; set; }
-        public virtual ICollection<Tag> Tags { get; set; }
+        public virtual User User { get; set; }
     }
 }

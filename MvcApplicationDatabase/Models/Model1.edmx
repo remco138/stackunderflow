@@ -4,8 +4,9 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="StackOverflowDatabaseModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="StackOverflowDatabaseModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="StackOverflowDatabaseModelStoreContainer">
+          <EntitySet Name="Comments" EntityType="StackOverflowDatabaseModel.Store.Comments" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Posts" EntityType="StackOverflowDatabaseModel.Store.Posts" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Questions" EntityType="StackOverflowDatabaseModel.Store.Questions" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Tagged_Questions" EntityType="StackOverflowDatabaseModel.Store.Tagged_Questions" store:Type="Tables" Schema="dbo" store:Name="Tagged_Questions">
@@ -28,19 +29,34 @@
             <End Role="Tags" EntitySet="Tags" />
             <End Role="Tagged_Questions" EntitySet="Tagged_Questions" />
           </AssociationSet>
+          <AssociationSet Name="Post_id" Association="StackOverflowDatabaseModel.Store.Post_id">
+            <End Role="Posts" EntitySet="Posts" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
           <AssociationSet Name="ReplyToPost" Association="StackOverflowDatabaseModel.Store.ReplyToPost">
             <End Role="Posts" EntitySet="Posts" />
             <End Role="Posts1" EntitySet="Posts" />
           </AssociationSet>
-          <AssociationSet Name="UserWhoMadeThisQuestion" Association="StackOverflowDatabaseModel.Store.UserWhoMadeThisQuestion">
-            <End Role="Posts" EntitySet="Posts" />
-            <End Role="Questions" EntitySet="Questions" />
+          <AssociationSet Name="User_id" Association="StackOverflowDatabaseModel.Store.User_id">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Comments" EntitySet="Comments" />
           </AssociationSet>
           <AssociationSet Name="UserWhoPosted" Association="StackOverflowDatabaseModel.Store.UserWhoPosted">
             <End Role="Users" EntitySet="Users" />
             <End Role="Posts" EntitySet="Posts" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Comments">
+          <Key>
+            <PropertyRef Name="Comment_Id" />
+          </Key>
+          <Property Name="Comment_Id" Type="int" Nullable="false" />
+          <Property Name="Post_id" Type="int" Nullable="false" />
+          <Property Name="User_id" Type="int" Nullable="false" />
+          <Property Name="Content" Type="text" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="Votes" Type="int" />
+        </EntityType>
         <EntityType Name="Posts">
           <Key>
             <PropertyRef Name="Post_id" />
@@ -58,7 +74,6 @@
             <PropertyRef Name="Question_id" />
           </Key>
           <Property Name="Question_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="OpeningPost_id" Type="int" />
           <Property Name="BestAnswer_id" Type="int" />
           <Property Name="DateCreated" Type="datetime" />
           <Property Name="Title" Type="varchar" MaxLength="150" />
@@ -148,6 +163,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Post_id">
+          <End Role="Posts" Type="StackOverflowDatabaseModel.Store.Posts" Multiplicity="1" />
+          <End Role="Comments" Type="StackOverflowDatabaseModel.Store.Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Posts">
+              <PropertyRef Name="Post_id" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="Post_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="ReplyToPost">
           <End Role="Posts" Type="StackOverflowDatabaseModel.Store.Posts" Multiplicity="0..1" />
           <End Role="Posts1" Type="StackOverflowDatabaseModel.Store.Posts" Multiplicity="*" />
@@ -160,15 +187,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="UserWhoMadeThisQuestion">
-          <End Role="Posts" Type="StackOverflowDatabaseModel.Store.Posts" Multiplicity="0..1" />
-          <End Role="Questions" Type="StackOverflowDatabaseModel.Store.Questions" Multiplicity="*" />
+        <Association Name="User_id">
+          <End Role="Users" Type="StackOverflowDatabaseModel.Store.Users" Multiplicity="1" />
+          <End Role="Comments" Type="StackOverflowDatabaseModel.Store.Comments" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Posts">
-              <PropertyRef Name="Post_id" />
+            <Principal Role="Users">
+              <PropertyRef Name="User_id" />
             </Principal>
-            <Dependent Role="Questions">
-              <PropertyRef Name="OpeningPost_id" />
+            <Dependent Role="Comments">
+              <PropertyRef Name="User_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -184,15 +211,25 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="StackOverflowDatabaseModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="StackOverflowDatabaseContext" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Comments" EntityType="StackOverflowDatabaseModel.Comment" />
           <EntitySet Name="Posts" EntityType="StackOverflowDatabaseModel.Post" />
           <EntitySet Name="Questions" EntityType="StackOverflowDatabaseModel.Question" />
           <EntitySet Name="Tags" EntityType="StackOverflowDatabaseModel.Tag" />
           <EntitySet Name="Users" EntityType="StackOverflowDatabaseModel.User" />
+          <AssociationSet Name="Post_id" Association="StackOverflowDatabaseModel.Post_id">
+            <End Role="Posts" EntitySet="Posts" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="User_id" Association="StackOverflowDatabaseModel.User_id">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
           <AssociationSet Name="BelongsToQuestion" Association="StackOverflowDatabaseModel.BelongsToQuestion">
             <End Role="Questions" EntitySet="Questions" />
             <End Role="Posts" EntitySet="Posts" />
@@ -205,10 +242,6 @@
             <End Role="Posts" EntitySet="Posts" />
             <End Role="Posts1" EntitySet="Posts" />
           </AssociationSet>
-          <AssociationSet Name="UserWhoMadeThisQuestion" Association="StackOverflowDatabaseModel.UserWhoMadeThisQuestion">
-            <End Role="Posts" EntitySet="Posts" />
-            <End Role="Questions" EntitySet="Questions" />
-          </AssociationSet>
           <AssociationSet Name="UserWhoPosted" Association="StackOverflowDatabaseModel.UserWhoPosted">
             <End Role="Users" EntitySet="Users" />
             <End Role="Posts" EntitySet="Posts" />
@@ -218,6 +251,19 @@
             <End Role="Tags" EntitySet="Tags" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="Comment_Id" />
+          </Key>
+          <Property Name="Comment_Id" Type="Int32" Nullable="false" />
+          <Property Name="Post_id" Type="Int32" Nullable="false" />
+          <Property Name="User_id" Type="Int32" Nullable="false" />
+          <Property Name="Content" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="Votes" Type="Int32" />
+          <NavigationProperty Name="Post" Relationship="StackOverflowDatabaseModel.Post_id" FromRole="Comments" ToRole="Posts" />
+          <NavigationProperty Name="User" Relationship="StackOverflowDatabaseModel.User_id" FromRole="Comments" ToRole="Users" />
+        </EntityType>
         <EntityType Name="Post">
           <Key>
             <PropertyRef Name="Post_id" />
@@ -229,11 +275,11 @@
           <Property Name="Votes" Type="Int32" />
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
           <Property Name="User_id" Type="Int32" />
+          <NavigationProperty Name="Comments" Relationship="StackOverflowDatabaseModel.Post_id" FromRole="Posts" ToRole="Comments" />
           <NavigationProperty Name="Question" Relationship="StackOverflowDatabaseModel.BelongsToQuestion" FromRole="Posts" ToRole="Questions" />
           <NavigationProperty Name="Questions" Relationship="StackOverflowDatabaseModel.BestAnswerPost_id" FromRole="Posts" ToRole="Questions" />
           <NavigationProperty Name="Posts1" Relationship="StackOverflowDatabaseModel.ReplyToPost" FromRole="Posts" ToRole="Posts1" />
-          <NavigationProperty Name="ReplyToPost" Relationship="StackOverflowDatabaseModel.ReplyToPost" FromRole="Posts1" ToRole="Posts" />
-          <NavigationProperty Name="Questions1" Relationship="StackOverflowDatabaseModel.UserWhoMadeThisQuestion" FromRole="Posts" ToRole="Questions" />
+          <NavigationProperty Name="Post1" Relationship="StackOverflowDatabaseModel.ReplyToPost" FromRole="Posts1" ToRole="Posts" />
           <NavigationProperty Name="User" Relationship="StackOverflowDatabaseModel.UserWhoPosted" FromRole="Posts" ToRole="Users" />
         </EntityType>
         <EntityType Name="Question">
@@ -241,14 +287,12 @@
             <PropertyRef Name="Question_id" />
           </Key>
           <Property Name="Question_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="OpeningPost_id" Type="Int32" />
           <Property Name="BestAnswer_id" Type="Int32" />
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
           <Property Name="Title" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
           <Property Name="Views" Type="Int32" />
           <NavigationProperty Name="Posts" Relationship="StackOverflowDatabaseModel.BelongsToQuestion" FromRole="Questions" ToRole="Posts" />
-          <NavigationProperty Name="BestAnswerPost" Relationship="StackOverflowDatabaseModel.BestAnswerPost_id" FromRole="Questions" ToRole="Posts" />
-          <NavigationProperty Name="OpeningPost" Relationship="StackOverflowDatabaseModel.UserWhoMadeThisQuestion" FromRole="Questions" ToRole="Posts" />
+          <NavigationProperty Name="Post" Relationship="StackOverflowDatabaseModel.BestAnswerPost_id" FromRole="Questions" ToRole="Posts" />
           <NavigationProperty Name="Tags" Relationship="StackOverflowDatabaseModel.Tagged_Questions" FromRole="Questions" ToRole="Tags" />
         </EntityType>
         <EntityType Name="Tag">
@@ -273,11 +317,36 @@
           <Property Name="PermissionLEvel" Type="Int32" Nullable="false" />
           <Property Name="Votes" Type="Int32" Nullable="false" />
           <Property Name="Username" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Address" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Zip" Type="String" MaxLength="6" Unicode="false" FixedLength="false" />
+          <Property Name="Photo" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Comments" Relationship="StackOverflowDatabaseModel.User_id" FromRole="Users" ToRole="Comments" />
           <NavigationProperty Name="Posts" Relationship="StackOverflowDatabaseModel.UserWhoPosted" FromRole="Users" ToRole="Posts" />
-          <Property Type="String" Name="Address" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="Zip" MaxLength="6" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="Photo" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
+        <Association Name="Post_id">
+          <End Role="Posts" Type="StackOverflowDatabaseModel.Post" Multiplicity="1" />
+          <End Role="Comments" Type="StackOverflowDatabaseModel.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Posts">
+              <PropertyRef Name="Post_id" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="Post_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="User_id">
+          <End Role="Users" Type="StackOverflowDatabaseModel.User" Multiplicity="1" />
+          <End Role="Comments" Type="StackOverflowDatabaseModel.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="User_id" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="BelongsToQuestion">
           <End Role="Questions" Type="StackOverflowDatabaseModel.Question" Multiplicity="0..1" />
           <End Role="Posts" Type="StackOverflowDatabaseModel.Post" Multiplicity="*" />
@@ -314,18 +383,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="UserWhoMadeThisQuestion">
-          <End Role="Posts" Type="StackOverflowDatabaseModel.Post" Multiplicity="0..1" />
-          <End Role="Questions" Type="StackOverflowDatabaseModel.Question" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Posts">
-              <PropertyRef Name="Post_id" />
-            </Principal>
-            <Dependent Role="Questions">
-              <PropertyRef Name="OpeningPost_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="UserWhoPosted">
           <End Role="Users" Type="StackOverflowDatabaseModel.User" Multiplicity="0..1" />
           <End Role="Posts" Type="StackOverflowDatabaseModel.Post" Multiplicity="*" />
@@ -348,6 +405,18 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="StackOverflowDatabaseModelStoreContainer" CdmEntityContainer="StackOverflowDatabaseContext">
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="StackOverflowDatabaseModel.Comment">
+              <MappingFragment StoreEntitySet="Comments">
+                <ScalarProperty Name="Comment_Id" ColumnName="Comment_Id" />
+                <ScalarProperty Name="Post_id" ColumnName="Post_id" />
+                <ScalarProperty Name="User_id" ColumnName="User_id" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Votes" ColumnName="Votes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Posts">
             <EntityTypeMapping TypeName="StackOverflowDatabaseModel.Post">
               <MappingFragment StoreEntitySet="Posts">
@@ -365,7 +434,6 @@
             <EntityTypeMapping TypeName="StackOverflowDatabaseModel.Question">
               <MappingFragment StoreEntitySet="Questions">
                 <ScalarProperty Name="Question_id" ColumnName="Question_id" />
-                <ScalarProperty Name="OpeningPost_id" ColumnName="OpeningPost_id" />
                 <ScalarProperty Name="BestAnswer_id" ColumnName="BestAnswer_id" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -385,9 +453,6 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="StackOverflowDatabaseModel.User">
               <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="Photo" ColumnName="Photo" />
-                <ScalarProperty Name="Zip" ColumnName="Zip" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="User_id" ColumnName="User_id" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
@@ -397,6 +462,9 @@
                 <ScalarProperty Name="PermissionLEvel" ColumnName="PermissionLEvel" />
                 <ScalarProperty Name="Votes" ColumnName="Votes" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

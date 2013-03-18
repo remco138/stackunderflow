@@ -4,15 +4,17 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e2ae979664b043a79b44055377c2e213" Name="Diagram1">
-        <EntityTypeShape EntityType="StackOverflowDatabaseModel.Post" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="StackOverflowDatabaseModel.Question" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="StackOverflowDatabaseModel.Tag" Width="1.5" PointX="7.5" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="StackOverflowDatabaseModel.User" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+      <Diagram DiagramId="7d1dff3b2720406dad52b0c3fb98ec41" Name="Diagram1">
+        <EntityTypeShape EntityType="StackOverflowDatabaseModel.Comment" Width="1.5" PointX="3" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="StackOverflowDatabaseModel.Post" Width="1.5" PointX="6" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="StackOverflowDatabaseModel.Question" Width="1.5" PointX="8.25" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="StackOverflowDatabaseModel.Tag" Width="1.5" PointX="10.5" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="StackOverflowDatabaseModel.User" Width="1.5" PointX="0.75" PointY="2.75" IsExpanded="true" />
+        <AssociationConnector Association="StackOverflowDatabaseModel.Post_id" ManuallyRouted="false" />
+        <AssociationConnector Association="StackOverflowDatabaseModel.User_id" ManuallyRouted="false" />
         <AssociationConnector Association="StackOverflowDatabaseModel.BelongsToQuestion" ManuallyRouted="false" />
         <AssociationConnector Association="StackOverflowDatabaseModel.BestAnswerPost_id" ManuallyRouted="false" />
         <AssociationConnector Association="StackOverflowDatabaseModel.ReplyToPost" ManuallyRouted="false" />
-        <AssociationConnector Association="StackOverflowDatabaseModel.UserWhoMadeThisQuestion" ManuallyRouted="false" />
         <AssociationConnector Association="StackOverflowDatabaseModel.UserWhoPosted" ManuallyRouted="false" />
         <AssociationConnector Association="StackOverflowDatabaseModel.Tagged_Questions" ManuallyRouted="false" />
       </Diagram>

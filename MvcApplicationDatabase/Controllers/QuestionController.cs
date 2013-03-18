@@ -61,6 +61,11 @@ namespace MvcApplicationDatabase.Controllers
 
         public ActionResult Ask()
         {
+
+            if ((bool)Session["login"] == true)
+            {
+                return RedirectToAction("index");
+            }
             return View();
         }
 
@@ -71,7 +76,7 @@ namespace MvcApplicationDatabase.Controllers
             {
                 question.DateCreated = DateTime.Now;
                 
-                db.Posts.Add(question.OpeningPost = new Post()
+                db.Posts.Add(new Post()
                     {
                         Content = Request.Form["content"],             
                     });           
