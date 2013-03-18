@@ -168,6 +168,9 @@
     <Content Include="App_Data\StackOverflowDatabase_log.ldf">
       <DependentUpon>StackOverflowDatabase.mdf</DependentUpon>
     </Content>
+    <Content Include="Content\js\Markdown.Converter.js" />
+    <Content Include="Content\js\Markdown.Editor.js" />
+    <Content Include="Content\js\Markdown.Sanitizer.js" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -224,6 +227,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Content\themes\layout\favicon.png" />
     <Content Include="Content\themes\layout\logo.png" />
+    <Content Include="Content\themes\layout\wmd-buttons.png" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <EntityDeploy Include="Models\Model1.edmx">
