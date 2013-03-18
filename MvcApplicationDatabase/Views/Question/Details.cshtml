@@ -2,49 +2,38 @@
 
 @{
     ViewBag.Title = "Details";
+
+   // Model.OpeningPost.Content
+    
 }
 
 <h2>Details</h2>
 
 <fieldset>
-    <legend>Question</legend>
+    <legend>@Model.Title</legend>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.OpeningPost_id)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.OpeningPost_id)
-    </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.BestAnswer_id)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.BestAnswer_id)
-    </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.DateCreated)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.DateCreated)
-    </div>
+    <div class="display-label">@Html.DisplayNameFor(model => model.BestAnswer_id)</div>
+    <div class="display-field">@Html.DisplayFor(model => model.BestAnswer_id)</div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Title)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Title)
-    </div>
+    <div class="display-label">@Html.DisplayNameFor(model => model.DateCreated)</div>
+    <div class="display-field">@Html.DisplayFor(model => model.DateCreated)</div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Views)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Views)
-    </div>
+    <div class="display-label">@Html.DisplayNameFor(model => model.Views)</div>
+    <div class="display-field">@Html.DisplayFor(model => model.Views)</div>   
+
+
+    @foreach(MvcApplicationDatabase.Models.Post post in Model.Posts)
+    {        
+        <div class="display-label">@Html.Display(post.Content)</div>
+        <div class="display-field">@Html.DisplayName(post.Content)</div>
+
+
+        
+        
+    }
 </fieldset>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

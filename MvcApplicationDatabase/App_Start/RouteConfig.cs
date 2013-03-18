@@ -15,6 +15,14 @@ namespace MvcApplicationDatabase
             routes.LowercaseUrls = true;
 
             routes.MapRoute(
+                "Question",
+                "Question/{id}",
+                new { controller = "Question", action = "Details" },
+                new { id = @"\d+" }
+                );
+
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

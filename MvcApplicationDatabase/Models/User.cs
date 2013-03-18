@@ -17,6 +17,7 @@ namespace MvcApplicationDatabase.Models
     {
         public User()
         {
+            this.Comments = new HashSet<Comment>();
             this.Posts = new HashSet<Post>();
         }
         [Required]
@@ -41,6 +42,7 @@ namespace MvcApplicationDatabase.Models
         [Required]
         public string Photo { get; set; }
     
+        public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Post> Posts { get; set; }
     }
 }

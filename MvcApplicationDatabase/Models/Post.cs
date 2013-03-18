@@ -16,9 +16,9 @@ namespace MvcApplicationDatabase.Models
     {
         public Post()
         {
+            this.Comments = new HashSet<Comment>();
             this.Questions = new HashSet<Question>();
             this.Posts1 = new HashSet<Post>();
-            this.Questions1 = new HashSet<Question>();
         }
     
         public int Post_id { get; set; }
@@ -29,11 +29,11 @@ namespace MvcApplicationDatabase.Models
         public Nullable<System.DateTime> DateCreated { get; set; }
         public Nullable<int> User_id { get; set; }
     
+        public virtual ICollection<Comment> Comments { get; set; }
         public virtual Question Question { get; set; }
         public virtual ICollection<Question> Questions { get; set; }
         public virtual ICollection<Post> Posts1 { get; set; }
-        public virtual Post ReplyToPost { get; set; }
-        public virtual ICollection<Question> Questions1 { get; set; }
+        public virtual Post Post1 { get; set; }
         public virtual User User { get; set; }
     }
 }
