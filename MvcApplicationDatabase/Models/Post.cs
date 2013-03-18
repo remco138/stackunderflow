@@ -11,7 +11,6 @@ namespace MvcApplicationDatabase.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class Post
     {
@@ -25,7 +24,6 @@ namespace MvcApplicationDatabase.Models
         public int Post_id { get; set; }
         public Nullable<int> Question_id { get; set; }
         public Nullable<int> ReplyToPost_id { get; set; }
-        [Required]
         public string Content { get; set; }
         public Nullable<int> Votes { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
