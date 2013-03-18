@@ -28,6 +28,10 @@ namespace MvcApplicationDatabase.Models
         public int PermissionLEvel { get; set; }
         public int Votes { get; set; }
         public string Username { get; set; }
+        public string Straatnaam { get; set; }
+        public string Straatnr { get; set; }
+        public string Postcode { get; set; }
+        public string ProfielFoto { get; set; }
     
         public virtual ICollection<Post> Posts { get; set; }
     }

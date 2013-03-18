@@ -4,11 +4,15 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="StackOverflowDatabaseModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="StackOverflowDatabaseModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="StackOverflowDatabaseModelStoreContainer">
           <EntitySet Name="Posts" EntityType="StackOverflowDatabaseModel.Store.Posts" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Questions" EntityType="StackOverflowDatabaseModel.Store.Questions" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Tagged_Questions" EntityType="StackOverflowDatabaseModel.Store.Tagged_Questions" store:Type="Tables" Schema="dbo" store:Name="Tagged_Questions">
+          <EntitySet Name="Tagged_Questions" EntityType="StackOverflowDatabaseModel.Store.Tagged_Questions" store:Type="Tables" store:Schema="dbo" store:Name="Tagged_Questions">
+            <DefiningQuery>SELECT 
+      [Tagged_Questions].[Question_id] AS [Question_id], 
+      [Tagged_Questions].[Tag_id] AS [Tag_id]
+      FROM [dbo].[Tagged_Questions] AS [Tagged_Questions]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="Tags" EntityType="StackOverflowDatabaseModel.Store.Tags" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Users" EntityType="StackOverflowDatabaseModel.Store.Users" store:Type="Tables" Schema="dbo" />
@@ -61,7 +65,7 @@
           <Property Name="OpeningPost_id" Type="int" />
           <Property Name="BestAnswer_id" Type="int" />
           <Property Name="DateCreated" Type="datetime" />
-          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="Title" Type="varchar" MaxLength="150" />
           <Property Name="Views" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -80,7 +84,7 @@
             <PropertyRef Name="Tag_id" />
           </Key>
           <Property Name="Tag_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="varchar" MaxLength="10" />
+          <Property Name="Name" Type="varchar" MaxLength="25" />
           <Property Name="Summary" Type="text" />
         </EntityType>
         <EntityType Name="Users">
@@ -88,14 +92,18 @@
             <PropertyRef Name="User_id" />
           </Key>
           <Property Name="User_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="nchar" MaxLength="10" />
-          <Property Name="LastName" Type="nchar" MaxLength="10" />
-          <Property Name="Password" Type="nchar" MaxLength="10" />
-          <Property Name="Email" Type="nchar" MaxLength="10" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="255" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
           <Property Name="DateCreated" Type="datetime" />
           <Property Name="PermissionLEvel" Type="int" Nullable="false" />
           <Property Name="Votes" Type="int" Nullable="false" />
           <Property Name="Username" Type="varchar" MaxLength="50" />
+          <Property Name="Straatnaam" Type="varchar" MaxLength="50" />
+          <Property Name="Straatnr" Type="varchar" MaxLength="10" />
+          <Property Name="Postcode" Type="varchar" MaxLength="6" />
+          <Property Name="ProfielFoto" Type="varchar" MaxLength="255" />
         </EntityType>
         <Association Name="BelongsToQuestion">
           <End Role="Questions" Type="StackOverflowDatabaseModel.Store.Questions" Multiplicity="0..1" />
@@ -181,8 +189,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="StackOverflowDatabaseModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -242,7 +249,7 @@
           <Property Name="OpeningPost_id" Type="Int32" />
           <Property Name="BestAnswer_id" Type="Int32" />
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
-          <Property Name="Title" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Title" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
           <Property Name="Views" Type="Int32" />
           <NavigationProperty Name="Posts" Relationship="StackOverflowDatabaseModel.BelongsToQuestion" FromRole="Questions" ToRole="Posts" />
           <NavigationProperty Name="BestAnswerPost" Relationship="StackOverflowDatabaseModel.BestAnswerPost_id" FromRole="Questions" ToRole="Posts" />
@@ -254,7 +261,7 @@
             <PropertyRef Name="Tag_id" />
           </Key>
           <Property Name="Tag_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="Name" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
           <Property Name="Summary" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Questions" Relationship="StackOverflowDatabaseModel.Tagged_Questions" FromRole="Tags" ToRole="Questions" />
         </EntityType>
@@ -263,15 +270,19 @@
             <PropertyRef Name="User_id" />
           </Key>
           <Property Name="User_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
-          <Property Name="LastName" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
-          <Property Name="Password" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
-          <Property Name="Email" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Password" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="Email" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
           <Property Name="PermissionLEvel" Type="Int32" Nullable="false" />
           <Property Name="Votes" Type="Int32" Nullable="false" />
           <Property Name="Username" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Posts" Relationship="StackOverflowDatabaseModel.UserWhoPosted" FromRole="Users" ToRole="Posts" />
+          <Property Type="String" Name="Straatnaam" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Straatnr" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Postcode" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ProfielFoto" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="BelongsToQuestion">
           <End Role="Questions" Type="StackOverflowDatabaseModel.Question" Multiplicity="0..1" />
@@ -380,6 +391,10 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="StackOverflowDatabaseModel.User">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ProfielFoto" ColumnName="ProfielFoto" />
+                <ScalarProperty Name="Postcode" ColumnName="Postcode" />
+                <ScalarProperty Name="Straatnr" ColumnName="Straatnr" />
+                <ScalarProperty Name="Straatnaam" ColumnName="Straatnaam" />
                 <ScalarProperty Name="User_id" ColumnName="User_id" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
