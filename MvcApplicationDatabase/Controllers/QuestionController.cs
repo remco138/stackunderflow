@@ -37,12 +37,6 @@ namespace MvcApplicationDatabase.Controllers
             return View(questionList);
         }
 
-        public ActionResult Details(int id)
-        {
-            var questionList = db.Questions.First(q => q.Question_id == id);
-            return View(questionList);
-        }
-
         public ActionResult Tagged(string id, int page = 1, int pagesize = 15)
         {
             page = page - 1;
@@ -92,6 +86,19 @@ namespace MvcApplicationDatabase.Controllers
             }
 
             return View(question);
+        }
+
+        public ActionResult Details(int id)
+        {
+            try
+            {
+                var question = db.Questions.First(q => q.Question_id == id);
+                return View(question);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return RedirectToAction("Index");
+            }
         }
 
 
