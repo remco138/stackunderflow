@@ -61,7 +61,7 @@ namespace MvcApplicationDatabase.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpPost, ValidateInput(false)]
         public ActionResult Ask(QuestionFormViewModel vm)
         {
             if (ModelState.IsValid)
@@ -70,7 +70,7 @@ namespace MvcApplicationDatabase.Controllers
                 
                 db.Posts.Add(new Post()
                     {
-                        Content = Request.Form["Post.Content"],             
+                        Content = Server.HtmlEncode(Request.Form["Post.Content"]),             
                     });           
                 
                 // Was unable to add Tags, but fixed this by following the steps under 'Issues With Views': http://oyonti.wordpress.com/2011/05/26/unable-to-update-the-entityset-because-it-has-a-definingquery/
