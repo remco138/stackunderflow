@@ -86,13 +86,30 @@ namespace MvcApplicationDatabase.Controllers
         // POST: /User/Edit/5
 
         [HttpPost]
-        public ActionResult Login(FormCollection collection)
+        public ActionResult Login(User user)
         {
+            bool loginCheck = false;
+
+
+            foreach (var userlist in db.Users)
+            {
+                if (userlist.Username.Equals(user.Username) && userlist.Password.Equals(user.Password))
+                {
+                    loginCheck = true;
+                    break;
+                }
+            }
+
+            Session["login"] = loginCheck;
             try
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                if ( (bool)Session["login"] == true )
+                {
+                    Session["Username"] = user.Username;
+                    Session["Password"] = user.Password;
+                    return RedirectToAction("create");
+                }
+                return null;
             }
             catch
             {

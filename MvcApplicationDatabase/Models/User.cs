@@ -11,6 +11,7 @@ namespace MvcApplicationDatabase.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class User
     {
@@ -18,18 +19,26 @@ namespace MvcApplicationDatabase.Models
         {
             this.Posts = new HashSet<Post>();
         }
-    
+        [Required]
         public int User_id { get; set; }
+        [Required]
         public string FirstName { get; set; }
+        [Required]
         public string LastName { get; set; }
+        [Required]
         public string Password { get; set; }
+        [Required]
         public string Email { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
         public int PermissionLEvel { get; set; }
         public int Votes { get; set; }
+        [Required]
         public string Username { get; set; }
+        [Required]
         public string Address { get; set; }
+        [Required]
         public string Zip { get; set; }
+        [Required]
         public string Photo { get; set; }
     
         public virtual ICollection<Post> Posts { get; set; }
