@@ -70,7 +70,7 @@ namespace MvcApplicationDatabase.Controllers
             {
                 question.DateCreated = DateTime.Now;
                 
-                db.Posts.Add(question.OpeningPost = new Post()
+                db.Posts.Add(new Post()
                     {
                         Content = Request.Form["content"],             
                     });           
