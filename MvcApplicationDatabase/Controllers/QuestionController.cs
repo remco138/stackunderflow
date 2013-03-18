@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
+
 
 namespace MvcApplicationDatabase.Controllers
 {
@@ -55,57 +58,38 @@ namespace MvcApplicationDatabase.Controllers
 
         public ActionResult Ask()
         {
-
-            if ((bool)Session["login"] == true)
-            {
-                return RedirectToAction("index");
-            }
             return View();
         }
 
         [HttpPost]
-        public ActionResult Ask(Question question)
+        public ActionResult Ask(QuestionFormViewModel vm)
         {
             if (ModelState.IsValid)
             {
-                question.DateCreated = DateTime.Now;
+                vm.Question.DateCreated = DateTime.Now;
                 
                 db.Posts.Add(new Post()
                     {
-                        Content = Request.Form["content"],             
+                        Content = Request.Form["Post.Content"],             
                     });           
                 
                 // Was unable to add Tags, but fixed this by following the steps under 'Issues With Views': http://oyonti.wordpress.com/2011/05/26/unable-to-update-the-entityset-because-it-has-a-definingquery/
                 //
-                string[] tagNames = Request.Form["Tag.Name"].Split(' ');
-                List<Tag> tagDb = db.Tags.Where(t => tagNames.Contains(t.Name)).ToList(); // Find existing tags in database
-                Tag[] tagList = new Tag[tagNames.Count()];
-
-                for (int i=0; i < tagNames.Count(); i++)
-                {
-                    tagList[i].Name = tagNames[i];
-                }
+                var tagNames = Request.Form["Tag.Name"].Split(' ');
+                var tagList = db.Tags.Where(t => tagNames.Contains(t.Name)).ToList(); // Find existing tags in database
 
                 foreach (Tag tag in tagList)
                 {
-                    if(!tagDb.Contains(tag))
-                        question.Tags.Add(tag);
+                    vm.Question.Tags.Add(tag);
                 }
 
-                /*
-                foreach (Tag tag in tagList)
-                {
-                    question.Tags.Add(tag);
-                }
-                 * */
-
-                db.Questions.Add(question);
+                db.Questions.Add(vm.Question);
                 db.SaveChanges();
 
                 return RedirectToAction("Index");
             }
 
-            return View(question);
+            return View(vm.Question);
         }
 
         public ActionResult Details(int id)
