@@ -39,7 +39,7 @@ namespace MvcApplicationDatabase.Controllers
 
         public ActionResult Details(int id)
         {
-            var questionList = db.Questions.First(q => q.Id == id);
+            var questionList = db.Questions.First(q => q.Question_id == id);
             return View(questionList);
         }
 
@@ -99,7 +99,7 @@ namespace MvcApplicationDatabase.Controllers
 
         public ActionResult Edit(int id)
         {
-            var question = db.Questions.Single(q => q.Id == id);
+            var question = db.Questions.Single(q => q.Question_id == id);
 
             return View(question);
         }

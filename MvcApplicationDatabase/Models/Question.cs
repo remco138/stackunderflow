@@ -20,7 +20,7 @@ namespace MvcApplicationDatabase.Models
             this.Tags = new HashSet<Tag>();
         }
     
-        public int Id { get; set; }
+        public int Question_id { get; set; }
         public Nullable<int> OpeningPost_id { get; set; }
         public Nullable<int> BestAnswer_id { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
@@ -28,7 +28,7 @@ namespace MvcApplicationDatabase.Models
         public Nullable<int> Views { get; set; }
     
         public virtual ICollection<Post> Posts { get; set; }
-        public virtual Post BestAnswer { get; set; }
+        public virtual Post BestAnswerPost { get; set; }
         public virtual Post OpeningPost { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }
     }

@@ -19,7 +19,7 @@ namespace MvcApplicationDatabase.Models
             this.Questions = new HashSet<Question>();
         }
     
-        public int Id { get; set; }
+        public int Tag_id { get; set; }
         public string Name { get; set; }
         public string Summary { get; set; }
     
