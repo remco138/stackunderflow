@@ -74,7 +74,7 @@ namespace MvcApplicationDatabase.Controllers
                 db.Posts.Add(question.OpeningPost = new Post()
                 {
                     Question = question,
-                    Content = Request.Form["content"],             
+                    Content = Request.Form["content"],
                 });
                 db.SaveChanges();
                 
