@@ -11,7 +11,6 @@ namespace MvcApplicationDatabase.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class Tag
     {
@@ -21,7 +20,6 @@ namespace MvcApplicationDatabase.Models
         }
     
         public int Tag_id { get; set; }
-        [Required]
         public string Name { get; set; }
         public string Summary { get; set; }
     

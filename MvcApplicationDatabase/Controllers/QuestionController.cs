@@ -108,17 +108,37 @@ namespace MvcApplicationDatabase.Controllers
             return View(question);
         }
 
+
         public ActionResult Details(int id)
         {
             try
             {
                 var question = db.Questions.First(q => q.Question_id == id);
-                return View(question);
+                
+
+                QuestionDetailsFormViewModel model = new QuestionDetailsFormViewModel()
+                    {
+                        Question = question,
+                        BestAnswerPost = question.BestAnswer,
+                        Posts = question.Posts.OrderBy(q => q.DateCreated).Skip(1),
+                        OpeningPost = question.Posts.First()
+                    };
+
+                return View(model);
             }
             catch (InvalidOperationException ex)
             {
+                // Unable to find the question id
                 return RedirectToAction("Index");
             }
+        }
+
+        [HttpPost]
+        public ActionResult Details(QuestionDetailsFormViewModel model)
+        {
+            // TODO: Add the post to the current question
+
+            return View();
         }
 
 

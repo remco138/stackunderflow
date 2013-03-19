@@ -33,10 +33,6 @@
             <End Role="Posts" EntitySet="Posts" />
             <End Role="Comments" EntitySet="Comments" />
           </AssociationSet>
-          <AssociationSet Name="ReplyToPost" Association="StackOverflowDatabaseModel.Store.ReplyToPost">
-            <End Role="Posts" EntitySet="Posts" />
-            <End Role="Posts1" EntitySet="Posts" />
-          </AssociationSet>
           <AssociationSet Name="User_id" Association="StackOverflowDatabaseModel.Store.User_id">
             <End Role="Users" EntitySet="Users" />
             <End Role="Comments" EntitySet="Comments" />
@@ -53,8 +49,8 @@
           <Property Name="Comment_Id" Type="int" Nullable="false" />
           <Property Name="Post_id" Type="int" Nullable="false" />
           <Property Name="User_id" Type="int" Nullable="false" />
-          <Property Name="Content" Type="text" />
-          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="Content" Type="text" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="Votes" Type="int" />
         </EntityType>
         <EntityType Name="Posts">
@@ -62,12 +58,11 @@
             <PropertyRef Name="Post_id" />
           </Key>
           <Property Name="Post_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Question_id" Type="int" />
-          <Property Name="ReplyToPost_id" Type="int" />
-          <Property Name="Content" Type="text" />
+          <Property Name="Question_id" Type="int" Nullable="false" />
+          <Property Name="User_id" Type="int" Nullable="false" />
+          <Property Name="Content" Type="text" Nullable="false" />
           <Property Name="Votes" Type="int" />
-          <Property Name="DateCreated" Type="datetime" />
-          <Property Name="User_id" Type="int" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Questions">
           <Key>
@@ -75,12 +70,12 @@
           </Key>
           <Property Name="Question_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="BestAnswer_id" Type="int" />
-          <Property Name="DateCreated" Type="datetime" />
-          <Property Name="Title" Type="varchar" MaxLength="150" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="Title" Type="varchar" Nullable="false" MaxLength="150" />
           <Property Name="Views" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'D0D1A7492B5773A519C4159791D29A02_O 2012\PROJECTS\GITHUB\STACKUNDERFLOW\MVCAPPLICATIONDATABASE\APP_DATA\STACKOVERFLOWDATABASE.MDF.dbo.Tagged_Questions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'L:\MIJN DOCUMENTEN\VISUAL STUDIO 2012\PROJECTS\GITHUB\STACKUNDERFLOW\MVCAPPLICATIONDATABASE\APP_DATA\STACKOVERFLOWDATABASE.MDF.dbo.Tagged_Questions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="Tagged_Questions">
           <Key>
@@ -116,7 +111,7 @@
           <Property Name="Photo" Type="varchar" MaxLength="255" />
         </EntityType>
         <Association Name="BelongsToQuestion">
-          <End Role="Questions" Type="StackOverflowDatabaseModel.Store.Questions" Multiplicity="0..1" />
+          <End Role="Questions" Type="StackOverflowDatabaseModel.Store.Questions" Multiplicity="1" />
           <End Role="Posts" Type="StackOverflowDatabaseModel.Store.Posts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Questions">
@@ -175,18 +170,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ReplyToPost">
-          <End Role="Posts" Type="StackOverflowDatabaseModel.Store.Posts" Multiplicity="0..1" />
-          <End Role="Posts1" Type="StackOverflowDatabaseModel.Store.Posts" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Posts">
-              <PropertyRef Name="Post_id" />
-            </Principal>
-            <Dependent Role="Posts1">
-              <PropertyRef Name="ReplyToPost_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="User_id">
           <End Role="Users" Type="StackOverflowDatabaseModel.Store.Users" Multiplicity="1" />
           <End Role="Comments" Type="StackOverflowDatabaseModel.Store.Comments" Multiplicity="*" />
@@ -200,7 +183,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="UserWhoPosted">
-          <End Role="Users" Type="StackOverflowDatabaseModel.Store.Users" Multiplicity="0..1" />
+          <End Role="Users" Type="StackOverflowDatabaseModel.Store.Users" Multiplicity="1" />
           <End Role="Posts" Type="StackOverflowDatabaseModel.Store.Posts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
@@ -238,10 +221,6 @@
             <End Role="Posts" EntitySet="Posts" />
             <End Role="Questions" EntitySet="Questions" />
           </AssociationSet>
-          <AssociationSet Name="ReplyToPost" Association="StackOverflowDatabaseModel.ReplyToPost">
-            <End Role="Posts" EntitySet="Posts" />
-            <End Role="Posts1" EntitySet="Posts" />
-          </AssociationSet>
           <AssociationSet Name="UserWhoPosted" Association="StackOverflowDatabaseModel.UserWhoPosted">
             <End Role="Users" EntitySet="Users" />
             <End Role="Posts" EntitySet="Posts" />
@@ -258,8 +237,8 @@
           <Property Name="Comment_Id" Type="Int32" Nullable="false" />
           <Property Name="Post_id" Type="Int32" Nullable="false" />
           <Property Name="User_id" Type="Int32" Nullable="false" />
-          <Property Name="Content" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="Content" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Votes" Type="Int32" />
           <NavigationProperty Name="Post" Relationship="StackOverflowDatabaseModel.Post_id" FromRole="Comments" ToRole="Posts" />
           <NavigationProperty Name="User" Relationship="StackOverflowDatabaseModel.User_id" FromRole="Comments" ToRole="Users" />
@@ -269,17 +248,14 @@
             <PropertyRef Name="Post_id" />
           </Key>
           <Property Name="Post_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="Question_id" Type="Int32" />
-          <Property Name="ReplyToPost_id" Type="Int32" />
-          <Property Name="Content" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="Question_id" Type="Int32" Nullable="false" />
+          <Property Name="User_id" Type="Int32" Nullable="false" />
+          <Property Name="Content" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
           <Property Name="Votes" Type="Int32" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
-          <Property Name="User_id" Type="Int32" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Comments" Relationship="StackOverflowDatabaseModel.Post_id" FromRole="Posts" ToRole="Comments" />
           <NavigationProperty Name="Question" Relationship="StackOverflowDatabaseModel.BelongsToQuestion" FromRole="Posts" ToRole="Questions" />
           <NavigationProperty Name="Questions" Relationship="StackOverflowDatabaseModel.BestAnswerPost_id" FromRole="Posts" ToRole="Questions" />
-          <NavigationProperty Name="Posts1" Relationship="StackOverflowDatabaseModel.ReplyToPost" FromRole="Posts" ToRole="Posts1" />
-          <NavigationProperty Name="Post1" Relationship="StackOverflowDatabaseModel.ReplyToPost" FromRole="Posts1" ToRole="Posts" />
           <NavigationProperty Name="User" Relationship="StackOverflowDatabaseModel.UserWhoPosted" FromRole="Posts" ToRole="Users" />
         </EntityType>
         <EntityType Name="Question">
@@ -288,11 +264,11 @@
           </Key>
           <Property Name="Question_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="BestAnswer_id" Type="Int32" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
-          <Property Name="Title" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="150" Unicode="false" FixedLength="false" />
           <Property Name="Views" Type="Int32" />
           <NavigationProperty Name="Posts" Relationship="StackOverflowDatabaseModel.BelongsToQuestion" FromRole="Questions" ToRole="Posts" />
-          <NavigationProperty Name="Post" Relationship="StackOverflowDatabaseModel.BestAnswerPost_id" FromRole="Questions" ToRole="Posts" />
+          <NavigationProperty Name="BestAnswer" Relationship="StackOverflowDatabaseModel.BestAnswerPost_id" FromRole="Questions" ToRole="Posts" />
           <NavigationProperty Name="Tags" Relationship="StackOverflowDatabaseModel.Tagged_Questions" FromRole="Questions" ToRole="Tags" />
         </EntityType>
         <EntityType Name="Tag">
@@ -348,7 +324,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="BelongsToQuestion">
-          <End Role="Questions" Type="StackOverflowDatabaseModel.Question" Multiplicity="0..1" />
+          <End Role="Questions" Type="StackOverflowDatabaseModel.Question" Multiplicity="1" />
           <End Role="Posts" Type="StackOverflowDatabaseModel.Post" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Questions">
@@ -371,20 +347,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ReplyToPost">
-          <End Role="Posts" Type="StackOverflowDatabaseModel.Post" Multiplicity="0..1" />
-          <End Role="Posts1" Type="StackOverflowDatabaseModel.Post" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Posts">
-              <PropertyRef Name="Post_id" />
-            </Principal>
-            <Dependent Role="Posts1">
-              <PropertyRef Name="ReplyToPost_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="UserWhoPosted">
-          <End Role="Users" Type="StackOverflowDatabaseModel.User" Multiplicity="0..1" />
+          <End Role="Users" Type="StackOverflowDatabaseModel.User" Multiplicity="1" />
           <End Role="Posts" Type="StackOverflowDatabaseModel.Post" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
@@ -422,11 +386,10 @@
               <MappingFragment StoreEntitySet="Posts">
                 <ScalarProperty Name="Post_id" ColumnName="Post_id" />
                 <ScalarProperty Name="Question_id" ColumnName="Question_id" />
-                <ScalarProperty Name="ReplyToPost_id" ColumnName="ReplyToPost_id" />
+                <ScalarProperty Name="User_id" ColumnName="User_id" />
                 <ScalarProperty Name="Content" ColumnName="Content" />
                 <ScalarProperty Name="Votes" ColumnName="Votes" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="User_id" ColumnName="User_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -18,7 +18,7 @@ namespace MvcApplicationDatabase.Models
         public int Post_id { get; set; }
         public int User_id { get; set; }
         public string Content { get; set; }
-        public Nullable<System.DateTime> DateCreated { get; set; }
+        public System.DateTime DateCreated { get; set; }
         public Nullable<int> Votes { get; set; }
     
         public virtual Post Post { get; set; }
