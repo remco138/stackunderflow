@@ -26,10 +26,16 @@ string act = ViewContext.RouteData.Values["action"].ToString().ToLower();
             <li@(ctrl.Equals("home") ? " class=active" : "")>@Html.ActionLink("Home", "Index", "Home")</li>
             <li@(ctrl.Equals("question") && !act.Equals("ask") ? " class=active" : "")>@Html.ActionLink("Questions", "Index", "Question")</li>
             <li@(ctrl.Equals("tag") ? " class=active" : "")>@Html.ActionLink("Tags", "Index", "Tag")</li>
-            <li@(ctrl.Equals("user") ? " class=active" : "")>@Html.ActionLink("Users", "Index", "User")</li>
+            <li@(ctrl.Equals("user") && act.Equals("") ? " class=active" : "")>@Html.ActionLink("Users", "Index", "User")</li>
             <li@(ctrl.Equals("badges") ? " class=active" : "")>@Html.ActionLink("Badges", "Index", "Badges")</li>
             <li@(ctrl.Equals("question") && act.Equals("ask") ? " class=active" : "")>@Html.ActionLink("Ask Question", "Ask", "Question")</li>
-             
+             @if (Session["login"] != null && (bool)Session["login"] == true) { 
+                 <p> sdfasdfa </p>
+             }
+             else {
+                <li@(ctrl.Equals("user") && act.Equals("login") ? " class=active" : "")>@Html.ActionLink("Login", "login", "user")</li@>
+             }
+
             </ul>
         </div>
         <div id="content">
