@@ -97,20 +97,22 @@ namespace MvcApplicationDatabase.Controllers
             try
             {
                 var question = db.Questions.First(q => q.Question_id == id);
-                
+                var posts = question.Posts.OrderBy(q => q.DateCreated).Skip(1);
+
 
                 QuestionDetailsFormViewModel model = new QuestionDetailsFormViewModel()
                     {
                         Question = question,
                         BestAnswerPost = question.BestAnswer,
-                        Posts = question.Posts.OrderBy(q => q.DateCreated).Skip(1),
-                        OpeningPost = question.Posts.First()
+                        OpeningPost = question.Posts.First(),
+                        Posts = posts
                     };
 
                 return View(model);
             }
             catch (InvalidOperationException ex)
             {
+                Console.WriteLine(ex.Message);
                 // Unable to find the question id
                 return RedirectToAction("Index");
             }

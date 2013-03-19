@@ -322,9 +322,11 @@ input[type=submit] {
 }
 
 
-/* Answers / Posts
+/* Answers to questions
 -----------------------------------------------------------*/
 
+
+/* Opening Post*/
 .post-left {
     float: left;
     width: 60px;
@@ -332,6 +334,8 @@ input[type=submit] {
 
 .post-right {
     float: left;
+    width: 660px;
+    min-height: 100px;
 }
 
 
