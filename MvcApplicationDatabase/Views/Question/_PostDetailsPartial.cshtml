@@ -1,0 +1,27 @@
+﻿@model MvcApplicationDatabase.Models.Post
+
+@{}
+
+<div id="@Model.Post_id" class="cf">
+    <div class="post-left">
+        <div class="vote">
+            <input type="hidden" value="@Model.Post_id" />
+            <a class="vote-up-off" title="Click to upvote">up vote</a>
+            <span class="vote-count-post">@Model.Votes</span>
+            <a class="vote-down-off" title="Click to downvote">down vote</a>
+        </div>
+    </div>
+
+    <div class="post-right">
+        <div class="post-text">@Model.Content</div> 
+        <div class="post-information">
+            @if(Model.User != null)
+            {
+                @Model.User.FirstName
+                @Model.User.LastName
+                @Model.User.Photo
+                @Model.User.Votes
+            }
+        </div>
+    </div>
+</div>   

@@ -1,7 +1,6 @@
 ﻿@model MvcApplicationDatabase.ViewModels.QuestionFormViewModel
 @{
     ViewBag.Title = "Ask";
-    Html.EnableClientValidation();
 }
 @Scripts.Render("~/Scripts/Markdown.Converter.js")
 @Scripts.Render("~/Scripts/Markdown.Editor.js")
@@ -19,7 +18,6 @@
                     <tr>
                         <td class="ask-title-cell-key">@Html.LabelFor(q => q.Question.Title)</td>
                         <td class="ask-title-cell-value">@Html.TextBoxFor(q => q.Question.Title, new { @class = "ask-title-field" }) </td>
-                        @Html.ValidationMessageFor(q => q.Question.Title)
                     </tr>
                 </tbody>
             </table>
@@ -29,14 +27,12 @@
             <div class="wmd-panel">
                 <div id="wmd-button-bar"></div>
                 @Html.TextAreaFor(p => p.Post.Content, new { @class = "post-editor wmd-input", @id = "wmd-input" })
-                @Html.ValidationMessageFor(p => p.Post.Content)
             </div>
             <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
         </div>
         
         <div class="form-item">
             <div>@Html.TextBoxFor(t => t.Tag.Name, new { @id = "tagnames", @type = "text", @style = "width: 650px;", @value = "", @tabindex = "103" } )</div>
-            <div>@Html.ValidationMessageFor(t => t.Tag.Name, "Minimaal 1 tag is verplicht")</div>
         </div>
         
         

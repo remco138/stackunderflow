@@ -1,66 +1,52 @@
-﻿@model MvcApplicationDatabase.Models.Question
+﻿@model MvcApplicationDatabase.ViewModels.QuestionDetailsFormViewModel
 
 @{
     ViewBag.Title = "Details";
-
-   // Model.OpeningPost.Content
-    MvcApplicationDatabase.Models.Post openingPost = Model.Posts.First();
 }
+@Scripts.Render("~/Scripts/Markdown.Converter.js")
+@Scripts.Render("~/Scripts/Markdown.Editor.js")
+@Scripts.Render("~/Scripts/Markdown.Sanitizer.js")
 
 <h2>Details</h2>
 
 <div class="question">
-    <legend>@Model.Title</legend>
+    <div class="question-title">@Model.Question.Title</div>
 
+    <div class="display-label">@Html.DisplayNameFor(model => model.Question.BestAnswer_id)</div>
+    <div class="display-field">@Html.DisplayFor(model => model.Question.BestAnswer_id)</div>
 
-    <div class="display-label">@Html.DisplayNameFor(model => model.BestAnswer_id)</div>
-    <div class="display-field">@Html.DisplayFor(model => model.BestAnswer_id)</div>
+    <div class="display-label">@Html.DisplayNameFor(model => model.Question.DateCreated)</div>
+    <div class="display-field">@Html.DisplayFor(model => model.Question.DateCreated)</div>
 
-    <div class="display-label">@Html.DisplayNameFor(model => model.DateCreated)</div>
-    <div class="display-field">@Html.DisplayFor(model => model.DateCreated)</div>
+    <div class="display-label">@Html.DisplayNameFor(model => model.Question.Views)</div>
+    <div class="display-field">@Html.DisplayFor(model => model.Question.Views)</div>   
 
-    <div class="display-label">@Html.DisplayNameFor(model => model.Views)</div>
-    <div class="display-field">@Html.DisplayFor(model => model.Views)</div>   
-
-
+     @Html.Partial("_PostDetailsPartial", Model.OpeningPost)
 
 </div>
 
 <div class="answers">
 
-    <div class="display-label">@Html.Display(openingPost.Content)</div>
-    <div class="display-field">@Html.DisplayName(openingPost.Content)</div> 
+   <div class="answers-header">
+        <h2>@Model.Posts.Count() Answers</h2>
+   </div>
 
-    @foreach(MvcApplicationDatabase.Models.Post post in Model.Posts
-                                                             .OrderBy(p => p.DateCreated)
-                                                             .Skip(1)) // Skip the Opening Post
-    { 
-        <div id="@post.Post_id" class="cf">
-            <div class="post-left">
-                <div class="vote">
-                    <input type="hidden" value="@post.Post_id" />
-                    <a class="vote-up-off" title="Click to upvote">up vote</a>
-                    <span class="vote-count-post">@post.Votes</span>
-                    <a class="vote-down-off" title="Click to downvote">down vote</a>
-                </div>
-            </div>
 
-            <div class="post-right">
-                <div class="post-text">@post.Content</div> 
-                <div class="post-information">
-                    @post.User.FirstName
-                    @post.User.LastName
-                    @post.User.Photo
-                    @post.User.Votes
-                </div>
-            </div>
-        </div>    
+    @foreach(MvcApplicationDatabase.Models.Post post in Model.Posts) // Skip the Opening Post
+    {
+        @Html.Partial("_PostDetailsPartial", post) 
     }
 
-    @Session["login"].ToString() 
+    <form>
+        <div class="wmd-panel">
+            <div id="wmd-button-bar"></div>
+            <textarea class="post-editor wmd-input" id="wmd-input" name="post-text"></textarea>
+        </div>
+        <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
+
+        <input type="submit" id="submit-button"  value="Post Your Answer" tabindex="120">
+    </form>
 
 </div>
 
-<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>
+@Scripts.Render("~/Scripts/runMarkdown.js")

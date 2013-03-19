@@ -11,7 +11,6 @@ namespace MvcApplicationDatabase.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class Post
     {
@@ -19,23 +18,18 @@ namespace MvcApplicationDatabase.Models
         {
             this.Comments = new HashSet<Comment>();
             this.Questions = new HashSet<Question>();
-            this.Posts1 = new HashSet<Post>();
         }
     
         public int Post_id { get; set; }
-        public Nullable<int> Question_id { get; set; }
-        public Nullable<int> ReplyToPost_id { get; set; }
-        [Required]
+        public int Question_id { get; set; }
+        public int User_id { get; set; }
         public string Content { get; set; }
         public Nullable<int> Votes { get; set; }
-        public Nullable<System.DateTime> DateCreated { get; set; }
-        public Nullable<int> User_id { get; set; }
+        public System.DateTime DateCreated { get; set; }
     
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual Question Question { get; set; }
         public virtual ICollection<Question> Questions { get; set; }
-        public virtual ICollection<Post> Posts1 { get; set; }
-        public virtual Post Post1 { get; set; }
         public virtual User User { get; set; }
     }
 }
