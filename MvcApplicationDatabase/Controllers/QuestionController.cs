@@ -108,6 +108,7 @@ namespace MvcApplicationDatabase.Controllers
                     };
 
                 return View(model);
+               
             }
             catch (InvalidOperationException ex)
             {
