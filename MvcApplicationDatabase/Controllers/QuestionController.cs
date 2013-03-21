@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
-
+using MarkdownSharp;
 
 namespace MvcApplicationDatabase.Controllers
 {
@@ -65,12 +65,13 @@ namespace MvcApplicationDatabase.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult Ask(QuestionFormViewModel vm)
         {
+            Markdown md = new Markdown();
             if (ModelState.IsValid)
             {
                 vm.Question.DateCreated = DateTime.Now;
                 vm.Question.Posts.Add(new Post()
                 {
-                    Content = Server.HtmlEncode(Request.Form["Post.Content"]),
+                    Content = md.Transform(Request.Form["Post.Content"]),
                     User_id = 1,    // id has to come from session
                     DateCreated = DateTime.Now,
                 });         

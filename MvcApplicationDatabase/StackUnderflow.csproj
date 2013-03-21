@@ -129,6 +129,8 @@
     <Compile Include="Controllers\StaticContentController.cs" />
     <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Extra\Escapes.cs" />
+    <Compile Include="Extra\Markdown.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
