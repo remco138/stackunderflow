@@ -21,7 +21,7 @@
     <div class="display-label">@Html.DisplayNameFor(model => model.Question.Views)</div>
     <div class="display-field">@Html.DisplayFor(model => model.Question.Views)</div>   
 
-     @Html.Partial("_PostDetailsPartial", Model.OpeningPost)
+    @Html.Partial("_PostDetailsPartial", Model.OpeningPost)
 
 </div>
 
@@ -36,16 +36,14 @@
     {
         @Html.Partial("_PostDetailsPartial", post) 
     }
-
-    <form>
-        <div class="wmd-panel">
-            <div id="wmd-button-bar"></div>
-            <textarea class="post-editor wmd-input" id="wmd-input" name="post-text"></textarea>
-        </div>
-        <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
-
-        <input type="submit" id="submit-button"  value="Post Your Answer" tabindex="120">
-    </form>
+    @if ((Session["login"] == null || !(bool)Session["Login"]))
+    {
+        <br />
+        <h2>You must login to give an answer!</h2>
+    }
+    else {
+        @Html.Partial("_Editor");
+    }
 
 </div>
 

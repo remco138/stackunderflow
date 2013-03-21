@@ -55,9 +55,10 @@ namespace MvcApplicationDatabase.Controllers
             return View("Index", questionList);
         }
 
-
         public ActionResult Ask()
         {
+            if (Session["login"] == null || !(bool)Session["Login"])
+                return RedirectToAction("login", "user", new { auth_error = 1 });
             return View();
         }
 
@@ -110,7 +111,7 @@ namespace MvcApplicationDatabase.Controllers
             {
                 var question = db.Questions.First(q => q.Question_id == id);
                 var posts = question.Posts.OrderBy(q => q.DateCreated).Skip(1);
-
+                ViewBag.Login = Session["login"];
                 QuestionDetailsFormViewModel model = new QuestionDetailsFormViewModel()
                     {
                         Question = question,
@@ -142,7 +143,6 @@ namespace MvcApplicationDatabase.Controllers
         public ActionResult Edit(int id)
         {
             var question = db.Questions.Single(q => q.Question_id == id);
-
             return View(question);
         }
 

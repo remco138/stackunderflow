@@ -289,6 +289,11 @@
     <Content Include="Views\Question\Edit.cshtml" />
     <Content Include="Views\Question\Details.cshtml" />
     <Content Include="Views\Question\_PostDetailsPartial.cshtml" />
+    <Content Include="Views\Shared\NotAllowed.cshtml" />
+    <Content Include="Views\Shared\_NotAllowed.cshtml" />
+    <Content Include="Views\Question\_Editor.cshtml" />
+    <Content Include="Views\User\logout.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\js\" />

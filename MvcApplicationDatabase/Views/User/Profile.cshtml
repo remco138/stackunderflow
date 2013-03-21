@@ -1,0 +1,47 @@
+﻿@model MvcApplicationDatabase.Models.User
+
+@{
+    ViewBag.Title = "Profile";
+}
+
+<h2>Profile</h2>
+<fieldset>
+
+    <legend>User</legend>
+
+    <div class="UserControl_ProfileContainer">
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.Photo)
+        </div>
+        <div class="display-field">
+       <img src="@Url.Content(ViewBag.PhotoURL)" />
+    </div>
+    </div>
+
+    <div class="UserControl_ProfileContainer">
+         <p class="UserControl_Title">Account information.</p>
+        
+        <div class="display-label">
+             UserName:  @Html.DisplayFor(model => model.Username)
+        </div>
+        <div class="display-label">
+             First Name: @Html.DisplayFor(model => model.FirstName)
+        </div>
+
+        <div class="display-label">
+             Last Name:  @Html.DisplayFor(model => model.LastName)
+        </div>
+
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.Email)  @Html.DisplayFor(model => model.Email)
+        </div>
+
+
+        <div class="display-label">
+             Votes:  @Html.DisplayFor(model => model.Votes)
+        </div>
+
+     </div>
+
+</fieldset>
+
