@@ -70,6 +70,8 @@ namespace MvcApplicationDatabase.Controllers
                 vm.Question.Posts.Add(new Post()
                 {
                     Content = Server.HtmlEncode(Request.Form["Post.Content"]),
+                    User_id = 1,    // id has to come from session
+                    DateCreated = DateTime.Now,
                 });         
                 
                 // Was unable to add Tags, but fixed this by following the steps under 'Issues With Views': http://oyonti.wordpress.com/2011/05/26/unable-to-update-the-entityset-because-it-has-a-definingquery/
