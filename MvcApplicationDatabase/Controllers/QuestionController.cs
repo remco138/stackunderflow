@@ -58,7 +58,7 @@ namespace MvcApplicationDatabase.Controllers
         public ActionResult Ask()
         {
             if (Session["login"] == null || !(bool)Session["Login"])
-                return View("NotAllowed");
+                return RedirectToAction("login", "user", new { auth_error = 1 });
             return View();
         }
 

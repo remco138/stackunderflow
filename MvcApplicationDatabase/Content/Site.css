@@ -3,7 +3,9 @@
 * { margin: 0; padding: 0; }
 
 .clear { clear: both; }
-
+.error {
+    color: red;
+}
 /**
  * For modern browsers
  * 1. The space content is one way to avoid an Opera bug when the
@@ -136,23 +138,23 @@ a:visited { color: #4a6b82; }
 
 #navigation { 
     margin-top: 16px; 
-    width: 100%;
+    text-align: center;
     height: 30px;
 }
-#navigation ul { list-style-type: none; width: 490px; margin: 0 auto; height: 30px; }
+#navigation ul { text-align: center; list-style-type: none; height: 30px; }
 #navigation ul li {
-    float: left;
+    display: inline;
+    margin: -2px;
     background: #666;
     border-right: 1px solid #fff;
-    height: 30px;
+    padding: 5px;
 }
 /*navigation ul li:last-child { background: green; float: right; }*/
 #navigation ul li a {
     color: #fff;
     text-decoration: none;
     font-size: 16px;
-    padding: 0 8px 0 8px;
-    line-height: 30px;
+    padding: 5px;
 }
 #navigation ul li:hover,#navigation ul li.active { background: #ff9900; }
 
@@ -439,7 +441,7 @@ input[type=submit] {
 }
 
 .tag-excerpt {
-    color: #888;     
+    color: #888;
 }
 
 /* Tabs

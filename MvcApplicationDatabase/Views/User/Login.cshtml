@@ -2,9 +2,12 @@
 
 @{
     ViewBag.Title = "Login";
+    bool auth_error = Request["auth_error"] == null ? false : true;
 }
 
-
+@if(auth_error) {
+    @Html.Partial("_NotAllowed");
+}
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
 
