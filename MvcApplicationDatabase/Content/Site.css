@@ -660,5 +660,9 @@ width: 660px;
 
 .UserControl_CenterButton {
     clear:both;
-    padding-left: 400px;
+    text-align: center;
+}
+
+.UserControl_LoginContainer {
+    text-align: center;
 }

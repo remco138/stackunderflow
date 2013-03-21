@@ -1,0 +1,58 @@
+﻿@model MvcApplicationDatabase.Models.User
+
+@{
+    ViewBag.Title = "Profile";
+}
+
+<h2>Profile</h2>
+<fieldset>
+
+    <legend>User</legend>
+
+
+    <div class="display-label">
+         First Name:
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FirstName)
+    </div>
+
+    <div class="display-label">
+         Last Name:
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LastName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Email)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Email)
+    </div>
+
+    <div class="display-label">
+         Votes:
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Votes)
+    </div>
+
+    <div class="display-label">
+         UserName:
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Username)
+    </div>
+
+    <div class="display-label">
+         Profile Pic
+    </div>
+    <div class="display-field">
+       <img src="@Url.Content("~/Content/themes/layout/photo.jpg")" />
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id=Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

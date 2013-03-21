@@ -170,6 +170,7 @@
     <Content Include="App_Data\StackOverflowDatabase_log.ldf">
       <DependentUpon>StackOverflowDatabase.mdf</DependentUpon>
     </Content>
+    <Content Include="Content\themes\layout\photo.jpg" />
     <Content Include="Scripts\Markdown.Converter.js" />
     <Content Include="Scripts\Markdown.Editor.js" />
     <Content Include="Scripts\Markdown.Sanitizer.js" />
@@ -289,6 +290,9 @@
     <Content Include="Views\Question\Edit.cshtml" />
     <Content Include="Views\Question\Details.cshtml" />
     <Content Include="Views\Question\_PostDetailsPartial.cshtml" />
+    <Content Include="Views\User\Details.cshtml" />
+    <Content Include="Views\User\ProfileAdmin.cshtml" />
+    <Content Include="Views\User\Profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\js\" />

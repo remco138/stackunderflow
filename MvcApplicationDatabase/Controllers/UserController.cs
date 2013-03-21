@@ -23,6 +23,19 @@ namespace MvcApplicationDatabase.Controllers
 
         public ActionResult Details(int id)
         {
+            var user = db.Users.First(u => u.User_id == id);
+            if ((bool)Session["login"])
+            {
+                if ((int)Session["ID"] == id)
+                {
+                    return View("ProfileAdmin", user);
+                }
+                else
+                {
+                    ViewBag.wakka = (int)Session["ID"];
+                    return View("Profile", user);
+                }
+            }
             return View();
         }
 
@@ -89,8 +102,7 @@ namespace MvcApplicationDatabase.Controllers
         public ActionResult Login(User user)
         {
             bool loginCheck = false;
-
-
+            int id = db.Users.Where(u => u.Username == user.Username).Select(u => u.User_id).First();
             foreach (var userlist in db.Users)
             {
                 if (userlist.Username.Equals(user.Username) && userlist.Password.Equals(user.Password))
@@ -105,7 +117,7 @@ namespace MvcApplicationDatabase.Controllers
                 if ( (bool)Session["login"] == true )
                 {
                     Session.Add("Username", user.Username);
-                    Session.Add("ID", user.User_id);
+                    Session.Add("ID", id);
                     return RedirectToAction("create");
                 }
                 return null;
