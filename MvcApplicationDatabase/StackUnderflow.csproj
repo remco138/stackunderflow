@@ -126,6 +126,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
+    <Compile Include="Controllers\StaticContentController.cs" />
     <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -294,6 +295,7 @@
     <Content Include="Views\Question\_Editor.cshtml" />
     <Content Include="Views\User\logout.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\StaticContent\PageNotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\js\" />
