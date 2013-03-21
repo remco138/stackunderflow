@@ -24,18 +24,34 @@ namespace MvcApplicationDatabase.Controllers
         public ActionResult Details(int id)
         {
             var user = db.Users.First(u => u.User_id == id);
-            if ((bool)Session["login"])
+            string photoURL;
+            try
             {
-                if ((int)Session["ID"] == id)
+
+                if ((bool)Session["login"])
                 {
-                    return View("ProfileAdmin", user);
-                }
-                else
-                {
-                    ViewBag.wakka = (int)Session["ID"];
-                    return View("Profile", user);
+                    if (user.Photo == null)
+                    {
+                        photoURL = "~/Content/themes/layout/photo.jpg";
+                    }
+                    else
+                    {
+                        photoURL = "~/Content/themes/layout/profilephoto/" + user.User_id.ToString() + ".jpg";
+                    }
+                    ViewBag.PhotoURL = photoURL;
+
+                    if ((int)Session["ID"] == id)
+                    {
+                        return View("ProfileAdmin", user);
+                    }
+                    else
+                    {
+                        ViewBag.wakka = (int)Session["ID"];
+                        return View("Profile", user);
+                    }
                 }
             }
+            catch (Exception ex) { }
             return View();
         }
 
@@ -151,6 +167,12 @@ namespace MvcApplicationDatabase.Controllers
             {
                 return View();
             }
+        }
+
+        public ActionResult logout()
+        {
+            Session["login"] = false;
+            return View("login");
         }
     }
 }
