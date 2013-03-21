@@ -77,12 +77,22 @@ namespace MvcApplicationDatabase.Controllers
                 
                 // Was unable to add Tags, but fixed this by following the steps under 'Issues With Views': http://oyonti.wordpress.com/2011/05/26/unable-to-update-the-entityset-because-it-has-a-definingquery/
                 //
-                var tagNames = Request.Form["Tag.Name"].Split(' ');
-                var tagList = db.Tags.Where(t => tagNames.Contains(t.Name)).ToList(); // Find existing tags in database
+                var tagNames = Request.Form["Tag.Name"].Split(" ,".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
-                foreach (Tag tag in tagList)
+                foreach (var t in tagNames)
                 {
-                    vm.Question.Tags.Add(tag);
+                    if (db.Tags.Where(q => q.Name == t).Count() == 0) //More elegant use of extensions goes here
+                    {
+                        vm.Question.Tags.Add(new Tag()
+                        {
+                            Name = t,
+                            Summary = "Requires summary",
+                        });
+                    }
+                    else
+                    {
+                        vm.Question.Tags.Add(db.Tags.Where(q => q.Name == t).ToList()[0]);
+                    }
                 }
 
                 db.Questions.Add(vm.Question);
