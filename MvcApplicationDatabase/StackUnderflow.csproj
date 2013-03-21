@@ -292,7 +292,6 @@
     <Content Include="Views\Shared\NotAllowed.cshtml" />
     <Content Include="Views\Shared\_NotAllowed.cshtml" />
     <Content Include="Views\Question\_Editor.cshtml" />
-    <Content Include="Views\User\logout.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -320,7 +319,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>2571</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:19797/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

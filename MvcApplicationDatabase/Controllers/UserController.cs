@@ -173,7 +173,7 @@ namespace MvcApplicationDatabase.Controllers
         public ActionResult logout()
         {
             Session["login"] = false;
-            return View("login");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

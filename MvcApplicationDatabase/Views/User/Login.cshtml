@@ -33,11 +33,13 @@
         <p class="UserControl_CenterButton">
             <input type="submit" value="Login" />
         </p>
+
+        @Html.ActionLink("No Account? Click here to Register", "Create")
     </fieldset>
 }
 
 <div>
-    @Html.ActionLink("Back to Home", "Index")
+    @Html.ActionLink("Back to Home", "Index", "Home")
 </div>
 
 @section Scripts {
