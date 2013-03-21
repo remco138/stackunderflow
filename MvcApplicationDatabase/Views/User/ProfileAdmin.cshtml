@@ -1,99 +1,49 @@
 ﻿@model MvcApplicationDatabase.Models.User
 
 @{
-    ViewBag.Title = "ProfileAdmin";
+    ViewBag.Title = "Profile";
 }
 
-<h2>ProfileAdmin</h2>
-
+<h2>Profile</h2>
 <fieldset>
+
     <legend>User</legend>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.User_id)
+    <div class="UserControl_ProfileContainer">
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.Photo)
+        </div>
+        <div class="display-field">
+       <img src="@Url.Content(ViewBag.PhotoURL)" />
     </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.User_id)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.FirstName)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.FirstName)
     </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.LastName)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.LastName)
-    </div>
+    <div class="UserControl_ProfileContainer">
+         <p class="UserControl_Title">Account information.</p>
+        
+        <div class="display-label">
+             UserName:  @Html.DisplayFor(model => model.Username)
+        </div>
+        <div class="display-label">
+             First Name: @Html.DisplayFor(model => model.FirstName)
+        </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Password)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Password)
-    </div>
+        <div class="display-label">
+             Last Name:  @Html.DisplayFor(model => model.LastName)
+        </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Email)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Email)
-    </div>
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.Email)  @Html.DisplayFor(model => model.Email)
+        </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.DateCreated)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.DateCreated)
-    </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.PermissionLEvel)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.PermissionLEvel)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Votes)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Votes)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Username)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Username)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Address)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Address)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Zip)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Zip)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Photo)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Photo)
-    </div>
+        <div class="display-label">
+             Votes:  @Html.DisplayFor(model => model.Votes)
+        </div>
+        
+     </div>
+   
 </fieldset>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { /* id=Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+ @Html.ActionLink("This is your profile, Click here to change your information", "Edit/" + Model.User_id.ToString())
+

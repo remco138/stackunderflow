@@ -653,6 +653,7 @@ width: 660px;
 .UserControl_Title {
     font-size: 22px;
     font-style: italic;
+    margin-bottom: 20px;
 }
 
 .UserControl_RegistrationContainer {
@@ -667,4 +668,10 @@ width: 660px;
 
 .UserControl_LoginContainer {
     text-align: center;
+}
+
+.UserControl_ProfileContainer {
+    float: left;
+    padding-left: 150px;
+
 }

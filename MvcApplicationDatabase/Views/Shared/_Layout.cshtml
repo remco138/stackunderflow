@@ -30,7 +30,7 @@ string act = ViewContext.RouteData.Values["action"].ToString().ToLower();
             <li@(ctrl.Equals("badges") ? " class=active" : "")>@Html.ActionLink("Badges", "Index", "Badges")</li>
             <li@(ctrl.Equals("question") && act.Equals("ask") ? " class=active" : "")>@Html.ActionLink("Ask Question", "Ask", "Question")</li>
              @if (Session["login"] != null && (bool)Session["login"] == true) { 
-                 <p> sdfasdfa </p>
+                 <li@(ctrl.Equals("user") && act.Equals("logout") ? " class=active" : "")>@Html.ActionLink("Logout", "logout", "user")</li@>
              }
              else {
                 <li@(ctrl.Equals("user") && act.Equals("login") ? " class=active" : "")>@Html.ActionLink("Login", "login", "user")</li@>

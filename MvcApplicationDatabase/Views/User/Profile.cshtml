@@ -9,50 +9,39 @@
 
     <legend>User</legend>
 
-
-    <div class="display-label">
-         First Name:
+    <div class="UserControl_ProfileContainer">
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.Photo)
+        </div>
+        <div class="display-field">
+       <img src="@Url.Content(ViewBag.PhotoURL)" />
     </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.FirstName)
-    </div>
-
-    <div class="display-label">
-         Last Name:
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.LastName)
     </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Email)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Email)
-    </div>
+    <div class="UserControl_ProfileContainer">
+         <p class="UserControl_Title">Account information.</p>
+        
+        <div class="display-label">
+             UserName:  @Html.DisplayFor(model => model.Username)
+        </div>
+        <div class="display-label">
+             First Name: @Html.DisplayFor(model => model.FirstName)
+        </div>
 
-    <div class="display-label">
-         Votes:
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Votes)
-    </div>
+        <div class="display-label">
+             Last Name:  @Html.DisplayFor(model => model.LastName)
+        </div>
 
-    <div class="display-label">
-         UserName:
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Username)
-    </div>
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.Email)  @Html.DisplayFor(model => model.Email)
+        </div>
 
-    <div class="display-label">
-         Profile Pic
-    </div>
-    <div class="display-field">
-       <img src="@Url.Content("~/Content/themes/layout/photo.jpg")" />
-    </div>
+
+        <div class="display-label">
+             Votes:  @Html.DisplayFor(model => model.Votes)
+        </div>
+
+     </div>
+
 </fieldset>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { /* id=Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
