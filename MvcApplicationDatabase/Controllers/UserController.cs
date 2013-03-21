@@ -85,14 +85,15 @@ namespace MvcApplicationDatabase.Controllers
 
         public ActionResult Edit(int id)
         {
-            return View();
+            var user = db.Users.First(u => u.User_id == id);
+            return View("Edit", user);
         }
 
         //
         // POST: /User/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, User user)
         {
             try
             {

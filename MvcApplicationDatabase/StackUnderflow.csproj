@@ -293,6 +293,7 @@
     <Content Include="Views\Shared\_NotAllowed.cshtml" />
     <Content Include="Views\Question\_Editor.cshtml" />
     <Content Include="Views\User\logout.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\js\" />
