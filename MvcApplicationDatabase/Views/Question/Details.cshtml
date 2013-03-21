@@ -39,7 +39,7 @@
     @if ((Session["login"] == null || !(bool)Session["Login"]))
     {
         <br />
-        <h2>You must login to give an answer!</h2>
+        <h2>You must @Html.ActionLink("login", "login", "user") to give an answer!</h2>
     }
     else {
         @Html.Partial("_Editor");
