@@ -105,7 +105,7 @@ namespace MvcApplicationDatabase.Controllers
                 if ( (bool)Session["login"] == true )
                 {
                     Session.Add("Username", user.Username);
-                    Session.Add("Password", user.Password);
+                    Session.Add("ID", user.User_id);
                     return RedirectToAction("create");
                 }
                 return null;
