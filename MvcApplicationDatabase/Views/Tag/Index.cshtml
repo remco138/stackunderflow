@@ -14,6 +14,7 @@
         //grab the summary element
         var node = document.getElementById(who) //this will find the modified textarea
         var parentNode = node.parentNode;
+        parentNode.parentNode.setAttribute("style", "");
 
         var newNode = document.createElement("div");
         newNode.setAttribute("id", who);
@@ -22,11 +23,10 @@
 
         var modButtons = parentNode.getElementsByClassName('summary-button');
 
-        parentNode.replaceChild(newNode, node);
-        parentNode.removeChild(modButtons[0]);
-        parentNode.removeChild(modButtons[0]);
+        parentNode.parentNode.replaceChild(newNode, parentNode);
+        //parentNode.removeChild(modButtons[0]);
+        //parentNode.removeChild(modButtons[0]);
         newNode.setAttribute("class", "tag-excerpt");
-        parentNode.setAttribute("style", "");
     }
 
     function modSummary(who) {
@@ -36,21 +36,40 @@
 
         parentNode.setAttribute("style", "padding-bottom:40px;");
 
+        var formNode = document.createElement("form");
+        formNode.setAttribute("name", "sumModForm");
+        formNode.setAttribute("action", "/tag/ModifySummary");
+        formNode.setAttribute("method", "GET");
+
         //create textarea and set initial summary text
         var newNode = document.createElement("TEXTAREA");
         newNode.setAttribute("id", who);
-        newNode.setAttribute("rows", "2"); //doesn't seem to do anything
+        newNode.setAttribute("name", "newSummary");
         newNode.setAttribute("style", "resize: none;");
         var newCont = document.createTextNode(node.innerHTML);
         newNode.appendChild(newCont);
 
         //insert buttons
-        var setButton = document.createElement("a");
-        setButton.setAttribute("href", "");
-        setButton.setAttribute("class", "summary-button");
+        var setButton = document.createElement("input");
+        setButton.setAttribute("type", "submit");
+        setButton.setAttribute("class", "modify-button");
+        setButton.setAttribute("value", "Submit");
         var setButtonCont = document.createTextNode("Set");
         setButton.appendChild(setButtonCont);
 
+        var idContainer = document.createElement("input");
+        idContainer.setAttribute("type", "hidden");
+        idContainer.setAttribute("value", who);
+        idContainer.setAttribute("name", "tagId");
+
+        /*
+        var cancelButton = document.createElement("input");
+        cancelButton.setAttribute("type", "submit");
+        cancelButton.setAttribute("class", "modify-button");
+        cancelButton.setAttribute("value", "Submit");
+        var cancelButtonCont = document.createTextNode("Set");
+        cancelButton.appendChild(cancelButtonCont);
+        */
         var cancelButton = document.createElement("a");
         cancelButton.setAttribute("href", "javascript:restoreSummary('" + who + "')");
         cancelButton.setAttribute("class", "summary-button");
@@ -58,9 +77,11 @@
         cancelButton.appendChild(cancelButtonCont);
 
         //replace it
-        parentNode.replaceChild(newNode, node);
-        parentNode.appendChild(setButton);
-        parentNode.appendChild(cancelButton);
+        formNode.appendChild(newNode);
+        formNode.appendChild(idContainer);
+        formNode.appendChild(setButton);
+        formNode.appendChild(cancelButton);
+        parentNode.replaceChild(formNode, node);
     }
 </script>
 
