@@ -25,16 +25,21 @@
         parentNode.replaceChild(newNode, node);
         parentNode.removeChild(modButtons[0]);
         parentNode.removeChild(modButtons[0]);
+        newNode.setAttribute("class", "tag-excerpt");
+        parentNode.setAttribute("style", "");
     }
+
     function modSummary(who) {
         //grab the summary element
         var node = document.getElementById(who)
         var parentNode = node.parentNode;
 
+        parentNode.setAttribute("style", "padding-bottom:40px;");
+
         //create textarea and set initial summary text
         var newNode = document.createElement("TEXTAREA");
         newNode.setAttribute("id", who);
-        newNode.setAttribute("rows", "3"); //doesn't seem to do anything
+        newNode.setAttribute("rows", "2"); //doesn't seem to do anything
         newNode.setAttribute("style", "resize: none;");
         var newCont = document.createTextNode(node.innerHTML);
         newNode.appendChild(newCont);
