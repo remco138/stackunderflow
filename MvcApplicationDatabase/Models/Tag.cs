@@ -22,6 +22,7 @@ namespace MvcApplicationDatabase.Models
         public int Tag_id { get; set; }
         public string Name { get; set; }
         public string Summary { get; set; }
+        public Nullable<bool> Active { get; set; }
     
         public virtual ICollection<Question> Questions { get; set; }
     }

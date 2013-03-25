@@ -135,7 +135,7 @@ namespace MvcApplicationDatabase.Controllers
         }
 
         [HttpPost]
-        public ActionResult Details(QuestionDetailsFormViewModel model)
+        public ActionResult Details(Post model)
         {
             // TODO: Add the post to the current question
 

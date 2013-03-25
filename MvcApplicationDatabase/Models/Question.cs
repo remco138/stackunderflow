@@ -26,6 +26,7 @@ namespace MvcApplicationDatabase.Models
         public string Title { get; set; }
         public int Views { get; set; }
         public string Reported { get; set; }
+        public Nullable<bool> Active { get; set; }
     
         public virtual ICollection<Post> Posts { get; set; }
         public virtual Post BestAnswer { get; set; }
