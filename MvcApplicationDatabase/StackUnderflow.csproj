@@ -173,6 +173,8 @@
     <Content Include="App_Data\StackOverflowDatabase_log.ldf">
       <DependentUpon>StackOverflowDatabase.mdf</DependentUpon>
     </Content>
+    <Content Include="Content\themes\layout\downvote.gif" />
+    <Content Include="Content\themes\layout\upvote.gif" />
     <Content Include="Scripts\Markdown.Converter.js" />
     <Content Include="Scripts\Markdown.Editor.js" />
     <Content Include="Scripts\Markdown.Sanitizer.js" />

@@ -38,6 +38,10 @@
     display: none;
 }
 
+.bottom_border {
+    border-bottom: 1px solid #ccc;
+}
+
 /* text shizzle*/
 .post-text p {
     margin-bottom: 10px;
@@ -170,7 +174,42 @@ a:visited { color: #4a6b82; }
 #content {
     margin-top: 15px;
 }
+#content h1.title {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+#content h1.title a {
+    color: #000;
+}
 #content h2.title { margin-bottom: -30px; }
+#content .question, #content .answers {
+    width: 730px;
+}
+#content .post_vote {
+    float: left;
+    text-align: center;
+    width: 60px;
+    font-size: 16px;
+    font-weight: bold;
+}
+#content .post_vote p:last-child {
+    margin-top: 6px;
+}
+#content .post {
+    float: left;
+}
+#content .question_tags {
+    float: left;
+    margin-top: 10px;
+}
+#content .post_user {
+    float: right;
+    width: 190px;
+    height: 70px;
+    background: #ddd;
+    padding: 5px;
+}
 
 
 /* QuestionList (bijna alles van stackoverflow.com)
