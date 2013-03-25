@@ -15,7 +15,10 @@ namespace MvcApplicationDatabase.Controllers
 
         public ActionResult Index()
         {
-            return View();
+
+                    var all = db.Users.Take(50);
+                    return View(all);
+
         }
 
         //
@@ -27,7 +30,6 @@ namespace MvcApplicationDatabase.Controllers
             string photoURL;
             try
             {
-
                 if ((bool)Session["login"])
                 {
                     if (user.Photo == null)
@@ -51,8 +53,8 @@ namespace MvcApplicationDatabase.Controllers
                     }
                 }
             }
-            catch (Exception ex) { }
-            return View();
+            catch (Exception ex) { return View("login"); }
+            return View("login");
         }
 
         //
@@ -85,8 +87,12 @@ namespace MvcApplicationDatabase.Controllers
 
         public ActionResult Edit(int id)
         {
-            var user = db.Users.First(u => u.User_id == id);
-            return View("Edit", user);
+            if ((bool)Session["login"])
+            {
+                var user = db.Users.First(u => u.User_id == id);
+                return View("Edit", user);
+            }
+            else { return View("login"); }
         }
 
         //
@@ -97,14 +103,19 @@ namespace MvcApplicationDatabase.Controllers
         {
             try
             {
-                // TODO: Add update logic here
+                if (ModelState.IsValid)
+                {
+                    db.Entry(user).State = System.Data.EntityState.Modified;
+                    db.SaveChanges();
 
-                return RedirectToAction("index");
+                    return View("index", "home");
+                }
             }
             catch
             {
-                return View();
+                
             }
+            return View();
         }
 
         public ActionResult Login()
@@ -135,7 +146,7 @@ namespace MvcApplicationDatabase.Controllers
                 {
                     Session.Add("Username", user.Username);
                     Session.Add("ID", id);
-                    return RedirectToAction("create");
+                    return RedirectToAction("index", "home");
                 }
                 return null;
             }

@@ -9,7 +9,17 @@
 <h2>@ViewBag.Title</h2>
 
 
+ @if (ViewBag.isAdmin == true)
+ {//text tag is to escape asp.net block, it won' be output
+     <text> 
 <script type="text/javascript">
+     
+    function deleteTag(who) {
+        if (confirm('Are you sure?')) {
+            //
+            window.location = "/tag/Delete/" + who.substr(7);
+        }
+    }
     function restoreSummary(who) {
         //grab the summary element
         var node = document.getElementById(who) //this will find the modified textarea
@@ -38,7 +48,7 @@
 
         var formNode = document.createElement("form");
         formNode.setAttribute("name", "sumModForm");
-        formNode.setAttribute("action", "/tag/ModifySummary");
+        formNode.setAttribute("action", "/tag/ModifySummary/" + who.substr(7));
         formNode.setAttribute("method", "GET");
 
         //create textarea and set initial summary text
@@ -46,7 +56,7 @@
         newNode.setAttribute("id", who);
         newNode.setAttribute("name", "newSummary");
         newNode.setAttribute("style", "resize: none;");
-        var newCont = document.createTextNode(node.innerHTML);
+        var newCont = document.createTextNode(node.innerHTML.trim());
         newNode.appendChild(newCont);
 
         //insert buttons
@@ -62,14 +72,6 @@
         idContainer.setAttribute("value", who);
         idContainer.setAttribute("name", "tagId");
 
-        /*
-        var cancelButton = document.createElement("input");
-        cancelButton.setAttribute("type", "submit");
-        cancelButton.setAttribute("class", "modify-button");
-        cancelButton.setAttribute("value", "Submit");
-        var cancelButtonCont = document.createTextNode("Set");
-        cancelButton.appendChild(cancelButtonCont);
-        */
         var cancelButton = document.createElement("a");
         cancelButton.setAttribute("href", "javascript:restoreSummary('" + who + "')");
         cancelButton.setAttribute("class", "summary-button");
@@ -83,7 +85,9 @@
         formNode.appendChild(cancelButton);
         parentNode.replaceChild(formNode, node);
     }
-</script>
+</script>
+</text>
+}
 
 
 <div class="tag-list">
@@ -93,10 +97,14 @@
             <a href="@Html.Raw("/question/tagged/" + Uri.EscapeDataString(t.Name.ToLower()))" class="post-tag">@t.Name</a>  
             <span class="tag-excerpt"> 
                 #@t.Questions.Count
-                <a href="javascript:modSummary('summary @t.Tag_id')">Edit</a>
+                @if(ViewBag.isAdmin == true)
+                {
+                        @:<a href="javascript:modSummary('@String.Format("summary{0}", @t.Tag_id)')">Edit</a>
+                        @:<a href="javascript:deleteTag('@String.Format("summary{0}", @t.Tag_id)')"> Edit</a>
+                }
                 <br /> </span>
-            <div class ="tag-excerpt" id="summary @t.Tag_id">
-@t.Summary
+            <div class ="tag-excerpt" id="@String.Format("summary{0}",@t.Tag_id)">
+                @t.Summary
             </div>
         </div>
         

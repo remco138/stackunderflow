@@ -119,11 +119,11 @@ namespace MvcApplicationDatabase.Controllers
                         Question = question,
                         BestAnswerPost = question.BestAnswer,
                         OpeningPost = question.Posts.First(),
-                        Posts = posts
+                        Posts = posts,
                     };
 
                 var row = db.Questions.Where(q => q.Question_id == id).Single();
-                row.Views = row.Views == null ? 1 : row.Views + 1;
+                row.Views++;
                 db.SaveChanges();
                 return View(model);
                
