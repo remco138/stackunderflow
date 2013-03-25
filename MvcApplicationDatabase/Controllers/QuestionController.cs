@@ -30,6 +30,12 @@ namespace MvcApplicationDatabase.Controllers
                                            .Skip(page * pagesize)
                                            .Take(pagesize);
                     break;
+                case "reported":
+                    questionList = db.Questions.OrderByDescending(q => q.Views)
+                                           .Where(q => q.Reported != null)
+                                           .Skip(page * pagesize)
+                                           .Take(pagesize);
+                    break;
                 default:
                     questions = db.Questions.OrderByDescending(q => q.DateCreated)
                                            .Skip(page * pagesize)
@@ -223,6 +229,26 @@ namespace MvcApplicationDatabase.Controllers
                     row.Votes--;
                 db.SaveChanges();
             }
+        }
+
+        public ActionResult Delete(int id = -1)
+        {
+            bool isAdmin = (Session["username"] != null && db.Users.Any(q => q.Username == Session["username"].ToString()));
+
+            if (isAdmin)
+            {
+                try
+                {
+                    db.Questions.First(t => t.Question_id == id).Active = false;
+                }
+                catch (Exception e)
+                {
+                    return Content(e.Message);
+                }
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
         }
 
     }

@@ -240,6 +240,15 @@ a:visited { color: #4a6b82; }
     width: 730px;
     float: left;
 }
+.question-summary-innactive {
+    border-bottom: 1px solid #eaeaea;
+    background-color: lightgrey;
+    overflow: hidden;
+    padding: 11px 0px;
+    width: 730px;
+    float: left;
+}
+
 .cp {
     background: #eee;
     width: 80px;
@@ -535,6 +544,32 @@ input[type=submit] {
     padding: 0px 11px 0px 11px;
 }
 
+.reports-tab {
+    background: #ffdcdc;
+    color:#ffd8d8;
+    background-color:#ffeded;
+    border-bottom:1px solid #b3cee1;
+    border-right:1px solid #b3cee1;
+    padding:4px 4px 3px 4px;
+    margin:2px 2px 2px 0;
+    text-decoration:none;
+    font-size:90%;
+    line-height:2.4;
+    white-space:nowrap;
+}
+
+.exclamation-mark {
+    font-weight:900;
+    color: red;
+    font-family: sans-serif;
+    font-size:xx-large;
+
+}
+.admin-menu { 
+    float:right;
+    margin-right:50px;
+    background-color: #FF3334;
+}
 
 /* MARKDOWN EDITOR CSS
 -----------------------------------------------------------*/
