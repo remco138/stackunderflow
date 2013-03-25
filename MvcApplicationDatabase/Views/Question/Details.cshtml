@@ -2,14 +2,35 @@
 
 @{
     ViewBag.Title = "Details";
+    string[] OpeningPost = Model.GetUserDetails(Model.OpeningPost.User_id);
 }
 @Scripts.Render("~/Scripts/Markdown.Converter.js")
 @Scripts.Render("~/Scripts/Markdown.Editor.js")
 @Scripts.Render("~/Scripts/Markdown.Sanitizer.js")
-
-<h2>Details</h2>
-
 <div class="question">
+    <h1 class="title">@Html.ActionLink(Model.Question.Title, Model.Question.Question_id.ToString(), "question")</h1>
+    <div class="post_vote">
+        <p><a href="#"><img src="~/Content/themes/layout/upvote.gif" alt="upvote" /></a></p>
+        <p>@Model.OpeningPost.Votes</p>
+        <p><a href="#"><img src="~/Content/themes/layout/downvote.gif" alt="upvote" /></a></p>
+    </div>
+    <div class="post_content">
+        @Html.Raw(Model.OpeningPost.Content)
+    </div>
+    <div class="question_tags">
+        @foreach (var tag in Model.Question.Tags)
+        {
+            @Html.ActionLink(@tag.Name, @tag.Name.ToLower(), new { controller = "question/tagged" }, new { @class = "post-tag", })
+        }
+    </div>
+    <div class="clear"></div>
+    <div class="post_user">
+        <p>asked @Model.OpeningPost.DateCreated.ToString("dd MMM \\a\\t HH:mm")</p>
+        <p>@Html.ActionLink(OpeningPost[0], "details/" + Model.OpeningPost.User_id, "users")</p>
+    </div>
+    <div class="clear"></div>
+</div>
+<!--<div class="question">
     <div class="question-title">@Model.Question.Title</div>
 
     <div class="display-label">@Html.DisplayNameFor(model => model.Question.BestAnswer_id)</div>
@@ -23,12 +44,12 @@
 
     @Html.Partial("_PostDetailsPartial", Model.OpeningPost)
 
-</div>
+</div>-->
 
 <div class="answers">
 
    <div class="answers-header">
-        <h2>@Model.Posts.Count() Answers</h2>
+        <h2 class="bottom_border">@Model.Posts.Count() Answers</h2>
    </div>
 
 
