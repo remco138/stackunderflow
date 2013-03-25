@@ -186,9 +186,12 @@ a:visited { color: #4a6b82; }
 #content .question {
     float: left;
     margin-top: 10px;
-}
-#content .question, #content .answers {
     width: 730px;
+    border-bottom: 1px solid #ccc;
+}
+#content .answers {
+    width: 730px;
+    margin-top: -25px;
 }
 #content .post_vote {
     float: left;

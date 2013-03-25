@@ -29,7 +29,7 @@
         <p>asked @Model.OpeningPost.DateCreated.ToString("dd MMM \\a\\t HH:mm")</p>
         <p>
             <img class="avatar" src="~/Content/themes/layout/@OpeningPost[1]" alt="avatar" width="40px" height="40px" />
-            @Html.ActionLink(OpeningPost[0], "details/" + Model.OpeningPost.User_id, "users")
+            @Html.ActionLink(OpeningPost[0], "details/" + Model.OpeningPost.User_id, "user")
         </p>
     </div>
     <div class="clear"></div>
@@ -50,7 +50,7 @@
 
     @foreach(MvcApplicationDatabase.Models.Post post in Model.Posts) // Skip the Opening Post
     {
-    <div id="post_@post.Post_id" class="question">
+    <div id="post_@post.Post_id" class="question post_answer">
         <div class="post_vote">
             <p><a href="#" id="upvote_@post.Post_id" title="This question shows research effort; it is useful and clear (click again to undo)" @(Session["login"] != null ? "onclick=upvote(" + post.Post_id + ");" : "onclick=notloggedin()")><img src="~/Content/themes/layout/upvote.gif" alt="upvote" /></a></p>
             <p id="totalvote_@post.Post_id">@post.Votes</p>
@@ -65,7 +65,7 @@
             <p>
                 @{ string[] userdetails = Model.GetUserDetails(post.User_id); }
                 <img class="avatar" src="~/Content/themes/layout/@userdetails[1]" alt="avatar" width="40px" height="40px" />
-                @Html.ActionLink(userdetails[0], "details/" + post.User_id, "users")
+                @Html.ActionLink(userdetails[0], "details/" + post.User_id, "user")
             </p>
         </div>
         <div class="clear"></div>
