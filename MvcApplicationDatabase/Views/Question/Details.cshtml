@@ -7,38 +7,13 @@
 @Scripts.Render("~/Scripts/Markdown.Converter.js")
 @Scripts.Render("~/Scripts/Markdown.Editor.js")
 @Scripts.Render("~/Scripts/Markdown.Sanitizer.js")
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#upvote_11").click(function () {
-            var prev = parseInt($("#totalvote_11").text()) + 1;
-            $("#totalvote_11").text(prev);
-            $.ajax({
-                type: "POST",
-                url: "vote?id=11&type=up",
-                success: function (result) {
-                }
-            });
-            return false;
-        });
-        $("#downvote_11").click(function () {
-            var prev = parseInt($("#totalvote_11").text()) - 1;
-            $("#totalvote_11").text(prev);
-            $.ajax({
-                type: "POST",
-                url: "vote?id=11&type=down",
-                success: function (result) {
-                }
-            });
-            return false;
-        });
-    });
-</script>
+@Scripts.Render("~/Scripts/voting.js")
 <div class="question">
     <h1 class="title">@Html.ActionLink(Model.Question.Title, Model.Question.Question_id.ToString(), "question")</h1>
     <div class="post_vote">
-        <p><a href="#" id="upvote_@Model.OpeningPost.Post_id" title="This question shows research effort; it is useful and clear (click again to undo)"><img src="~/Content/themes/layout/upvote.gif" alt="upvote" /></a></p>
+        <p><a href="#" id="upvote_@Model.OpeningPost.Post_id" title="This question shows research effort; it is useful and clear (click again to undo)" @(Session["login"] != null ? "onclick=upvote(" + Model.OpeningPost.Post_id + ");" : "onclick=notloggedin()")><img src="~/Content/themes/layout/upvote.gif" alt="upvote" /></a></p>
         <p id="totalvote_@Model.OpeningPost.Post_id">@Model.OpeningPost.Votes</p>
-        <p><a href="#" id="downvote_@Model.OpeningPost.Post_id" title="This question does not show any research effort; it is unclear or not useful (click again to undo)"><img src="~/Content/themes/layout/downvote.gif" alt="upvote" /></a></p>
+        <p><a href="#" id="downvote_@Model.OpeningPost.Post_id" title="This question does not show any research effort; it is unclear or not useful (click again to undo)" @(Session["login"] != null ? "onclick=downvote(" + Model.OpeningPost.Post_id + ");" : "onclick=notloggedin()")><img src="~/Content/themes/layout/downvote.gif" alt="upvote" /></a></p>
     </div>
     <div class="post_content">
         @Html.Raw(Model.OpeningPost.Content)
@@ -59,7 +34,13 @@
     </div>
     <div class="clear"></div>
 </div>
-
+<div id="toptags" style="margin-top: 0px;">
+    <h2>Recent Tags</h2>
+    @foreach (var tag in ViewBag.RecentTags)
+    {
+       <p><a href="@Html.Raw("/question/tagged/" + Uri.EscapeDataString(tag.Name.ToLower()))" class="post-tag">@tag.Name</a> x @tag.Questions.Count</p> 
+    }
+</div>
 <div class="answers">
 
    <div class="answers-header">
