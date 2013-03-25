@@ -10,5 +10,6 @@ namespace MvcApplicationDatabase.ViewModels
         public virtual IEnumerable<Post> Posts { get; set; }
         public Post OpeningPost { get; set; }
         public Post BestAnswerPost { get; set; }
+        public Post NewAnswer { get; set; }
     }
 }
