@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="StackOverflowDatabaseModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="StackOverflowDatabaseModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="StackOverflowDatabaseModelStoreContainer">
           <EntitySet Name="Comments" EntityType="StackOverflowDatabaseModel.Store.Comments" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Posts" EntityType="StackOverflowDatabaseModel.Store.Posts" store:Type="Tables" Schema="dbo" />
@@ -52,6 +52,7 @@
           <Property Name="Content" Type="text" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="Votes" Type="int" />
+          <Property Name="Reported" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Posts">
           <Key>
@@ -63,6 +64,7 @@
           <Property Name="Content" Type="text" Nullable="false" />
           <Property Name="Votes" Type="int" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="Reported" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Questions">
           <Key>
@@ -75,7 +77,7 @@
           <Property Name="Views" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'L:\MIJN DOCUMENTEN\VISUAL STUDIO 2012\PROJECTS\GITHUB\STACKUNDERFLOW\MVCAPPLICATIONDATABASE\APP_DATA\STACKOVERFLOWDATABASE.MDF.dbo.Tagged_Questions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'C:\USERS\ASDFJKL\DOCUMENTS\PROJECTS\STACKUNDERFLOW\STACKUNDERFLOW\MVCAPPLICATIONDATABASE\APP_DATA\STACKOVERFLOWDATABASE.MDF.dbo.Tagged_Questions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="Tagged_Questions">
           <Key>
@@ -109,6 +111,7 @@
           <Property Name="Address" Type="varchar" MaxLength="50" />
           <Property Name="Zip" Type="varchar" MaxLength="6" />
           <Property Name="Photo" Type="varchar" MaxLength="255" />
+          <Property Name="Bio" Type="text" />
         </EntityType>
         <Association Name="BelongsToQuestion">
           <End Role="Questions" Type="StackOverflowDatabaseModel.Store.Questions" Multiplicity="1" />
@@ -194,8 +197,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="StackOverflowDatabaseModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -242,6 +244,7 @@
           <Property Name="Votes" Type="Int32" />
           <NavigationProperty Name="Post" Relationship="StackOverflowDatabaseModel.Post_id" FromRole="Comments" ToRole="Posts" />
           <NavigationProperty Name="User" Relationship="StackOverflowDatabaseModel.User_id" FromRole="Comments" ToRole="Users" />
+          <Property Type="String" Name="Reported" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Post">
           <Key>
@@ -257,6 +260,7 @@
           <NavigationProperty Name="Question" Relationship="StackOverflowDatabaseModel.BelongsToQuestion" FromRole="Posts" ToRole="Questions" />
           <NavigationProperty Name="Questions" Relationship="StackOverflowDatabaseModel.BestAnswerPost_id" FromRole="Posts" ToRole="Questions" />
           <NavigationProperty Name="User" Relationship="StackOverflowDatabaseModel.UserWhoPosted" FromRole="Posts" ToRole="Users" />
+          <Property Type="String" Name="Reported" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Question">
           <Key>
@@ -298,6 +302,7 @@
           <Property Name="Photo" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Comments" Relationship="StackOverflowDatabaseModel.User_id" FromRole="Users" ToRole="Comments" />
           <NavigationProperty Name="Posts" Relationship="StackOverflowDatabaseModel.UserWhoPosted" FromRole="Users" ToRole="Posts" />
+          <Property Type="String" Name="Bio" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="Post_id">
           <End Role="Posts" Type="StackOverflowDatabaseModel.Post" Multiplicity="1" />
@@ -372,6 +377,7 @@
           <EntitySetMapping Name="Comments">
             <EntityTypeMapping TypeName="StackOverflowDatabaseModel.Comment">
               <MappingFragment StoreEntitySet="Comments">
+                <ScalarProperty Name="Reported" ColumnName="Reported" />
                 <ScalarProperty Name="Comment_Id" ColumnName="Comment_Id" />
                 <ScalarProperty Name="Post_id" ColumnName="Post_id" />
                 <ScalarProperty Name="User_id" ColumnName="User_id" />
@@ -384,6 +390,7 @@
           <EntitySetMapping Name="Posts">
             <EntityTypeMapping TypeName="StackOverflowDatabaseModel.Post">
               <MappingFragment StoreEntitySet="Posts">
+                <ScalarProperty Name="Reported" ColumnName="Reported" />
                 <ScalarProperty Name="Post_id" ColumnName="Post_id" />
                 <ScalarProperty Name="Question_id" ColumnName="Question_id" />
                 <ScalarProperty Name="User_id" ColumnName="User_id" />
@@ -416,6 +423,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="StackOverflowDatabaseModel.User">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Bio" ColumnName="Bio" />
                 <ScalarProperty Name="User_id" ColumnName="User_id" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />

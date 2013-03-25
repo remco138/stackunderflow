@@ -20,5 +20,23 @@ namespace MvcApplicationDatabase.Controllers
             return View(tagList);
         }
 
+
+        public ActionResult ModifySummary()
+        {
+            int tagId = Int32.Parse(Request.QueryString["tagId"].Replace("summary", "").Trim()); //Wish i knew earlier about Trim(), removes all trailing whitespaces
+            string newSummary = Request.QueryString["newSummary"].Trim();
+
+            if (tagId >= 0)
+            {
+                Tag tag = db.Tags.Find(tagId);
+                if (tag != null)
+                {
+                    tag.Summary = newSummary;
+                }
+            }
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
     }
 }

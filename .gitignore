@@ -19,3 +19,5 @@ Thumbs.db
 obj/
 [Rr]elease*/
 _ReSharper*/
+MvcApplicationDatabase/App_Data/StackOverflowDatabase.mdf
+MvcApplicationDatabase/App_Data/StackOverflowDatabase_log.ldf

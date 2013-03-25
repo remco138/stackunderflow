@@ -6,23 +6,85 @@
     @Scripts.Render("~/Scripts/jquery-1.7.1.js")
     @Scripts.Render("~/Scripts/jquery-ui-1.8.20.js")
  
- <script>
-  $(function() {
-      $("#dialog").dialog();
-
-      $(".edit-tag").click(function (e) {
-          $("#dialog").dialog();
-          e.preventDefault();
-      });
-  });
-  </script>
-
-<div id="dialog" hidden title="Basic dialog">
-  <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
-</div>
-
-
 <h2>@ViewBag.Title</h2>
+
+
+<script type="text/javascript">
+    function restoreSummary(who) {
+        //grab the summary element
+        var node = document.getElementById(who) //this will find the modified textarea
+        var parentNode = node.parentNode;
+        parentNode.parentNode.setAttribute("style", "");
+
+        var newNode = document.createElement("div");
+        newNode.setAttribute("id", who);
+        var newCont = document.createTextNode(node.innerHTML);
+        newNode.appendChild(newCont);
+
+        var modButtons = parentNode.getElementsByClassName('summary-button');
+
+        parentNode.parentNode.replaceChild(newNode, parentNode);
+        //parentNode.removeChild(modButtons[0]);
+        //parentNode.removeChild(modButtons[0]);
+        newNode.setAttribute("class", "tag-excerpt");
+    }
+
+    function modSummary(who) {
+        //grab the summary element
+        var node = document.getElementById(who)
+        var parentNode = node.parentNode;
+
+        parentNode.setAttribute("style", "padding-bottom:40px;");
+
+        var formNode = document.createElement("form");
+        formNode.setAttribute("name", "sumModForm");
+        formNode.setAttribute("action", "/tag/ModifySummary");
+        formNode.setAttribute("method", "GET");
+
+        //create textarea and set initial summary text
+        var newNode = document.createElement("TEXTAREA");
+        newNode.setAttribute("id", who);
+        newNode.setAttribute("name", "newSummary");
+        newNode.setAttribute("style", "resize: none;");
+        var newCont = document.createTextNode(node.innerHTML);
+        newNode.appendChild(newCont);
+
+        //insert buttons
+        var setButton = document.createElement("input");
+        setButton.setAttribute("type", "submit");
+        setButton.setAttribute("class", "modify-button");
+        setButton.setAttribute("value", "Submit");
+        var setButtonCont = document.createTextNode("Set");
+        setButton.appendChild(setButtonCont);
+
+        var idContainer = document.createElement("input");
+        idContainer.setAttribute("type", "hidden");
+        idContainer.setAttribute("value", who);
+        idContainer.setAttribute("name", "tagId");
+
+        /*
+        var cancelButton = document.createElement("input");
+        cancelButton.setAttribute("type", "submit");
+        cancelButton.setAttribute("class", "modify-button");
+        cancelButton.setAttribute("value", "Submit");
+        var cancelButtonCont = document.createTextNode("Set");
+        cancelButton.appendChild(cancelButtonCont);
+        */
+        var cancelButton = document.createElement("a");
+        cancelButton.setAttribute("href", "javascript:restoreSummary('" + who + "')");
+        cancelButton.setAttribute("class", "summary-button");
+        var cancelButtonCont = document.createTextNode("Cancel");
+        cancelButton.appendChild(cancelButtonCont);
+
+        //replace it
+        formNode.appendChild(newNode);
+        formNode.appendChild(idContainer);
+        formNode.appendChild(setButton);
+        formNode.appendChild(cancelButton);
+        parentNode.replaceChild(formNode, node);
+    }
+</script>
+
 
 <div class="tag-list">
     @foreach (var t in Model)
@@ -31,11 +93,13 @@
             <a href="@Html.Raw("/question/tagged/" + Uri.EscapeDataString(t.Name.ToLower()))" class="post-tag">@t.Name</a>  
             <span class="tag-excerpt"> 
                 #@t.Questions.Count
-                <a href class="edit-tag" >Edit</a>
-                <br /> 
-                @t.Summary
-            </span>
+                <a href="javascript:modSummary('summary @t.Tag_id')">Edit</a>
+                <br /> </span>
+            <div class ="tag-excerpt" id="summary @t.Tag_id">
+@t.Summary
+            </div>
         </div>
+        
     }
 
     <div class="clear"></div>
