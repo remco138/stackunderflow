@@ -19,7 +19,9 @@
         
         <a href="?sort=reported" class="reports-tab">Reports 
          </a>
-              <span class="exclamation-mark"> !</span>
+            @if(Model.Any(q => q.Reported != null)) {
+                    <span class="exclamation-mark"> ! </span>
+            }
     </div>
 </div>
 <p class="dno">
@@ -28,7 +30,7 @@
 
 <div id="question-list">
     @foreach (var item in Model) {
-    <div class="question-summary" id="question-summary-@item.Question_id">
+    <div class="@((item.Active == true) ? "question-summary" : "question-summary-innactive")" id="question-summary-@item.Question_id">
         <div class="cp">
             <div class="ql_votes">
                 <div class="count">0</div>
@@ -42,8 +44,20 @@
                 <div>@item.Views views</div>
             </div>
         </div>
+        <div class="admin-menu">
+        @if (ViewBag.isAdmin != true)
+        {
+            <span class="">Make inactive: </span>
+            @Html.ActionLink("X", "delete", new { controller = "question", id=item.Question_id }, new { @class = "", })
+        }
+        </div>
         <div class="summary">
-            <h3>@Html.ActionLink(item.Title, item.Question_id.ToString(), "question")</h3>
+            <h3>@Html.ActionLink(item.Title, item.Question_id.ToString(), "question")
+                @if(item.Reported != null) {
+                    <span class="exclamation-mark"> ! </span>
+                }
+            </h3>
+
             <div class="tags">
                 @foreach (var tag in item.Tags)
                 {

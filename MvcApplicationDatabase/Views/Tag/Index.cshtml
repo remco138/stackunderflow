@@ -99,8 +99,8 @@
                 #@t.Questions.Count
                 @if(ViewBag.isAdmin == true)
                 {
-                        @:<a href="javascript:modSummary('@String.Format("summary{0}", @t.Tag_id)')">Edit</a>
-                        @:<a href="javascript:deleteTag('@String.Format("summary{0}", @t.Tag_id)')"> Edit</a>
+                        @:<a href="javascript:modSummary('@String.Format("summary{0}", @t.Tag_id)')">Edit </a>
+                        @:<a href="javascript:deleteTag('@String.Format("summary{0}", @t.Tag_id)')"> X </a>
                 }
                 <br /> </span>
             <div class ="tag-excerpt" id="@String.Format("summary{0}",@t.Tag_id)">

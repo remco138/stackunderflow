@@ -194,5 +194,11 @@ namespace MvcApplicationDatabase.Controllers
                 System.Web.HttpContext.Current.Response.RedirectToRoute("Default", new { action = "Login", controller = "User" });
             }
         }
+        public static bool isAdmin()
+        {//FIXME
+
+            //return (Session["username"] != null && db.Users.Any(q => q.Username == Session["username"].ToString()));
+            return true;
+        }
     }
 }

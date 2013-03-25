@@ -231,5 +231,25 @@ namespace MvcApplicationDatabase.Controllers
             }
         }
 
+        public ActionResult Delete(int id = -1)
+        {
+            bool isAdmin = (Session["username"] != null && db.Users.Any(q => q.Username == Session["username"].ToString()));
+
+            if (isAdmin)
+            {
+                try
+                {
+                    db.Questions.First(t => t.Question_id == id).Active = false;
+                }
+                catch (Exception e)
+                {
+                    return Content(e.Message);
+                }
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
+        }
+
     }
 }
