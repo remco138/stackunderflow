@@ -185,6 +185,7 @@ a:visited { color: #4a6b82; }
 #content h2.title { margin-bottom: -30px; }
 #content .question {
     float: left;
+    margin-top: 10px;
 }
 #content .question, #content .answers {
     width: 730px;

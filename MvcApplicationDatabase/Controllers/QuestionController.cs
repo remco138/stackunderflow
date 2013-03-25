@@ -31,7 +31,7 @@ namespace MvcApplicationDatabase.Controllers
                                            .Take(pagesize);
                     break;
                 case "reported":
-                    questionList = db.Questions.OrderByDescending(q => q.Views)
+                    questions = db.Questions.OrderByDescending(q => q.Views)
                                            .Where(q => q.Reported != null)
                                            .Skip(page * pagesize)
                                            .Take(pagesize);
