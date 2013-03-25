@@ -51,8 +51,8 @@ namespace MvcApplicationDatabase.Controllers
                     }
                 }
             }
-            catch (Exception ex) { }
-            return View();
+            catch (Exception ex) { return View("login"); }
+            return View("login");
         }
 
         //
@@ -85,8 +85,12 @@ namespace MvcApplicationDatabase.Controllers
 
         public ActionResult Edit(int id)
         {
-            var user = db.Users.First(u => u.User_id == id);
-            return View("Edit", user);
+            if ((bool)Session["login"])
+            {
+                var user = db.Users.First(u => u.User_id == id);
+                return View("Edit", user);
+            }
+            else { return View("login"); }
         }
 
         //

@@ -14,11 +14,31 @@ namespace MvcApplicationDatabase
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.LowercaseUrls = true;
 
+            /*
+                /Question/1234
+                    maps to:
+             
+                /Question/Details/1234
+            */
             routes.MapRoute(
                 "Question",
                 "Question/{id}",
                 new { controller = "Question", action = "Details" },
                 new { id = @"\d+" }
+                );
+
+            /* 
+                /Question/1234/answer/submit"
+                    Maps to:
+
+                [HttpPost]
+                Question/Details/1234
+            */
+            routes.MapRoute(
+                "AnswerQuestion",
+                "Question/{id}/answer/submit",
+                new { controller = "Question", action = "Details" },
+                new { id = @"\d+", httpMethod = new HttpMethodConstraint("POST") }
                 );
 
 

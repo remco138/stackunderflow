@@ -27,6 +27,7 @@ namespace MvcApplicationDatabase.Models
         public int Votes { get; set; }
         public System.DateTime DateCreated { get; set; }
         public string Reported { get; set; }
+        public Nullable<bool> Active { get; set; }
     
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual Question Question { get; set; }
