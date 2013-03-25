@@ -38,6 +38,11 @@
     display: none;
 }
 
+/* text shizzle*/
+.post-text p {
+    margin-bottom: 10px;
+}
+
 .wrapper {
     width: 960px;
     margin: 0 auto;
