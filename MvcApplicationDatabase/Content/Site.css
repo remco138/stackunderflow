@@ -232,7 +232,6 @@ a:visited { color: #4a6b82; }
 }
 .question-summary {
     border-bottom: 1px solid #eaeaea;
-    background-color:white;
     overflow: hidden;
     padding: 11px 0px;
     width: 730px;

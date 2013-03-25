@@ -53,7 +53,7 @@
         </div>
         <div class="summary">
             <h3>@Html.ActionLink(item.Title, item.Question_id.ToString(), "question")
-                @if(item.Reported != null) {
+                @if(item.Reported != null && item.Reported != "") {
                     <span class="exclamation-mark"> ! </span>
                 }
             </h3>
