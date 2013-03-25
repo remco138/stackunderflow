@@ -29,6 +29,12 @@ namespace MvcApplicationDatabase.Controllers
                                            .Skip(page * pagesize)
                                            .Take(pagesize);
                     break;
+                case "reported":
+                    questionList = db.Questions.OrderByDescending(q => q.Views)
+                                           .Where(q => q.Reported != null)
+                                           .Skip(page * pagesize)
+                                           .Take(pagesize);
+                    break;
                 default:
                     questionList = db.Questions.OrderByDescending(q => q.DateCreated)
                                            .Skip(page * pagesize)

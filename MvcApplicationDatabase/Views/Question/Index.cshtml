@@ -15,6 +15,11 @@
         @foreach(string tab in tabs) {
             <a href="?sort=@tab" @(sort == @tab ? "class=youarehere" : "")>@tab</a>
         }
+
+        
+        <a href="?sort=reported" class="reports-tab">Reports 
+         </a>
+              <span class="exclamation-mark"> !</span>
     </div>
 </div>
 <p class="dno">
