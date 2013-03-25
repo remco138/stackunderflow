@@ -103,14 +103,19 @@ namespace MvcApplicationDatabase.Controllers
         {
             try
             {
-                // TODO: Add update logic here
+                if (ModelState.IsValid)
+                {
+                    db.Entry(user).State = System.Data.EntityState.Modified;
+                    db.SaveChanges();
 
-                return RedirectToAction("index");
+                    return View("index", "home");
+                }
             }
             catch
             {
-                return View();
+                
             }
+            return View();
         }
 
         public ActionResult Login()
@@ -141,7 +146,7 @@ namespace MvcApplicationDatabase.Controllers
                 {
                     Session.Add("Username", user.Username);
                     Session.Add("ID", id);
-                    return RedirectToAction("create");
+                    return RedirectToAction("index", "home");
                 }
                 return null;
             }
@@ -180,6 +185,14 @@ namespace MvcApplicationDatabase.Controllers
         {
             Session["login"] = false;
             return RedirectToAction("Index", "Home");
+        }
+
+        public static void CheckLogin()
+        {
+            if (System.Web.HttpContext.Current.Session["Login"] == null)
+            {
+                System.Web.HttpContext.Current.Response.RedirectToRoute("Default", new { action = "Login", controller = "User" });
+            }
         }
     }
 }

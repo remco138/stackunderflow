@@ -31,19 +31,21 @@ string act = ViewContext.RouteData.Values["action"].ToString().ToLower();
             <li@(ctrl.Equals("home") ? " class=active" : "")>@Html.ActionLink("Home", "Index", "Home")</li>
             <li@(ctrl.Equals("question") && !act.Equals("ask") ? " class=active" : "")>@Html.ActionLink("Questions", "Index", "Question")</li>
             <li@(ctrl.Equals("tag") ? " class=active" : "")>@Html.ActionLink("Tags", "Index", "Tag")</li>
-            <li@(ctrl.Equals("user") ? " class=active" : "")>@Html.ActionLink("Users", "Index", "User")</li>
-            @if (Session["login"] != null) { 
-                 <li@(ctrl.Equals("user") && act.Equals("details") ? " class=active" : "")>@Html.ActionLink("Profile", "details/"  + Session["ID"].ToString(), "user")</li>
-             }
+            <li@(ctrl.Equals("user") && act.Equals("") ? " class=active" : "")>@Html.ActionLink("Users", "Index", "User")</li>
+          
             <li@(ctrl.Equals("badges") ? " class=active" : "")>@Html.ActionLink("Badges", "Index", "Badges")</li>
             <li@(ctrl.Equals("question") && act.Equals("ask") ? " class=active" : "")>@Html.ActionLink("Ask Question", "Ask", "Question")</li>
-             @if (Session["login"] != null && (bool)Session["login"] == true) { 
+              @if (Session["login"] != null && (bool)Session["login"] == true) { 
+                 <li@(ctrl.Equals("user") && act.Equals("details/" + Session["ID"].ToString()) ? " class=active" : "")>@Html.ActionLink("profile", "details/"  + Session["ID"].ToString(), "user")</li@>
+             }
+
+                @if (Session["login"] != null && (bool)Session["login"] == true) { 
                  <li@(ctrl.Equals("user") && act.Equals("logout") ? " class=active" : "")>@Html.ActionLink("Logout", "logout", "user")</li@>
              }
              else {
                 <li@(ctrl.Equals("user") && act.Equals("login") ? " class=active" : "")>@Html.ActionLink("Login", "login", "user")</li@>
              }
-
+                 
             </ul>
         </div>
         <div id="content">
