@@ -10,9 +10,7 @@
     <legend>User</legend>
 
     <div class="UserControl_ProfileContainer">
-        <div class="display-label">
-             @Html.DisplayNameFor(model => model.Photo)
-        </div>
+
         <div class="display-field">
        <img src="@Url.Content(ViewBag.PhotoURL)" />
     </div>
@@ -41,8 +39,14 @@
              Votes:  @Html.DisplayFor(model => model.Votes)
         </div>
         
+         <div class="display-label">
+             Info:  @Html.DisplayFor(model => model.Bio)
+        </div>
+
+        
      </div>
    
+       
 </fieldset>
 
  @Html.ActionLink("This is your profile, Click here to change your information", "Edit/" + Model.User_id.ToString())
