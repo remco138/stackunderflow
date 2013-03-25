@@ -15,7 +15,10 @@ namespace MvcApplicationDatabase.Controllers
 
         public ActionResult Index()
         {
-            return View();
+
+                    var all = db.Users.Take(50);
+                    return View(all);
+
         }
 
         //
@@ -27,7 +30,6 @@ namespace MvcApplicationDatabase.Controllers
             string photoURL;
             try
             {
-
                 if ((bool)Session["login"])
                 {
                     if (user.Photo == null)

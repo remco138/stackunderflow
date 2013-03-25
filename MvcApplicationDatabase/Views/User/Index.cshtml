@@ -1,9 +1,42 @@
-﻿@{
-    Layout = null;
+﻿@model IEnumerable<MvcApplicationDatabase.Models.User>
+
+@{
+    ViewBag.Title = "Index";
 }
 
-<section class="featured">
-    <div class="content-wrapper">
+<h2>User List</h2>
+<table >
+    <tr>
+        <th>
+            Username: 
+        </th>
 
-    </div>
-</section>
+        <th>
+            AN:
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Votes)
+        </th>
+        
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+         <td>
+               @if (Session["login"] != null) {
+           @Html.ActionLink(item.Username, "details/" +  item.User_id.ToString()) 
+               }
+             else { @Html.DisplayFor(modelItem => item.Username) }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Votes)
+        </td>
+       
+
+    </tr>
+
+}
+</table>
