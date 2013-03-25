@@ -74,10 +74,11 @@
           <Property Name="BestAnswer_id" Type="int" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="Title" Type="varchar" Nullable="false" MaxLength="150" />
-          <Property Name="Views" Type="int" />
+          <Property Name="Views" Type="int" Nullable="false" />
+          <Property Name="Reported" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'C:\USERS\ASDFJKL\DOCUMENTS\PROJECTS\STACKUNDERFLOW\STACKUNDERFLOW\MVCAPPLICATIONDATABASE\APP_DATA\STACKOVERFLOWDATABASE.MDF.dbo.Tagged_Questions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view '17AC21E954199D7E75EFB0CBFFFE9EFC_ROJECTS\STACKUNDERFLOW\STACKUNDERFLOW\MVCAPPLICATIONDATABASE\APP_DATA\STACKOVERFLOWDATABASE.MDF.dbo.Tagged_Questions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="Tagged_Questions">
           <Key>
@@ -270,10 +271,11 @@
           <Property Name="BestAnswer_id" Type="Int32" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="150" Unicode="false" FixedLength="false" />
-          <Property Name="Views" Type="Int32" />
+          <Property Name="Views" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Posts" Relationship="StackOverflowDatabaseModel.BelongsToQuestion" FromRole="Questions" ToRole="Posts" />
           <NavigationProperty Name="BestAnswer" Relationship="StackOverflowDatabaseModel.BestAnswerPost_id" FromRole="Questions" ToRole="Posts" />
           <NavigationProperty Name="Tags" Relationship="StackOverflowDatabaseModel.Tagged_Questions" FromRole="Questions" ToRole="Tags" />
+          <Property Type="String" Name="Reported" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Tag">
           <Key>
@@ -403,6 +405,7 @@
           <EntitySetMapping Name="Questions">
             <EntityTypeMapping TypeName="StackOverflowDatabaseModel.Question">
               <MappingFragment StoreEntitySet="Questions">
+                <ScalarProperty Name="Reported" ColumnName="Reported" />
                 <ScalarProperty Name="Question_id" ColumnName="Question_id" />
                 <ScalarProperty Name="BestAnswer_id" ColumnName="BestAnswer_id" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />

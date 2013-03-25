@@ -20,6 +20,7 @@ namespace MvcApplicationDatabase.Models
         public string Content { get; set; }
         public System.DateTime DateCreated { get; set; }
         public Nullable<int> Votes { get; set; }
+        public string Reported { get; set; }
     
         public virtual Post Post { get; set; }
         public virtual User User { get; set; }

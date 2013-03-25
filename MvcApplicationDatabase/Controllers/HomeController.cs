@@ -10,7 +10,6 @@ namespace MvcApplicationDatabase.Controllers
     public class HomeController : Controller
     {
         private StackOverflowDatabaseContext db = new StackOverflowDatabaseContext();
-        private QuestionController question = new QuestionController();
 
         // GET: /Home/
         //
