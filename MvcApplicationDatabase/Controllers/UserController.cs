@@ -175,5 +175,13 @@ namespace MvcApplicationDatabase.Controllers
             Session["login"] = false;
             return RedirectToAction("Index", "Home");
         }
+
+        public static void CheckLogin()
+        {
+            if (System.Web.HttpContext.Current.Session["Login"] == null)
+            {
+                System.Web.HttpContext.Current.Response.RedirectToRoute("Default", new { action = "Login", controller = "User" });
+            }
+        }
     }
 }

@@ -36,24 +36,27 @@
     {
         @Html.Partial("_PostDetailsPartial", post) 
     }
-    @if ((Session["login"] == null || !(bool)Session["Login"]))
+    @if (Session["login"] == null)
     {
         <br />
         <h2>You must @Html.ActionLink("login", "login", "user") to give an answer!</h2>
     }
     else {
-        @using (Html.BeginForm())
+        using (Html.BeginRouteForm("AnswerQuestion"))
         {
+            <input type="hidden" id="answer-question-id" value="@Model.Question.Question_id" />
+
+            @Html.HiddenFor(m => m.Question.Question_id)
+        
             <div class="form-item">
                 <div class="wmd-panel">
                     <div id="wmd-button-bar"></div>
-                    @Html.ValidationMessageFor(q => q.Post.Content, "Bericht is verplicht")
-                    @Html.TextAreaFor(p => p.Posts, new { @class = "post-editor wmd-input", @id = "wmd-input" })
+                    @Html.ValidationMessageFor(q => q.NewAnswer.Content, "Bericht is verplicht")
+                    @Html.TextAreaFor(p => p.NewAnswer.Content, new { @class = "post-editor wmd-input", @id = "wmd-input" })
                 </div>
                 <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
             </div>
-            
-            @Html.Partial("_EditorPartial");          
+                
             <input type="submit" id="submit-button"  value="Post Your Answer" tabindex="120">
         }
     }
