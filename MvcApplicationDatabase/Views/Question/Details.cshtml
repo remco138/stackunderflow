@@ -7,12 +7,38 @@
 @Scripts.Render("~/Scripts/Markdown.Converter.js")
 @Scripts.Render("~/Scripts/Markdown.Editor.js")
 @Scripts.Render("~/Scripts/Markdown.Sanitizer.js")
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#upvote_11").click(function () {
+            var prev = parseInt($("#totalvote_11").text()) + 1;
+            $("#totalvote_11").text(prev);
+            $.ajax({
+                type: "POST",
+                url: "vote?id=11&type=up",
+                success: function (result) {
+                }
+            });
+            return false;
+        });
+        $("#downvote_11").click(function () {
+            var prev = parseInt($("#totalvote_11").text()) - 1;
+            $("#totalvote_11").text(prev);
+            $.ajax({
+                type: "POST",
+                url: "vote?id=11&type=down",
+                success: function (result) {
+                }
+            });
+            return false;
+        });
+    });
+</script>
 <div class="question">
     <h1 class="title">@Html.ActionLink(Model.Question.Title, Model.Question.Question_id.ToString(), "question")</h1>
     <div class="post_vote">
-        <p><a href="#"><img src="~/Content/themes/layout/upvote.gif" alt="upvote" /></a></p>
-        <p>@Model.OpeningPost.Votes</p>
-        <p><a href="#"><img src="~/Content/themes/layout/downvote.gif" alt="upvote" /></a></p>
+        <p><a href="#" id="upvote_@Model.OpeningPost.Post_id" title="This question shows research effort; it is useful and clear (click again to undo)"><img src="~/Content/themes/layout/upvote.gif" alt="upvote" /></a></p>
+        <p id="totalvote_@Model.OpeningPost.Post_id">@Model.OpeningPost.Votes</p>
+        <p><a href="#" id="downvote_@Model.OpeningPost.Post_id" title="This question does not show any research effort; it is unclear or not useful (click again to undo)"><img src="~/Content/themes/layout/downvote.gif" alt="upvote" /></a></p>
     </div>
     <div class="post_content">
         @Html.Raw(Model.OpeningPost.Content)
@@ -45,24 +71,27 @@
     {
         @Html.Partial("_PostDetailsPartial", post) 
     }
-    @if ((Session["login"] == null))
+    @if (Session["login"] == null)
     {
         <br />
         <h2>You must @Html.ActionLink("login", "login", "user") to give an answer!</h2>
     }
     else {
-        using (Html.BeginForm())
+        using (Html.BeginRouteForm("AnswerQuestion"))
         {
+            <input type="hidden" id="answer-question-id" value="@Model.Question.Question_id" />
+
+            @Html.HiddenFor(m => m.Question.Question_id)
+        
             <div class="form-item">
                 <div class="wmd-panel">
                     <div id="wmd-button-bar"></div>
-                    @Html.ValidationMessageFor(p => p.NewAnswer.Content, "Bericht is verplicht")
+                    @Html.ValidationMessageFor(q => q.NewAnswer.Content, "Bericht is verplicht")
                     @Html.TextAreaFor(p => p.NewAnswer.Content, new { @class = "post-editor wmd-input", @id = "wmd-input" })
                 </div>
                 <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
             </div>
-            
-            @Html.Partial("_EditorPartial");          
+                
             <input type="submit" id="submit-button"  value="Post Your Answer" tabindex="120">
         }
     }

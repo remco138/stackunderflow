@@ -40,7 +40,7 @@ namespace MvcApplicationDatabase
                 new { controller = "Question", action = "Details" },
                 new { id = @"\d+", httpMethod = new HttpMethodConstraint("POST") }
                 );
-
+            
 
             routes.MapRoute(
                 name: "Default",

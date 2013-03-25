@@ -1,0 +1,36 @@
+﻿@model MvcApplicationDatabase.Models.Comment
+
+
+<h2>Comment on answer</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        @Html.HiddenFor(model => model.Comment_Id)
+        @Html.HiddenFor(model => model.Post_id)
+
+        @Html.Partial("_PostDetailsPartial", Model.Post) 
+
+        <div class="form-item">
+            <div class="wmd-panel">
+                <div id="wmd-button-bar"></div>
+                @Html.ValidationMessageFor(m => m.Content, "")
+                @Html.TextAreaFor(m => m.Content, new { @class = "post-editor wmd-input", @id = "wmd-input" })
+            </div>
+            <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
+        </div>
+
+        <p>
+            <input type="submit" value="Post Comment" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

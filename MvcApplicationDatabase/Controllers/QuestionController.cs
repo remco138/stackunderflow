@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using MarkdownSharp;
+using System.Web.Services;
 
 namespace MvcApplicationDatabase.Controllers
 {
@@ -119,6 +120,7 @@ namespace MvcApplicationDatabase.Controllers
                 var question = db.Questions.First(q => q.Question_id == id);
                 var posts = question.Posts.OrderBy(q => q.DateCreated).Skip(1);
                 ViewBag.Login = Session["login"];
+
                 QuestionDetailsFormViewModel model = new QuestionDetailsFormViewModel()
                     {
                         Question = question,
@@ -126,6 +128,7 @@ namespace MvcApplicationDatabase.Controllers
                         OpeningPost = question.Posts.First(),
                         Posts = posts,
                     };
+
                 var row = db.Questions.Where(q => q.Question_id == id).Single();
                 row.Views++;
                 db.SaveChanges();
@@ -141,11 +144,21 @@ namespace MvcApplicationDatabase.Controllers
         }
 
         [HttpPost]
-        public ActionResult Details(Post model)
+        public ActionResult Details(QuestionDetailsFormViewModel model)
         {
-            // TODO: Add the post to the current question
+            if (Session["login"] == null)
+            {
+                return RedirectToRoute("Question", new { id = model.Question.Question_id });
+            }
 
-            return View();
+            model.NewAnswer.Question_id = model.Question.Question_id;
+            model.NewAnswer.DateCreated = DateTime.Now;
+            model.NewAnswer.User_id = (int)Session["ID"];
+
+            db.Posts.Add(model.NewAnswer);
+            db.SaveChanges();
+
+            return RedirectToAction("Details");
         }
 
 
@@ -169,7 +182,54 @@ namespace MvcApplicationDatabase.Controllers
             return View(question);
         }
 
+
+        public ActionResult Comment(int id) // id = post_id
+        {
+            UserController.CheckLogin();
+
+            var comment = new Comment();
+
+            try
+            {
+                comment.Post_id = id;
+                comment.Post = db.Posts.First(p => p.Post_id == id);             
+            }
+            catch (InvalidOperationException ex)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View(comment);
+        }
+
+        [HttpPost]
+        public ActionResult Comment(Comment comment)
+        {
+            UserController.CheckLogin();
+
+            comment.User_id = (int)Session["ID"];
+            comment.DateCreated = DateTime.Now;
+
+            db.Comments.Add(comment);
+            db.SaveChanges();
+
+            return RedirectToRoute("Question", new { id = comment.Post.Question_id });
+        }
         
+        [WebMethod()]
+        //[ScriptMethod()]
+        public void Vote(int? id, string type = "up")
+        {
+            if (id != null)
+            {
+                var row = db.Posts.Where(p => p.Post_id == id).Single();
+                if (type == "up")
+                    row.Votes++;
+                else if(type == "down")
+                    row.Votes--;
+                db.SaveChanges();
+            }
+        }
 
     }
 }
