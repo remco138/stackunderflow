@@ -16,25 +16,53 @@ namespace MvcApplicationDatabase.Controllers
         public ActionResult Index()
         {
             List<Tag> tagList = db.Tags.OrderByDescending(x => x.Questions.Count).ToList();  //I've got not clue whether this works or not 
-                
+            if (Session["username"] != null)
+            {
+                ViewBag.isAdmin = db.Users.Any(q => q.Username == Session["username"].ToString());
+            }
+            else ViewBag.isAdmin = false;
             return View(tagList);
         }
 
-
-        public ActionResult ModifySummary()
+        //   /Tag/Delete/5
+        public ActionResult Delete(int id = -1)
         {
-            int tagId = Int32.Parse(Request.QueryString["tagId"].Replace("summary", "").Trim()); //Wish i knew earlier about Trim(), removes all trailing whitespaces
-            string newSummary = Request.QueryString["newSummary"].Trim();
+            bool isAdmin = (Session["username"] != null && db.Users.Any(q => q.Username == Session["username"].ToString()));
 
-            if (tagId >= 0)
+            if (isAdmin)
             {
-                Tag tag = db.Tags.Find(tagId);
-                if (tag != null)
+                try
                 {
-                    tag.Summary = newSummary;
+                    db.Tags.First(t => t.Tag_id == id).Active = false;
                 }
+                catch (Exception e)
+                {
+                    return Content(e.Message);
+                }
+                db.SaveChanges();
             }
-            db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult ModifySummary(int id = -1)
+        {
+            bool isAdmin = (Session["username"] != null && db.Users.Any(q => q.Username == Session["username"].ToString()));
+
+            if (isAdmin)
+            {
+                string newSummary = Request.QueryString["newSummary"].Trim();
+
+                if (id >= 0)
+                {
+                    Tag tag = db.Tags.Find(id);
+                    if (tag != null)
+                    {
+                        tag.Summary = newSummary;
+                    }
+                }
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 
