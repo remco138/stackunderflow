@@ -210,6 +210,10 @@ a:visited { color: #4a6b82; }
     background: #ddd;
     padding: 5px;
 }
+#content .post_user .avatar {
+    float: left;
+    padding: 0 5px 0 0;
+}
 
 
 /* QuestionList (bijna alles van stackoverflow.com)
@@ -240,26 +244,26 @@ a:visited { color: #4a6b82; }
     float: left;
     text-align: center;
 }
-.count {
+.ql_count {
     margin: 0;
     padding: 0;
 }
-.votes {
+.ql_votes {
     font-size: 11px;
 }
-.votes .count {
+.ql_votes .count {
     font-size: 14px;
     font-weight: bold;
 }
-.answers {
+.ql_answers {
     font-size: 11px;
     padding-bottom: 5px;
 }
-.answers .count {
+.ql_answers .count {
     font-size: 12px;
     font-weight: bold;
 }
-.views {
+.ql_views {
     font-size: 11px;
     color: #666;
     width: 100%;

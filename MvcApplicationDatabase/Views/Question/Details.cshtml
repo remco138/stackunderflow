@@ -26,25 +26,13 @@
     <div class="clear"></div>
     <div class="post_user">
         <p>asked @Model.OpeningPost.DateCreated.ToString("dd MMM \\a\\t HH:mm")</p>
-        <p>@Html.ActionLink(OpeningPost[0], "details/" + Model.OpeningPost.User_id, "users")</p>
+        <p>
+            <img class="avatar" src="~/Content/themes/layout/@OpeningPost[1]" alt="avatar" width="40px" height="40px" />
+            @Html.ActionLink(OpeningPost[0], "details/" + Model.OpeningPost.User_id, "users")
+        </p>
     </div>
     <div class="clear"></div>
 </div>
-<!--<div class="question">
-    <div class="question-title">@Model.Question.Title</div>
-
-    <div class="display-label">@Html.DisplayNameFor(model => model.Question.BestAnswer_id)</div>
-    <div class="display-field">@Html.DisplayFor(model => model.Question.BestAnswer_id)</div>
-
-    <div class="display-label">@Html.DisplayNameFor(model => model.Question.DateCreated)</div>
-    <div class="display-field">@Html.DisplayFor(model => model.Question.DateCreated)</div>
-
-    <div class="display-label">@Html.DisplayNameFor(model => model.Question.Views)</div>
-    <div class="display-field">@Html.DisplayFor(model => model.Question.Views)</div>   
-
-    @Html.Partial("_PostDetailsPartial", Model.OpeningPost)
-
-</div>-->
 
 <div class="answers">
 
@@ -57,19 +45,19 @@
     {
         @Html.Partial("_PostDetailsPartial", post) 
     }
-    @if ((Session["login"] == null || !(bool)Session["Login"]))
+    @if ((Session["login"] == null))
     {
         <br />
         <h2>You must @Html.ActionLink("login", "login", "user") to give an answer!</h2>
     }
     else {
-        @using (Html.BeginForm())
+        using (Html.BeginForm())
         {
             <div class="form-item">
                 <div class="wmd-panel">
                     <div id="wmd-button-bar"></div>
-                    @Html.ValidationMessageFor(q => q.Post.Content, "Bericht is verplicht")
-                    @Html.TextAreaFor(p => p.Posts, new { @class = "post-editor wmd-input", @id = "wmd-input" })
+                    @Html.ValidationMessageFor(p => p.NewAnswer.Content, "Bericht is verplicht")
+                    @Html.TextAreaFor(p => p.NewAnswer.Content, new { @class = "post-editor wmd-input", @id = "wmd-input" })
                 </div>
                 <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
             </div>
