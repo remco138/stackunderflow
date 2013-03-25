@@ -210,6 +210,10 @@ a:visited { color: #4a6b82; }
     background: #ddd;
     padding: 5px;
 }
+#content .post_user .avatar {
+    float: left;
+    padding: 0 5px 0 0;
+}
 
 
 /* QuestionList (bijna alles van stackoverflow.com)

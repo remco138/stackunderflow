@@ -18,7 +18,7 @@ namespace MvcApplicationDatabase.ViewModels
             string[] user = new string[2];
             var record = db.Users.Where(u => u.User_id == id).Single();
             user[0] = record.Username;
-            user[1] = record.Photo;
+            user[1] = record.Photo == null ? "photo.jpg" : record.Photo;
             return user;
         }
     }
