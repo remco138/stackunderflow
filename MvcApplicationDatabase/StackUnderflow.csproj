@@ -278,7 +278,9 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -296,9 +298,9 @@
     <Content Include="Views\Shared\NotAllowed.cshtml" />
     <Content Include="Views\Shared\_NotAllowed.cshtml" />
     <Content Include="Views\Question\_EditorPartial.cshtml" />
-    <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\StaticContent\PageNotFound.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\js\" />
