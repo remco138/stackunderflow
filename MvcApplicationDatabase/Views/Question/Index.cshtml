@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<MvcApplicationDatabase.Models.Question>
+@Scripts.Render("Content/Site.js")
 
 @{
     string sort = Request["sort"];
@@ -44,13 +45,13 @@
                 <div>@item.Views views</div>
             </div>
         </div>
-        <div class="admin-menu">
         @if (ViewBag.isAdmin != true)
         {
+            <div class="admin-menu" style="visibility:hidden">
             <span class="">Make inactive: </span>
             @Html.ActionLink("X", "delete", new { controller = "question", id=item.Question_id }, new { @class = "", })
-        }
         </div>
+        }
         <div class="summary">
             <h3>@Html.ActionLink(item.Title, item.Question_id.ToString(), "question")
                 @if(item.Reported != null && item.Reported != "") {
