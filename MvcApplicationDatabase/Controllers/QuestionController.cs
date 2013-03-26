@@ -223,7 +223,9 @@ namespace MvcApplicationDatabase.Controllers
         [HttpPost]
         public ActionResult Edit(Question question)
         {
-            if (ModelState.IsValid)
+            bool isAdmin = (Session["username"] != null && db.Users.Any(q => q.Username == Session["username"].ToString()));
+
+            if (ModelState.IsValid && (question.Active == true || isAdmin))
             {
                 db.Entry(question).State = System.Data.EntityState.Modified;
                 db.SaveChanges();
@@ -257,12 +259,16 @@ namespace MvcApplicationDatabase.Controllers
         public ActionResult Comment(Comment comment)
         {
             UserController.CheckLogin();
+            bool isAdmin = (Session["username"] != null && db.Users.Any(q => q.Username == Session["username"].ToString()));
 
-            comment.User_id = (int)Session["ID"];
-            comment.DateCreated = DateTime.Now;
+            if (comment.Post.Question.Active == false || isAdmin)
+            {
+                comment.User_id = (int)Session["ID"];
+                comment.DateCreated = DateTime.Now;
 
-            db.Comments.Add(comment);
-            db.SaveChanges();
+                db.Comments.Add(comment);
+                db.SaveChanges();
+            }
 
             return RedirectToRoute("Question", new { id = comment.Post_id });
         }

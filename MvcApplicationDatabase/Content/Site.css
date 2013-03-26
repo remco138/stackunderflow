@@ -211,7 +211,7 @@ a:visited { color: #4a6b82; }
     width: 730px;
     float: left;
 }
-.question-summary-innactive {
+.question-summary-inactive {
     border-bottom: 1px solid #eaeaea;
     background-color: lightgrey;
     overflow: hidden;
@@ -646,7 +646,7 @@ input[type=submit] {
 }
 .question-report-menu {
     float:right;
-    margin-right: 50;
+    margin-right: 20px;
     padding:4px 4px 3px 4px;
     border-bottom:1px solid #b3cee1;
     border-left:1px solid #b3cee1;
@@ -654,7 +654,6 @@ input[type=submit] {
 
 .admin-menu { 
     float:right;
-    margin-right:50px;
     background-color: rgba(255, 0, 1, 0.07);
     font-weight:bold;
 }
