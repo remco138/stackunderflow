@@ -7,96 +7,80 @@
 @Scripts.Render("~/Scripts/Markdown.Converter.js")
 @Scripts.Render("~/Scripts/Markdown.Editor.js")
 @Scripts.Render("~/Scripts/Markdown.Sanitizer.js")
-@Scripts.Render("~/Scripts/voting.js")
-<div id="post_@Model.OpeningPost.Post_id" class="question">
-    <h1 class="title">@Html.ActionLink(Model.Question.Title, Model.Question.Question_id.ToString(), "question")</h1>
-    <div class="post_vote">
-        <p><a href="#" id="upvote_@Model.OpeningPost.Post_id" title="This question shows research effort; it is useful and clear (click again to undo)" @(Session["login"] != null ? "onclick=upvote(" + Model.OpeningPost.Post_id + ");" : "onclick=notloggedin()")><img src="~/Content/themes/layout/upvote.gif" alt="upvote" /></a></p>
-        <p id="totalvote_@Model.OpeningPost.Post_id">@Model.OpeningPost.Votes</p>
-        <p><a href="#" id="downvote_@Model.OpeningPost.Post_id" title="This question does not show any research effort; it is unclear or not useful (click again to undo)" @(Session["login"] != null ? "onclick=downvote(" + Model.OpeningPost.Post_id + ");" : "onclick=notloggedin()")><img src="~/Content/themes/layout/downvote.gif" alt="upvote" /></a></p>
-    </div>
-    <div class="post_content">
-        @Html.Raw(Model.OpeningPost.Content)
-    </div>
-    <div class="question_tags">
-        @foreach (var tag in Model.Question.Tags)
-        {
-            @Html.ActionLink(@tag.Name, @tag.Name.ToLower(), new { controller = "question/tagged" }, new { @class = "post-tag", })
-        }
-    </div>
-    <div class="clear"></div>
-    <div class="post_user">
-        <p>asked @Model.OpeningPost.DateCreated.ToString("dd MMM \\a\\t HH:mm")</p>
-        <p>
-            <img class="avatar" src="~/Content/themes/layout/@OpeningPost[1]" alt="avatar" width="40px" height="40px" />
-            @Html.ActionLink(OpeningPost[0], "details/" + Model.OpeningPost.User_id, "user")
-        </p>
-    </div>
-    <div class="clear"></div>
-</div>
-<div id="toptags" style="margin-top: 0px;">
-    <h2>Recent Tags</h2>
-    @foreach (var tag in ViewBag.RecentTags)
-    {
-       <p><a href="@Html.Raw("/question/tagged/" + Uri.EscapeDataString(tag.Name.ToLower()))" class="post-tag">@tag.Name</a> x @tag.Questions.Count</p> 
-    }
-</div>
-<div class="answers">
 
-   <div class="answers-header">
-        <h2 class="bottom_border">@Model.Posts.Count() Answer@(Model.Posts.Count() != 1 ? "s" : "")</h2>
-   </div>
+<div class="content-left">
 
-
-    @foreach(MvcApplicationDatabase.Models.Post post in Model.Posts) // Skip the Opening Post
-    {
-    <div id="post_@post.Post_id" class="question post_answer">
+    <div class="question">
+        <h1 class="title">@Html.ActionLink(Model.Question.Title, Model.Question.Question_id.ToString(), "question")</h1>
+    
         <div class="post_vote">
-            <p><a href="#" id="upvote_@post.Post_id" title="This question shows research effort; it is useful and clear (click again to undo)" @(Session["login"] != null ? "onclick=upvote(" + post.Post_id + ");" : "onclick=notloggedin()")><img src="~/Content/themes/layout/upvote.gif" alt="upvote" /></a></p>
-            <p id="totalvote_@post.Post_id">@post.Votes</p>
-            <p><a href="#" id="downvote_@post.Post_id" title="This question does not show any research effort; it is unclear or not useful (click again to undo)" @(Session["login"] != null ? "onclick=downvote(" + post.Post_id + ");" : "onclick=notloggedin()")><img src="~/Content/themes/layout/downvote.gif" alt="upvote" /></a></p>
+            <p><a href="#"><img src="~/Content/themes/layout/upvote.gif" alt="upvote" /></a></p>
+            <p>@Model.OpeningPost.Votes</p>
+            <p><a href="#"><img src="~/Content/themes/layout/downvote.gif" alt="upvote" /></a></p>
         </div>
+
         <div class="post_content">
-            @Html.Raw(post.Content)
+            @Html.Raw(Model.OpeningPost.Content)
         </div>
-        <div class="clear"></div>
+
+        <div class="question_tags">
+            @foreach (var tag in Model.Question.Tags)
+            {
+                @Html.ActionLink(@tag.Name, @tag.Name.ToLower(), new { controller = "question/tagged" }, new { @class = "post-tag", })
+            }
+        </div>
+    
         <div class="post_user">
-            <p>asked @post.DateCreated.ToString("dd MMM \\a\\t HH:mm")</p>
+            <p>asked @Model.OpeningPost.DateCreated.ToString("dd MMM \\a\\t HH:mm")</p>
             <p>
-                @{ string[] userdetails = Model.GetUserDetails(post.User_id); }
-                <img class="avatar" src="~/Content/themes/layout/@userdetails[1]" alt="avatar" width="40px" height="40px" />
-                @Html.ActionLink(userdetails[0], "details/" + post.User_id, "user")
+                <img class="avatar" src="~/Content/themes/layout/@OpeningPost[1]" alt="avatar" width="40px" height="40px" />
+                @Html.ActionLink(OpeningPost[0], "details/" + Model.OpeningPost.User_id, "users")
             </p>
         </div>
-        <div class="clear"></div>
     </div>
     <div class="clear"></div>
-    }
-    @if (Session["login"] == null)
-    {
-        <br />
-        <h2>You must @Html.ActionLink("login", "login", "user") to give an answer!</h2>
-    }
-    else {
-        using (Html.BeginRouteForm("AnswerQuestion"))
+
+    <div class="answers">
+
+       <div class="answers-header">
+            <h2 class="bottom_border">@Model.Posts.Count() Answers</h2>
+       </div>
+
+
+        @foreach(MvcApplicationDatabase.Models.Post post in Model.Posts)
         {
-            <input type="hidden" id="answer-question-id" value="@Model.Question.Question_id" />
-
-            @Html.HiddenFor(m => m.Question.Question_id)
-        
-            <div class="form-item">
-                <div class="wmd-panel">
-                    <div id="wmd-button-bar"></div>
-                    @Html.ValidationMessageFor(q => q.NewAnswer.Content, "Bericht is verplicht")
-                    @Html.TextAreaFor(p => p.NewAnswer.Content, new { @class = "post-editor wmd-input", @id = "wmd-input" })
-                </div>
-                <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
-            </div>
-                
-            <input type="submit" id="submit-button"  value="Post Your Answer" tabindex="120">
+            @Html.Partial("_PostDetailsPartial", post) 
         }
-    }
 
+        @if (Session["login"] == null)
+        {
+            <br />
+            <h2>You must @Html.ActionLink("login", "login", "user") to give an answer!</h2>
+        }
+        else {
+        
+            <h2>Give an answer</h2>
+        
+            using (Html.BeginRouteForm("AnswerQuestion"))
+            {
+                <input type="hidden" id="answer-question-id" value="@Model.Question.Question_id" />
+
+                @Html.HiddenFor(m => m.Question.Question_id)
+        
+                <div class="form-item">
+                    <div class="wmd-panel">
+                        <div id="wmd-button-bar"></div>
+                        @Html.ValidationMessageFor(q => q.NewAnswer.Content, "Bericht is verplicht")
+                        @Html.TextAreaFor(p => p.NewAnswer.Content, new { @class = "post-editor wmd-input", @id = "wmd-input" })
+                    </div>
+                    <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
+                </div>
+                
+                <input type="submit" id="submit-button"  value="Post Your Answer" tabindex="120">
+            }
+        }
+
+    </div>
 </div>
 
 @Scripts.Render("~/Scripts/runMarkdown.js")

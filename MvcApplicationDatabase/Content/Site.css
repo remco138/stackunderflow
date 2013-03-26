@@ -182,46 +182,13 @@ a:visited { color: #4a6b82; }
 #content h1.title a {
     color: #000;
 }
-#content h2.title { margin-bottom: -30px; }
-#content .question {
-    float: left;
-    margin-top: 10px;
-    width: 730px;
-    border-bottom: 1px solid #ccc;
-}
-#content .answers {
-    width: 730px;
-    margin-top: -25px;
-}
-#content .post_vote {
-    float: left;
-    text-align: center;
-    width: 60px;
-    font-size: 16px;
-    font-weight: bold;
-}
-#content .post_vote p:last-child {
-    margin-top: 6px;
-}
-#content .post {
-    float: left;
-}
-#content .question_tags {
-    float: left;
-    margin-top: 10px;
-}
-#content .post_user {
-    float: right;
-    width: 190px;
-    height: 70px;
-    background: #ddd;
-    padding: 5px;
-}
-#content .post_user .avatar {
-    float: left;
-    padding: 0 5px 0 0;
+#content h2.title { 
+    margin-bottom: -30px; 
 }
 
+#content .content-left {
+    width: 730px;
+}
 
 /* QuestionList (bijna alles van stackoverflow.com)
 -----------------------------------------------------------*/
@@ -388,22 +355,92 @@ input[type=submit] {
 }
 
 
-/* Answers to questions
+/* Opening post & Answers to questions
 -----------------------------------------------------------*/
 
+.question {
+    margin-top: 10px;
+    
+}
 
-/* Opening Post*/
+.answers {
+    
+}
+
+.post {
+    margin-top: 10px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+}
+
+.post_vote {
+    display: inline-table;
+    text-align: center;
+    width: 60px;
+    font-size: 16px;
+    font-weight: bold;
+}
+.post_vote p:last-child {
+    margin-top: 6px;
+}
+
+.post_content {
+    display: inline-table;
+}
+
+.question_tags {
+    margin-top: 10px;
+    margin-left: 60px;
+}
+
+
+
+.post_user {
+    float: right;
+    width: 190px;
+    height: 62px;
+    background: #EBEBEB;
+    padding: 5px;
+}
+
+.answers .post_user {
+    background: white;
+}
+
+.post_user .avatar {
+    float: left;
+    padding: 0 5px 0 0;
+}
+
 .post-left {
     float: left;
     width: 60px;
 }
 
 .post-right {
-    float: left;
-    width: 660px;
-    min-height: 100px;
+    margin-left: 60px;
+    margin-bottom: 5px;
 }
 
+.post-reply {
+    margin-left: 5px;
+    margin-top: 5px;
+}
+
+
+.post-comments {
+    margin-left: 60px;
+    border-top: 1px dashed Silver;
+}
+
+.comment {
+    padding: 4px 0;
+    border-bottom: 1px dashed #ccc;
+}
+
+.comment-user {
+    margin: 0 7px;
+}
 
 /* Votes block in each post */
 .vote-up-off,
@@ -412,9 +449,11 @@ input[type=submit] {
 .vote-down-on,
 .comment-up-off,
 .comment-up-on, .vote-accepted-off, .vote-accepted-on {
-    text-indent: 9999em;
+    text-indent: -9999em;
     font-size: 1px;   
 }
+
+
 
 
 /* <form> Ask A Question

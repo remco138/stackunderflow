@@ -183,12 +183,7 @@ namespace MvcApplicationDatabase.Controllers
 
         public ActionResult logout()
         {
-            /* groetjes minardus : 
-             * heb false -> null gemaakt, zodat je nog maar 1 check hoeft uit te voeren
-             * dus if(Session["login"] != null) 
-             *
-             * Wat nog beter is (als het werkt, niet getest) -> Session.Clear()*/
-            Session["login"] = null; 
+            Session["login"] = false;
             return RedirectToAction("Index", "Home");
         }
 
@@ -198,12 +193,6 @@ namespace MvcApplicationDatabase.Controllers
             {
                 System.Web.HttpContext.Current.Response.RedirectToRoute("Default", new { action = "Login", controller = "User" });
             }
-        }
-        public static bool isAdmin()
-        {//FIXME
-
-            //return (Session["username"] != null && db.Users.Any(q => q.Username == Session["username"].ToString()));
-            return true;
         }
     }
 }
