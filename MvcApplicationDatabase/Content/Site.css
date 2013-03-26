@@ -612,6 +612,13 @@ input[type=submit] {
     float:right;
     margin-right:50px;
     background-color: #FF3334;
+    font-weight:bold;
+}
+.admin-menu a {
+    font-size:larger;
+    font-weight: 900;
+    font-family: 'Open Sans';
+    color: midnightblue;
 }
 
 /* MARKDOWN EDITOR CSS
