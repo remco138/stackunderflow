@@ -183,7 +183,12 @@ namespace MvcApplicationDatabase.Controllers
 
         public ActionResult logout()
         {
-            Session["login"] = false;
+            /* groetjes minardus : 
+             * heb false -> null gemaakt, zodat je nog maar 1 check hoeft uit te voeren
+             * dus if(Session["login"] != null) 
+             *
+             * Wat nog beter is (als het werkt, niet getest) -> Session.Clear()*/
+            Session["login"] = null; 
             return RedirectToAction("Index", "Home");
         }
 

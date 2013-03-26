@@ -34,11 +34,12 @@
     <div class="@((item.Active == true) ? "question-summary" : "question-summary-innactive")" id="question-summary-@item.Question_id">
         <div class="cp">
             <div class="ql_votes">
-                <div class="count">0</div>
+                <div class="count">@item.Posts.First().Votes</div>
                 <div>votes</div>
             </div>
             <div class="ql_answers">
-                <div class="count">0</div>
+                @{ int answers = item.Posts.Count() - 1; }
+                <div class="count">@answers</div>
                 <div>answers</div>
             </div>
             <div class="ql_views">

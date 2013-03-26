@@ -22,22 +22,22 @@ namespace MvcApplicationDatabase.Controllers
         {
             page = page - 1;
             int questionCount = db.Questions.Count();
-            IQueryable questionList;
+            IQueryable questions;
             switch (sort)
             {
                 case "faq":
-                    questionList = db.Questions.OrderByDescending(q => q.Views)
+                    questions = db.Questions.OrderByDescending(q => q.Views)
                                            .Skip(page * pagesize)
                                            .Take(pagesize);
                     break;
                 case "reported":
-                    questionList = db.Questions.OrderByDescending(q => q.Views)
+                    questions = db.Questions.OrderByDescending(q => q.Views)
                                            .Where(q => q.Reported != null)
                                            .Skip(page * pagesize)
                                            .Take(pagesize);
                     break;
                 default:
-                    questionList = db.Questions.OrderByDescending(q => q.DateCreated)
+                    questions = db.Questions.OrderByDescending(q => q.DateCreated)
                                            .Skip(page * pagesize)
                                            .Take(pagesize);
                     break;
@@ -45,7 +45,7 @@ namespace MvcApplicationDatabase.Controllers
             ViewBag.PageSize = pagesize;
             ViewBag.QuestionCount = questionCount;
             ViewBag.RecentTags = db.Tags.OrderByDescending(x => x.Questions.Count).ToArray();
-            return View(questionList);
+            return View(questions);
         }
 
         public ActionResult Tagged(string id, int page = 1, int pagesize = 15)
@@ -79,7 +79,7 @@ namespace MvcApplicationDatabase.Controllers
                 vm.Question.Posts.Add(new Post()
                 {
                     Content = md.Transform(Request.Form["Post.Content"]),
-                    User_id = 1,    // id has to come from session
+                    User_id = (int)Session["ID"],
                     DateCreated = DateTime.Now,
                 });         
                 
@@ -120,7 +120,7 @@ namespace MvcApplicationDatabase.Controllers
                 var question = db.Questions.First(q => q.Question_id == id);
                 var posts = question.Posts.OrderBy(q => q.DateCreated).Skip(1);
                 ViewBag.Login = Session["login"];
-
+                ViewBag.RecentTags = db.Tags.OrderByDescending(x => x.Questions.Count).ToArray();
                 QuestionDetailsFormViewModel model = new QuestionDetailsFormViewModel()
                     {
                         Question = question,
