@@ -644,17 +644,25 @@ input[type=submit] {
     font-size:xx-large;
 
 }
+.question-report-menu {
+    float:right;
+    margin-right: 50;
+    padding:4px 4px 3px 4px;
+    border-bottom:1px solid #b3cee1;
+    border-left:1px solid #b3cee1;
+}
+
 .admin-menu { 
     float:right;
     margin-right:50px;
-    background-color: #FF3334;
+    background-color: rgba(255, 0, 1, 0.07);
     font-weight:bold;
 }
-.admin-menu a {
-    font-size:larger;
+.question-report-menu a {
+    font-size: 18px;
     font-weight: 900;
     font-family: 'Open Sans';
-    color: midnightblue;
+    color: #22478a;
 }
 
 /* MARKDOWN EDITOR CSS

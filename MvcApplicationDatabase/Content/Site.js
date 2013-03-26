@@ -5,13 +5,13 @@ $("document").ready(
     function () {
         /*  toggling question menu for admins, make inactive, delete, etc      */
         //mouseOver
-        myDiv = $(".question-summary");
+        myDiv = $(".question-summary, .question");
         myDiv.mouseover(function () {
-            $(this).children(".admin-menu").css("visibility", "visible");
+            $(this).children(".question-report-menu").show();//.css("visibility", "visible");
         })
         //mouseOut
         myDiv.mouseout(function () {
-            $(this).children(".admin-menu").css("visibility", "hidden");                                                
+            $(this).children(".question-report-menu").hide();//.css("visibility", "hidden");
         })
 
         /*  (ugly) Tag summary modigying code toggles invisibility and swaps places between div and textarea     */

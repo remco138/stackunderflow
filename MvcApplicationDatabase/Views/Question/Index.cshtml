@@ -20,7 +20,7 @@
         
         <a href="?sort=reported" class="reports-tab">Reports 
          </a>
-            @if(Model.Any(q => q.Reported != null)) {
+            @if(Model.Any(q => q.Reported != null && q.Reported != "")) {
                     <span class="exclamation-mark"> ! </span>
             }
     </div>
@@ -46,13 +46,22 @@
                 <div>@item.Views views</div>
             </div>
         </div>
-        @if (ViewBag.isAdmin != true)
-        {
-            <div class="admin-menu" style="visibility:hidden">
-            <span class="">Make inactive: </span>
-            @Html.ActionLink("X", "delete", new { controller = "question", id=item.Question_id }, new { @class = "", })
-        </div>
-        }
+        <div class="question-report-menu" style="display:none">
+            <div class="report-menu-option">
+                Report:
+                @Html.ActionLink("X", "Report", new { controller = "question", id=item.Question_id }, new { @class = "", onclick="return confirm('Are you sure you want to report this question?');"})
+            </div>
+
+            @if (ViewBag.isAdmin != true)
+            {
+                <div class="admin-menu">
+                    <div class="report-menu-option">
+                        Make inactive:
+                        @Html.ActionLink("X", "MakeInactive", new { controller = "question", id=item.Question_id }, new { @class = "", onclick="return confirm('Are you sure you want to report this question?');" })
+                     </div>
+                </div>
+            }
+            </div>
         <div class="summary">
             <h3>@Html.ActionLink(item.Title, item.Question_id.ToString(), "question")
                 @if(item.Reported != null && item.Reported != "") {

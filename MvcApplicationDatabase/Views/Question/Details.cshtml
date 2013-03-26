@@ -14,6 +14,24 @@
     <div class="question">
         <h1 class="title">@Html.ActionLink(Model.Question.Title, Model.Question.Question_id.ToString(), "question")</h1>
     
+        <div class="question-report-menu" style="display:none">
+            <div class="report-menu-option">
+                Report:
+                @Html.ActionLink("X", "Report", new { controller = "question", id = Model.Question.Question_id }, new { @class = "", onclick = "return confirm('Are you sure you want to report this question?');" })
+            </div>
+
+            @if (ViewBag.isAdmin != true)
+            {
+                <div class="admin-menu">
+                    <div class="report-menu-option">
+                        Make inactive:
+                        @Html.ActionLink("X", "MakeInactive", new { controller = "question", id=Model.Question.Question_id }, new { @class = "", onclick="return confirm('Are you sure you want to report this question?');" })
+                     </div>
+                </div>
+            }
+            </div>
+
+
         <div class="post_vote">
             <p><a href="#"><img src="~/Content/themes/layout/upvote.gif" alt="upvote" /></a></p>
             <p>@Model.OpeningPost.Votes</p>

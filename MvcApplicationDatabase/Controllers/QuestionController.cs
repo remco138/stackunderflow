@@ -266,7 +266,52 @@ namespace MvcApplicationDatabase.Controllers
 
             return RedirectToRoute("Question", new { id = comment.Post_id });
         }
-        
+
+        public ActionResult MakeInactive(int id)
+        {
+            bool isAdmin = (Session["username"] != null && db.Users.Any(q => q.Username == Session["username"].ToString()));
+
+            if (!isAdmin && id >= 0)
+            {
+                try
+                {
+                    db.Questions.First(q => q.Question_id == id).Active = false;
+                }
+                catch (Exception e)
+                {
+                    return Content(e.Message);
+                }
+                db.SaveChanges();
+            }
+
+            if(Request.UrlReferrer != null)
+            {
+                return Redirect(Request.UrlReferrer.ToString());
+            }
+            return RedirectToAction("Index");
+        }
+
+    
+    public ActionResult Report(int id)
+        {
+            if (id >= 0)
+            {
+                try
+                {
+                    db.Questions.First(q => q.Question_id == id).Reported = "May contain bad content"; //Introducing a new textbox will be a lot of effort
+                }
+                catch (Exception e)
+                {
+                    return Content(e.Message);
+                }
+                db.SaveChanges();
+            }
+            if(Request.UrlReferrer != null)
+            {
+                return Redirect(Request.UrlReferrer.ToString());
+            }
+            return RedirectToAction("Index");
+        }
 
 
     }
