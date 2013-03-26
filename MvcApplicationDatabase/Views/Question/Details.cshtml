@@ -47,9 +47,12 @@
             <h2 class="bottom_border">@Model.Posts.Count() Answers</h2>
        </div>
 
-        <div class="best-answer">
-            @Html.Partial("_PostDetailsPartial", Model.BestAnswerPost)
-        </div>
+        @if(Model.BestAnswerPost != null)
+        {
+            <div class="best-answer">
+                @Html.Partial("_PostDetailsPartial", Model.BestAnswerPost)
+            </div>
+        }
 
         @foreach(MvcApplicationDatabase.Models.Post post in Model.Posts)
         {
