@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<MvcApplicationDatabase.Models.Tag>
+
 @{
     ViewBag.Title = "Top tags";
 }
@@ -7,17 +8,6 @@
     @Scripts.Render("~/Scripts/jquery-ui-1.8.20.js")
  
 <h2>@ViewBag.Title</h2>
-
-
- @if (ViewBag.isAdmin == true)
- {//text tag is to escape asp.net block, it won' be output
-     <text> 
-<script type="text/javascript">
-     
- 
-</script>
-</text>
-}
 
 
 <div class="tag-list">
@@ -36,11 +26,11 @@
             <div class ="tag-excerpt" id="@("divsummary" + @t.Tag_id)">
                 @t.Summary
             </div>
-            <div id="@("textsummary" + @t.Tag_id)" style="visibility:hidden;">
-            @using (Html.BeginForm("tag/ModifySummary")) {
-                @Html.ValidationSummary(true)
+            <div id="@("textsummary" + @t.Tag_id)" style="display:none">
+            @using (Html.BeginForm("ModifySummary", "Tag", new { id = t.Tag_id }, FormMethod.Get )) {
 
-                @Html.TextArea("summary", t.Summary.Trim(), new {cols = 25 } )
+                @Html.TextArea("newSummary", t.Summary.Trim(), new {cols = 25} )
+                <input type="hidden" value="@t.Tag_id" />
                 
                 <div class="summary-button">
                     <input type="submit" value="Set" />

@@ -11,7 +11,7 @@ $("document").ready(
         })
         //mouseOut
         myDiv.mouseout(function () {
-            $(this).children(".admin-menu").css("visibility", "hidden");
+            $(this).children(".admin-menu").css("visibility", "hidden");                                                
         })
 
         /*  (ugly) Tag summary modigying code toggles invisibility and swaps places between div and textarea     */
@@ -25,21 +25,21 @@ $("document").ready(
              );
         $("[id^=restoresummary]").click(function () {
              var realId = this.id.substr(14);
-            $("#textsummary" + realId).css("visibility", "hidden");
-            $("#divsummary" + realId).css("visibility", "visible");
+             $("#textsummary" + realId).toggle();//css("visibility", "hidden");
+             $("#divsummary" + realId).toggle();//css("visibility", "visible");
             $("#textsummary" + realId).parent().css("padding-bottom", "");
 
-            $("#divsummary" + realId).prependTo($("#textsummary" + realId))
+            //$("#divsummary" + realId).prependTo($("#textsummary" + realId))
         });
 
 
         $(".modify-summary-button").click(function () {
             var realId = this.id.substr(9);
-            $("#divsummary" + realId).css("visibility", "hidden");
-            $("#textsummary" + realId).css("visibility", "visible");
+            $("#divsummary" + realId).toggle();//css("visibility", "hidden");
+            $("#textsummary" + realId).toggle();//css("visibility", "visible");
             $("#textsummary" + realId).parent().css("padding-bottom", "60px");
 
-            $("#textsummary" + realId).prependTo($("#divsummary" + realId))
+            //$("#textsummary" + realId).prependTo($("#divsummary" + realId))
         });
 
      
