@@ -367,6 +367,31 @@ input[type=submit] {
     
 }
 
+.user-asked-question .set-best-answer /* only show set-best-answer for user who is logged in*/,
+.user-asked-question .question .edit {
+    display: block;
+}
+
+
+.set-best-answer, /* never show set-best-answer */
+.user-asked-question .best-answer .set-best-answer /* best answer is already set as best-answer */{
+    display: none;
+}
+
+.best-answer {
+    background-color: #CDEBCD;
+    border: 1px dotted green;
+    padding: 5px;
+    padding-bottom: 20px;
+}
+.best-answer .post{
+    border: none;
+}
+.best-answer .post_user {
+    background: #a7c2ac;
+}
+
+
 .post {
     margin-top: 10px;
     padding-bottom: 20px;
@@ -395,15 +420,16 @@ input[type=submit] {
 
 
 
+.question .post_user {
+    background: #EBEBEB;
+}
+
 .post_user {
     float: right;
     width: 190px;
     height: 62px;
-    background: #EBEBEB;
     padding: 5px;
-}
 
-.answers .post_user {
     background: white;
 }
 
@@ -422,9 +448,16 @@ input[type=submit] {
     margin-bottom: 5px;
 }
 
-.post-reply {
+.post-bar {
     margin-left: 5px;
     margin-top: 5px;
+}
+    .post-bar a {
+        margin-right: 10px;
+    }
+
+.post-reply {
+
 }
 
 
@@ -436,6 +469,9 @@ input[type=submit] {
 .comment {
     padding: 4px 0;
     border-bottom: 1px dashed #ccc;
+}
+.comment :hover {
+    background-color: #f3f3f3;
 }
 
 .comment-user {

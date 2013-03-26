@@ -57,6 +57,21 @@ namespace MvcApplicationDatabase
             );
 
 
+            // 
+            //  /Question/1/bestanswer/3
+            //      Maps to:
+            //
+            //  [HttpPost]
+            //  /Question/SetBestAnswer?question_id=1&bestanswer_id=3
+            //
+            routes.MapRoute(
+                "BestAnswer",
+                "Question/{question_id}/bestanswer/{bestanswer_id}",
+                new { controller = "Question", action = "SetBestAnswer" },
+                new { question_id = @"\d+", bestanswer_id = @"\d+" }
+            );
+
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

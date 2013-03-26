@@ -187,9 +187,22 @@ namespace MvcApplicationDatabase.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+
+
+        public static bool isLoggedIn
+        {
+            get
+            {
+                if (System.Web.HttpContext.Current.Session["Login"] == null)
+                    return false;
+                else
+                    return true;
+            }
+        }
+
         public static void CheckLogin()
         {
-            if (System.Web.HttpContext.Current.Session["Login"] == null)
+            if (!isLoggedIn)
             {
                 System.Web.HttpContext.Current.Response.RedirectToRoute("Default", new { action = "Login", controller = "User" });
             }
