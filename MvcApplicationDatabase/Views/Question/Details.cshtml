@@ -3,12 +3,13 @@
 @{
     ViewBag.Title = "Details";
     string[] OpeningPost = Model.GetUserDetails(Model.OpeningPost.User_id);
+
 }
 @Scripts.Render("~/Scripts/Markdown.Converter.js")
 @Scripts.Render("~/Scripts/Markdown.Editor.js")
 @Scripts.Render("~/Scripts/Markdown.Sanitizer.js")
 
-<div class="content-left">
+<div class="content-left @if(ViewBag.isUserWhoAskedThisQuestion) { @Html.Raw("user-asked-question") }">
 
     <div class="question">
         <h1 class="title">@Html.ActionLink(Model.Question.Title, Model.Question.Question_id.ToString(), "question")</h1>
@@ -46,9 +47,14 @@
             <h2 class="bottom_border">@Model.Posts.Count() Answers</h2>
        </div>
 
+        <div class="best-answer">
+            @Html.Partial("_PostDetailsPartial", Model.BestAnswerPost)
+        </div>
 
         @foreach(MvcApplicationDatabase.Models.Post post in Model.Posts)
         {
+            if (post.Post_id == Model.BestAnswerPost.Post_id) { continue; }
+            
             @Html.Partial("_PostDetailsPartial", post) 
         }
 

@@ -1,8 +1,5 @@
 ﻿@model MvcApplicationDatabase.Models.Post
 
-@{
-    
-}
 
 <div id="@Model.Post_id" class="post">
 
@@ -17,14 +14,21 @@
                     <p><a href="#"><img src="~/Content/themes/layout/downvote.gif" alt="upvote" /></a></p>
                 </div>
 
+                <a class="set-best-answer" href="/question/@Model.Question_id/bestanswer/@Model.Post_id">Select as best answer</a>
+
             </div>
         </div>
 
         <div class="post-right">
             <div class="post-text">@Html.Raw(Model.Content)</div> 
-            <div class="post-reply">
-                <a href="/question/comment/@Model.Post_id" title="Reply to this post.">comment</a>
+
+            <div class="post-bar">
+                <a class="post-reply" href="/question/comment/@Model.Post_id" title="Reply to this post.">comment</a>
+                <a hidden class="post-edit" href="/question/edit/@Model.Post_id">edit</a>               
             </div>
+
+            
+
             <div class="post-information">
                 <div class="post_user">
                     <p>Answered @Model.DateCreated.ToString("dd MMM \\a\\t HH:mm")</p>
@@ -39,22 +43,25 @@
     </div>
 
 
-    <div class="post-comments">
-        @foreach (MvcApplicationDatabase.Models.Comment comment in Model.Comments)
-        {
-            <div id="comment-@comment.Comment_Id" class="comment">
-                <div class="comment-text">
-                    <span>@comment.Content</span>
+    @if(Model.Comments.Count != 0)
+    {
+        <div class="post-comments">
+            @foreach (MvcApplicationDatabase.Models.Comment comment in Model.Comments)
+            {
+                <div id="comment-@comment.Comment_Id" class="comment">
+                    <div class="comment-text">
+                        <span>@comment.Content</span>
 
-                    <a  href="/user/@comment.User_id" 
-                        title="Go to @comment.User.FirstName @comment.User.LastName's profile" 
-                        class="comment-user">@comment.User.FirstName @comment.User.LastName</a>
+                        <a  href="/user/@comment.User_id" 
+                            title="Go to @comment.User.FirstName @comment.User.LastName's profile" 
+                            class="comment-user">@comment.User.FirstName @comment.User.LastName</a>
 
-                    <span class="comment-date">
-                        Posted on: @comment.DateCreated
-                    </span>
+                        <span class="comment-date">
+                            Posted on: @comment.DateCreated
+                        </span>
+                    </div>
                 </div>
-            </div>
-        }
-    </div>
+            }
+        </div>
+    }
 </div>   

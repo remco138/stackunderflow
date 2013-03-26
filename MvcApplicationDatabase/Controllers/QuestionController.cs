@@ -119,6 +119,11 @@ namespace MvcApplicationDatabase.Controllers
                 var posts = question.Posts.OrderBy(q => q.DateCreated).Skip(1);
                 ViewBag.Login = Session["login"];
 
+                if (UserController.isLoggedIn)
+                    ViewBag.isUserWhoAskedThisQuestion = question.Posts.First().User_id == (int)Session["ID"];
+                else
+                    ViewBag.isUserWhoAskedThisQuestion = false;
+
                 QuestionDetailsFormViewModel model = new QuestionDetailsFormViewModel()
                     {
                         Question = question,
@@ -166,11 +171,53 @@ namespace MvcApplicationDatabase.Controllers
             return RedirectToAction("Details");
         }
 
+        //  /Question/10/bestanswer/3
+        //
+        //      Maps to:
+        //  
+        //  /Question/SetBestAnswer?question_id=10&bestanswer_id=12
+        //
+        //      
+        public ActionResult SetBestAnswer(int question_id = 0, int bestanswer_id = 0)       
+        {
+            if (!UserController.isLoggedIn || question_id == 0 || bestanswer_id == 0)
+            {
+                return RedirectToAction("Index");
+            }
+
+            var targetQuestion = db.Questions.First(q => q.Question_id == question_id);
+            var targetQuestionUser_id = targetQuestion.Posts.First().User_id;
+
+            // Only the user who created the question can select a best answer.
+            //
+
+            if (targetQuestionUser_id == (int)Session["ID"])
+            {
+                targetQuestion.BestAnswer_id = bestanswer_id;
+                db.SaveChanges();
+
+                return RedirectToRoute("Question", new { id = targetQuestion.Question_id });
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+            
+        }
 
         public ActionResult Edit(int id)
         {
-            var question = db.Questions.Single(q => q.Question_id == id);
-            return View(question);
+            try
+            {
+                var question = db.Questions.First(q => q.Question_id == id);
+                var openingPost = question.Posts.First();
+
+                return View(question);
+            }
+            catch(Exception ex)
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpPost]
