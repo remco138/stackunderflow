@@ -183,7 +183,7 @@ namespace MvcApplicationDatabase.Controllers
 
         public ActionResult logout()
         {
-            Session["login"] = false;
+            Session.Clear();
             return RedirectToAction("Index", "Home");
         }
 

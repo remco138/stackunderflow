@@ -34,9 +34,9 @@
 
 
         <div class="post_vote">
-            <p><a href="#" title="This question shows research effort; it is useful and clear (click again to undo)"><img src="~/Content/themes/layout/upvote.gif" alt="upvote" onclick="upvote(@Model.OpeningPost.Post_id);" /></a></p>
+            <p><a href="#" title="This question shows research effort; it is useful and clear (click again to undo)"><img src="~/Content/themes/layout/upvote.gif" alt="upvote" onclick="@(Session["login"] != null ? "upvote(" + Model.OpeningPost.Post_id + ");" : "notloggedin();")" /></a></p>
             <p id="totalvote_@Model.OpeningPost.Post_id">@Model.OpeningPost.Votes</p>
-            <p><a href="#" title="This question does not show any research effort; it is unclear or not useful (click again to undo)"><img src="~/Content/themes/layout/downvote.gif" alt="upvote" onclick="downvote(@Model.OpeningPost.Post_id);" /></a></p>
+            <p><a href="#" title="This question does not show any research effort; it is unclear or not useful (click again to undo)"><img src="~/Content/themes/layout/downvote.gif" alt="upvote" onclick="@(Session["login"] != null ? "downvote(" + Model.OpeningPost.Post_id + ");" : "notloggedin();")" /></a></p>
         </div>
 
         <div class="post_content">
