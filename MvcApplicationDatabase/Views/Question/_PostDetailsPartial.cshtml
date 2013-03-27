@@ -35,7 +35,7 @@
                 <div class="post_user">
                     <p>Answered @Model.DateCreated.ToString("dd MMM \\a\\t HH:mm")</p>
                     <p>
-                        <img class="avatar" src="~/Content/themes/layout/" alt="avatar" width="40px" height="40px" />
+                        <img class="avatar" src="~/Content/themes/layout/@Model.User.Photo" alt="avatar" width="40px" height="40px" />
                         @Html.ActionLink(Model.User.FirstName, "/user/details/" + Model.User_id, "users")
                     </p>
                 </div>

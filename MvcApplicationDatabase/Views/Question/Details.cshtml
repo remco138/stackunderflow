@@ -2,8 +2,6 @@
 
 @{
     ViewBag.Title = "Details";
-    string[] OpeningPost = Model.GetUserDetails(Model.OpeningPost.User_id);
-
 }
 @Scripts.Render("~/Scripts/Markdown.Converter.js")
 @Scripts.Render("~/Scripts/Markdown.Editor.js")
@@ -49,12 +47,13 @@
                 @Html.ActionLink(@tag.Name, @tag.Name.ToLower(), new { controller = "question/tagged" }, new { @class = "post-tag", })
             }
         </div>
-    
+        
+      
         <div class="post_user">
             <p>asked @Model.OpeningPost.DateCreated.ToString("dd MMM \\a\\t HH:mm")</p>
             <p>
-                <img class="avatar" src="~/Content/themes/layout/@OpeningPost[1]" alt="avatar" width="40px" height="40px" />
-                @Html.ActionLink(OpeningPost[0], "details/" + Model.OpeningPost.User_id, "users")
+                <img class="avatar" src="~/Content/themes/layout/@Model.OpeningPost.User.Photo" alt="avatar" width="40px" height="40px" />
+                @Html.ActionLink(Model.OpeningPost.User.Username, "details/" + Model.OpeningPost.User_id, "users")
             </p>
         </div>
     </div>
