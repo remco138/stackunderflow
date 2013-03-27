@@ -217,7 +217,6 @@ namespace MvcApplicationDatabase.Controllers
         }
         
         [WebMethod()]
-        //[ScriptMethod()]
         public void Vote(int? id, string type = "up")
         {
             if (id != null)
