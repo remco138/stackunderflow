@@ -74,7 +74,10 @@
 
         @foreach(MvcApplicationDatabase.Models.Post post in Model.Posts)
         {
-            if (post.Post_id == Model.BestAnswerPost.Post_id) { continue; }
+            if (Model.BestAnswerPost != null)
+            {
+                if (post.Post_id == Model.BestAnswerPost.Post_id) { continue; }
+            }
             
             @Html.Partial("_PostDetailsPartial", post) 
         }
