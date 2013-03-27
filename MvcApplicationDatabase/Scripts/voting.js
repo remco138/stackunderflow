@@ -3,7 +3,7 @@
     $("#totalvote_" + id).text(prev);
     $.ajax({
         type: "POST",
-        url: "vote?id="+ id + "&type=up",
+        url: "vote?id=" + id + "&type=up",
         success: function (result) {
         }
     });
@@ -14,7 +14,7 @@ function downvote(id) {
     $("#totalvote_" + id).text(prev);
     $.ajax({
         type: "POST",
-        url: "vote?id="+ id + "&type=down",
+        url: "vote?id=" + id + "&type=down",
         success: function (result) {
         }
     });

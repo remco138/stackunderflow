@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using MarkdownSharp;
+using System.Web.Services;
 
 namespace MvcApplicationDatabase.Controllers
 {
@@ -319,6 +320,18 @@ namespace MvcApplicationDatabase.Controllers
             return RedirectToAction("Index");
         }
 
-
+        [WebMethod()]
+        public void Vote(int? id, string type = "up")
+        {
+            if (id != null)
+            {
+                var row = db.Posts.Where(p => p.Post_id == id).Single();
+                if (type == "up")
+                    row.Votes++;
+                else if (type == "down")
+                    row.Votes--;
+                db.SaveChanges();
+            }
+        }
     }
 }

@@ -9,9 +9,9 @@
                 <input type="hidden" value="@Model.Post_id" />
 
                 <div class="post_vote">
-                    <p><a href="#"><img src="~/Content/themes/layout/upvote.gif" alt="upvote" /></a></p>
-                    <p>@Model.Votes</p>
-                    <p><a href="#"><img src="~/Content/themes/layout/downvote.gif" alt="upvote" /></a></p>
+                    <p><a href="#" title="This answer is useful (click again to undo)"><img src="~/Content/themes/layout/upvote.gif" alt="upvote" onclick="upvote(@Model.Post_id);" /></a></p>
+                    <p id="totalvote_@Model.Post_id">@Model.Votes</p>
+                    <p><a href="#" title="This answer is not useful (click again to undo)"><img src="~/Content/themes/layout/downvote.gif" alt="upvote" onclick="downvote(@Model.Post_id);" /></a></p>
                 </div>
 
                 <a class="set-best-answer" href="/question/@Model.Question_id/bestanswer/@Model.Post_id">Select as best answer</a>

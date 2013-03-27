@@ -8,6 +8,7 @@
 @Scripts.Render("~/Scripts/Markdown.Converter.js")
 @Scripts.Render("~/Scripts/Markdown.Editor.js")
 @Scripts.Render("~/Scripts/Markdown.Sanitizer.js")
+@Scripts.Render("~/Scripts/voting.js")
 
 <div class="content-left @if(ViewBag.isUserWhoAskedThisQuestion) { @Html.Raw("user-asked-question") }">
 
@@ -33,9 +34,9 @@
 
 
         <div class="post_vote">
-            <p><a href="#"><img src="~/Content/themes/layout/upvote.gif" alt="upvote" /></a></p>
-            <p>@Model.OpeningPost.Votes</p>
-            <p><a href="#"><img src="~/Content/themes/layout/downvote.gif" alt="upvote" /></a></p>
+            <p><a href="#" title="This question shows research effort; it is useful and clear (click again to undo)"><img src="~/Content/themes/layout/upvote.gif" alt="upvote" onclick="upvote(@Model.OpeningPost.Post_id);" /></a></p>
+            <p id="totalvote_@Model.OpeningPost.Post_id">@Model.OpeningPost.Votes</p>
+            <p><a href="#" title="This question does not show any research effort; it is unclear or not useful (click again to undo)"><img src="~/Content/themes/layout/downvote.gif" alt="upvote" onclick="downvote(@Model.OpeningPost.Post_id);" /></a></p>
         </div>
 
         <div class="post_content">
