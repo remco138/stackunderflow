@@ -14,11 +14,11 @@
 <div class="subheader">
     <div id="tabs">
         @foreach(string tab in tabs) {
-            <a href="?sort=@tab" @(sort == @tab ? "class=youarehere" : "")>@tab</a>
+            <a href="?sort=@tab" @(sort == tab ? "class=youarehere" : "")>@tab</a>
         }
 
         
-        <a href="?sort=reported" class="reports-tab">Reports 
+        <a href="?sort=reported" class="reports-tab@(sort == "reported" ? " youarehere" : "")">Reports 
          </a>
             @if(Model.Any(q => q.Reported != null && q.Reported != "")) {
                     <span class="exclamation-mark"> ! </span>
@@ -88,17 +88,22 @@
 </div>
 <div class="clear"></div>
 <div id="pager">
-    <p>
-        @for (int i = 1; i <= Math.Abs(ViewBag.QuestionCount/ViewBag.PageSize); i++)
+    @{
+        // define page shizzle
+        int page = Request["page"] != null ? Convert.ToInt32(Request["page"]) : 1;
+        int pagesize = Request["pagesize"] != null ? Convert.ToInt32(Request["pagesize"]) : ViewBag.StdPageSize;
+    }
+    <p><b>Page: </b>
+        @for (int i = 0; i <= Math.Abs(ViewBag.QuestionCount/pagesize); i++)
         {
-            @Html.ActionLink(i.ToString() + " | ", "Index", new { page=i })
+            @Html.ActionLink((i+1).ToString() + " ", "Index", new { page=i+1, pagesize=pagesize })
         }
     </p>
     <p>
-        <b>Pagesize:</b>
-        @Html.ActionLink("5", "Index", new { pagesize=5 }) | 
-        @Html.ActionLink("10", "Index", new { pagesize=10 })  | 
-        @Html.ActionLink("15", "Index", new { pagesize=15 })
+        <b>Pagesize: </b>
+        @Html.ActionLink("5", "Index", new { page=page, pagesize=5 }) | 
+        @Html.ActionLink("10", "Index", new { page=page, pagesize=10 })  | 
+        @Html.ActionLink("15", "Index", new { page=page, pagesize=15 })
     </p>
 </div>
 <br />

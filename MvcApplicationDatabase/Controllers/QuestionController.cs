@@ -36,7 +36,7 @@ namespace MvcApplicationDatabase.Controllers
                                            .Take(pagesize);
                     break;
             }
-            ViewBag.PageSize = pagesize;
+            ViewBag.StdPageSize = pagesize;
             ViewBag.QuestionCount = questionCount;
             ViewBag.RecentTags = db.Tags.OrderByDescending(x => x.Questions.Count).ToArray();
             return View(questionList);
