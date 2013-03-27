@@ -174,6 +174,7 @@
     <Content Include="App_Data\StackOverflowDatabase_log.ldf">
       <DependentUpon>StackOverflowDatabase.mdf</DependentUpon>
     </Content>
+    <Content Include="Content\Site.js" />
     <Content Include="Scripts\Markdown.Converter.js" />
     <Content Include="Scripts\Markdown.Editor.js" />
     <Content Include="Scripts\Markdown.Sanitizer.js" />
@@ -269,11 +270,8 @@
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\runMarkdown.js" />
-    <Content Include="Scripts\voting.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

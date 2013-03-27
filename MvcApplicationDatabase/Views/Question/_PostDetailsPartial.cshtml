@@ -1,27 +1,69 @@
 ﻿@model MvcApplicationDatabase.Models.Post
 
-@{}
 
-<div id="@Model.Post_id" class="cf">
-    <div class="post-left">
-        <div class="vote">
-            <input type="hidden" value="@Model.Post_id" />
-            <a class="vote-up-off" title="Click to upvote">up vote</a>
-            <span class="vote-count-post">@Model.Votes</span>
-            <a class="vote-down-off" title="Click to downvote">down vote</a>
+<div id="@Model.Post_id" class="post">
+
+    <div class="cf">
+        <div class="post-left">
+            <div class="vote">
+                <input type="hidden" value="@Model.Post_id" />
+
+                <div class="post_vote">
+                    <p><a href="#"><img src="~/Content/themes/layout/upvote.gif" alt="upvote" /></a></p>
+                    <p>@Model.Votes</p>
+                    <p><a href="#"><img src="~/Content/themes/layout/downvote.gif" alt="upvote" /></a></p>
+                </div>
+
+                <a class="set-best-answer" href="/question/@Model.Question_id/bestanswer/@Model.Post_id">Select as best answer</a>
+
+            </div>
+        </div>
+
+        <div class="post-right">
+            <div class="post-text">@Html.Raw(Model.Content)</div> 
+
+            @if (Model.Question.Active == false)
+            {
+            <div class="post-bar">
+                <a class="post-reply" href="/question/comment/@Model.Post_id" title="Reply to this post.">comment</a>
+                <a hidden class="post-edit" href="/question/edit/@Model.Post_id">edit</a>               
+            </div>
+            }
+            
+
+            <div class="post-information">
+                <div class="post_user">
+                    <p>Answered @Model.DateCreated.ToString("dd MMM \\a\\t HH:mm")</p>
+                    <p>
+                        <img class="avatar" src="~/Content/themes/layout/" alt="avatar" width="40px" height="40px" />
+                        @Html.ActionLink(Model.User.FirstName, "/user/details/" + Model.User_id, "users")
+                    </p>
+                </div>
+                <div class="clear"></div>
+            </div>
         </div>
     </div>
 
-    <div class="post-right">
-        <div class="post-text">@Html.Raw(Model.Content)</div> 
-        <div class="post-information">
-            @if(Model.User != null)
+
+    @if(Model.Comments.Count != 0)
+    {
+        <div class="post-comments">
+            @foreach (MvcApplicationDatabase.Models.Comment comment in Model.Comments)
             {
-                @Model.User.FirstName
-                @Model.User.LastName
-                @Model.User.Photo
-                @Model.User.Votes
+                <div id="comment-@comment.Comment_Id" class="comment">
+                    <div class="comment-text">
+                        <span>@comment.Content</span>
+
+                        <a  href="/user/@comment.User_id" 
+                            title="Go to @comment.User.FirstName @comment.User.LastName's profile" 
+                            class="comment-user">@comment.User.FirstName @comment.User.LastName</a>
+
+                        <span class="comment-date">
+                            Posted on: @comment.DateCreated
+                        </span>
+                    </div>
+                </div>
             }
         </div>
-    </div>
+    }
 </div>   

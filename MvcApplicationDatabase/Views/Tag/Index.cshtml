@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<MvcApplicationDatabase.Models.Tag>
+
 @{
     ViewBag.Title = "Top tags";
 }
@@ -9,87 +10,6 @@
 <h2>@ViewBag.Title</h2>
 
 
- @if (ViewBag.isAdmin == true)
- {//text tag is to escape asp.net block, it won' be output
-     <text> 
-<script type="text/javascript">
-     
-    function deleteTag(who) {
-        if (confirm('Are you sure?')) {
-            //
-            window.location = "/tag/Delete/" + who.substr(7);
-        }
-    }
-    function restoreSummary(who) {
-        //grab the summary element
-        var node = document.getElementById(who) //this will find the modified textarea
-        var parentNode = node.parentNode;
-        parentNode.parentNode.setAttribute("style", "");
-
-        var newNode = document.createElement("div");
-        newNode.setAttribute("id", who);
-        var newCont = document.createTextNode(node.innerHTML);
-        newNode.appendChild(newCont);
-
-        var modButtons = parentNode.getElementsByClassName('summary-button');
-
-        parentNode.parentNode.replaceChild(newNode, parentNode);
-        //parentNode.removeChild(modButtons[0]);
-        //parentNode.removeChild(modButtons[0]);
-        newNode.setAttribute("class", "tag-excerpt");
-    }
-
-    function modSummary(who) {
-        //grab the summary element
-        var node = document.getElementById(who)
-        var parentNode = node.parentNode;
-
-        parentNode.setAttribute("style", "padding-bottom:40px;");
-
-        var formNode = document.createElement("form");
-        formNode.setAttribute("name", "sumModForm");
-        formNode.setAttribute("action", "/tag/ModifySummary/" + who.substr(7));
-        formNode.setAttribute("method", "GET");
-
-        //create textarea and set initial summary text
-        var newNode = document.createElement("TEXTAREA");
-        newNode.setAttribute("id", who);
-        newNode.setAttribute("name", "newSummary");
-        newNode.setAttribute("style", "resize: none;");
-        var newCont = document.createTextNode(node.innerHTML.trim());
-        newNode.appendChild(newCont);
-
-        //insert buttons
-        var setButton = document.createElement("input");
-        setButton.setAttribute("type", "submit");
-        setButton.setAttribute("class", "modify-button");
-        setButton.setAttribute("value", "Submit");
-        var setButtonCont = document.createTextNode("Set");
-        setButton.appendChild(setButtonCont);
-
-        var idContainer = document.createElement("input");
-        idContainer.setAttribute("type", "hidden");
-        idContainer.setAttribute("value", who);
-        idContainer.setAttribute("name", "tagId");
-
-        var cancelButton = document.createElement("a");
-        cancelButton.setAttribute("href", "javascript:restoreSummary('" + who + "')");
-        cancelButton.setAttribute("class", "summary-button");
-        var cancelButtonCont = document.createTextNode("Cancel");
-        cancelButton.appendChild(cancelButtonCont);
-
-        //replace it
-        formNode.appendChild(newNode);
-        formNode.appendChild(idContainer);
-        formNode.appendChild(setButton);
-        formNode.appendChild(cancelButton);
-        parentNode.replaceChild(formNode, node);
-    }
-</script>
-</text>
-}
-
-
 <div class="tag-list">
     @foreach (var t in Model)
     {
@@ -97,17 +17,31 @@
             <a href="@Html.Raw("/question/tagged/" + Uri.EscapeDataString(t.Name.ToLower()))" class="post-tag">@t.Name</a>  
             <span class="tag-excerpt"> 
                 #@t.Questions.Count
-                @if(ViewBag.isAdmin == true)
+                @if(ViewBag.isAdmin != true)
                 {
-                        @:<a href="javascript:modSummary('@String.Format("summary{0}", @t.Tag_id)')">Edit </a>
-                        @:<a href="javascript:deleteTag('@String.Format("summary{0}", @t.Tag_id)')"> X </a>
+                        @:<a href="#" class="modify-summary-button" id="@("modifytag" + t.Tag_id)">Edit </a>
+                        @:<a href="#" class="delete-tag-button" id="@("deletetag" + t.Tag_id)"> X </a>
                 }
                 <br /> </span>
-            <div class ="tag-excerpt" id="@String.Format("summary{0}",@t.Tag_id)">
+            <div class ="tag-excerpt" id="@("divsummary" + @t.Tag_id)">
                 @t.Summary
             </div>
-        </div>
-        
+            <div id="@("textsummary" + @t.Tag_id)" style="display:none">
+            @using (Html.BeginForm("ModifySummary", "Tag", new { id = t.Tag_id }, FormMethod.Get )) {
+
+                @Html.TextArea("newSummary", t.Summary.Trim(), new {cols = 25} )
+                <input type="hidden" value="@t.Tag_id" />
+                
+                <div class="summary-button">
+                    <input type="submit" value="Set" />
+                
+                <a href="#" class="" id="@("restoresummary" + t.Tag_id)"> Cancel</a>
+                
+                </div>
+                
+            }
+           </div>
+    </div>
     }
 
     <div class="clear"></div>

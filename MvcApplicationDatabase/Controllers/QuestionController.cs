@@ -8,7 +8,6 @@ using System.Web.Mvc;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using MarkdownSharp;
-using System.Web.Services;
 
 namespace MvcApplicationDatabase.Controllers
 {
@@ -22,22 +21,16 @@ namespace MvcApplicationDatabase.Controllers
         {
             page = page - 1;
             int questionCount = db.Questions.Count();
-            IQueryable questions;
+            IQueryable questionList;
             switch (sort)
             {
                 case "faq":
-                    questions = db.Questions.OrderByDescending(q => q.Views)
-                                           .Skip(page * pagesize)
-                                           .Take(pagesize);
-                    break;
-                case "reported":
-                    questions = db.Questions.OrderByDescending(q => q.Views)
-                                           .Where(q => q.Reported != null)
+                    questionList = db.Questions.OrderByDescending(q => q.Views)
                                            .Skip(page * pagesize)
                                            .Take(pagesize);
                     break;
                 default:
-                    questions = db.Questions.OrderByDescending(q => q.DateCreated)
+                    questionList = db.Questions.OrderByDescending(q => q.DateCreated)
                                            .Skip(page * pagesize)
                                            .Take(pagesize);
                     break;
@@ -45,7 +38,7 @@ namespace MvcApplicationDatabase.Controllers
             ViewBag.PageSize = pagesize;
             ViewBag.QuestionCount = questionCount;
             ViewBag.RecentTags = db.Tags.OrderByDescending(x => x.Questions.Count).ToArray();
-            return View(questions);
+            return View(questionList);
         }
 
         public ActionResult Tagged(string id, int page = 1, int pagesize = 15)
@@ -68,7 +61,6 @@ namespace MvcApplicationDatabase.Controllers
                 return RedirectToAction("login", "user", new { auth_error = 1 });
             return View();
         }
-
         [HttpPost, ValidateInput(false)]
         public ActionResult Ask(QuestionFormViewModel vm)
         {
@@ -113,6 +105,12 @@ namespace MvcApplicationDatabase.Controllers
         }
 
 
+        //  /Question/1234
+        //         
+        //      Maps to:
+        //  
+        //  /Question/Details/1234
+        //
         public ActionResult Details(int id)
         {
             try
@@ -120,7 +118,12 @@ namespace MvcApplicationDatabase.Controllers
                 var question = db.Questions.First(q => q.Question_id == id);
                 var posts = question.Posts.OrderBy(q => q.DateCreated).Skip(1);
                 ViewBag.Login = Session["login"];
-                ViewBag.RecentTags = db.Tags.OrderByDescending(x => x.Questions.Count).ToArray();
+
+                if (UserController.isLoggedIn)
+                    ViewBag.isUserWhoAskedThisQuestion = question.Posts.First().User_id == (int)Session["ID"];
+                else
+                    ViewBag.isUserWhoAskedThisQuestion = false;
+
                 QuestionDetailsFormViewModel model = new QuestionDetailsFormViewModel()
                     {
                         Question = question,
@@ -142,7 +145,14 @@ namespace MvcApplicationDatabase.Controllers
                 return RedirectToAction("Index");
             }
         }
-
+        
+        //  /Question/1234/answer/submit
+        //
+        //      Maps to:
+        //
+        //  [HttpPost]
+        //  /Question/Details/1234
+        //
         [HttpPost]
         public ActionResult Details(QuestionDetailsFormViewModel model)
         {
@@ -161,17 +171,61 @@ namespace MvcApplicationDatabase.Controllers
             return RedirectToAction("Details");
         }
 
+        //  /Question/10/bestanswer/3
+        //
+        //      Maps to:
+        //  
+        //  /Question/SetBestAnswer?question_id=10&bestanswer_id=12
+        //
+        //      
+        public ActionResult SetBestAnswer(int question_id = 0, int bestanswer_id = 0)       
+        {
+            if (!UserController.isLoggedIn || question_id == 0 || bestanswer_id == 0)
+            {
+                return RedirectToAction("Index");
+            }
+
+            var targetQuestion = db.Questions.First(q => q.Question_id == question_id);
+            var targetQuestionUser_id = targetQuestion.Posts.First().User_id;
+
+            // Only the user who created the question can select a best answer.
+            //
+
+            if (targetQuestionUser_id == (int)Session["ID"])
+            {
+                targetQuestion.BestAnswer_id = bestanswer_id;
+                db.SaveChanges();
+
+                return RedirectToRoute("Question", new { id = targetQuestion.Question_id });
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+            
+        }
 
         public ActionResult Edit(int id)
         {
-            var question = db.Questions.Single(q => q.Question_id == id);
-            return View(question);
+            try
+            {
+                var question = db.Questions.First(q => q.Question_id == id);
+                var openingPost = question.Posts.First();
+
+                return View(question);
+            }
+            catch(Exception ex)
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpPost]
         public ActionResult Edit(Question question)
         {
-            if (ModelState.IsValid)
+            bool isAdmin = (Session["username"] != null && db.Users.Any(q => q.Username == Session["username"].ToString()));
+
+            if (ModelState.IsValid && (question.Active == true || isAdmin))
             {
                 db.Entry(question).State = System.Data.EntityState.Modified;
                 db.SaveChanges();
@@ -187,58 +241,47 @@ namespace MvcApplicationDatabase.Controllers
         {
             UserController.CheckLogin();
 
-            var comment = new Comment();
-
             try
             {
-                comment.Post_id = id;
-                comment.Post = db.Posts.First(p => p.Post_id == id);             
+                ViewBag.Post_id = id;
+                ViewBag.Post = db.Posts.First(p => p.Post_id == id);             
             }
             catch (InvalidOperationException ex)
             {
                 return RedirectToAction("Index");
             }
 
-            return View(comment);
+
+            return View();
         }
 
         [HttpPost]
         public ActionResult Comment(Comment comment)
         {
             UserController.CheckLogin();
+            bool isAdmin = (Session["username"] != null && db.Users.Any(q => q.Username == Session["username"].ToString()));
 
-            comment.User_id = (int)Session["ID"];
-            comment.DateCreated = DateTime.Now;
-
-            db.Comments.Add(comment);
-            db.SaveChanges();
-
-            return RedirectToRoute("Question", new { id = comment.Post.Question_id });
-        }
-        
-        [WebMethod()]
-        public void Vote(int? id, string type = "up")
-        {
-            if (id != null)
+            if (comment.Post.Question.Active == false || isAdmin)
             {
-                var row = db.Posts.Where(p => p.Post_id == id).Single();
-                if (type == "up")
-                    row.Votes++;
-                else if(type == "down")
-                    row.Votes--;
+                comment.User_id = (int)Session["ID"];
+                comment.DateCreated = DateTime.Now;
+
+                db.Comments.Add(comment);
                 db.SaveChanges();
             }
+
+            return RedirectToRoute("Question", new { id = comment.Post_id });
         }
 
-        public ActionResult Delete(int id = -1)
+        public ActionResult MakeInactive(int id)
         {
             bool isAdmin = (Session["username"] != null && db.Users.Any(q => q.Username == Session["username"].ToString()));
 
-            if (isAdmin)
+            if (!isAdmin && id >= 0)
             {
                 try
                 {
-                    db.Questions.First(t => t.Question_id == id).Active = false;
+                    db.Questions.First(q => q.Question_id == id).Active = false;
                 }
                 catch (Exception e)
                 {
@@ -247,8 +290,35 @@ namespace MvcApplicationDatabase.Controllers
                 db.SaveChanges();
             }
 
+            if(Request.UrlReferrer != null)
+            {
+                return Redirect(Request.UrlReferrer.ToString());
+            }
             return RedirectToAction("Index");
         }
+
+    
+    public ActionResult Report(int id)
+        {
+            if (id >= 0)
+            {
+                try
+                {
+                    db.Questions.First(q => q.Question_id == id).Reported = "May contain bad content"; //Introducing a new textbox will be a lot of effort
+                }
+                catch (Exception e)
+                {
+                    return Content(e.Message);
+                }
+                db.SaveChanges();
+            }
+            if(Request.UrlReferrer != null)
+            {
+                return Redirect(Request.UrlReferrer.ToString());
+            }
+            return RedirectToAction("Index");
+        }
+
 
     }
 }

@@ -182,46 +182,13 @@ a:visited { color: #4a6b82; }
 #content h1.title a {
     color: #000;
 }
-#content h2.title { margin-bottom: -30px; }
-#content .question {
-    float: left;
-    margin-top: 10px;
-    width: 730px;
-    border-bottom: 1px solid #ccc;
-}
-#content .answers {
-    width: 730px;
-    margin-top: -25px;
-}
-#content .post_vote {
-    float: left;
-    text-align: center;
-    width: 60px;
-    font-size: 16px;
-    font-weight: bold;
-}
-#content .post_vote p:last-child {
-    margin-top: 6px;
-}
-#content .post {
-    float: left;
-}
-#content .question_tags {
-    float: left;
-    margin-top: 10px;
-}
-#content .post_user {
-    float: right;
-    width: 190px;
-    height: 70px;
-    background: #ddd;
-    padding: 5px;
-}
-#content .post_user .avatar {
-    float: left;
-    padding: 0 5px 0 0;
+#content h2.title { 
+    margin-bottom: -30px; 
 }
 
+#content .content-left {
+    width: 730px;
+}
 
 /* QuestionList (bijna alles van stackoverflow.com)
 -----------------------------------------------------------*/
@@ -244,7 +211,7 @@ a:visited { color: #4a6b82; }
     width: 730px;
     float: left;
 }
-.question-summary-innactive {
+.question-summary-inactive {
     border-bottom: 1px solid #eaeaea;
     background-color: lightgrey;
     overflow: hidden;
@@ -388,22 +355,128 @@ input[type=submit] {
 }
 
 
-/* Answers to questions
+/* Opening post & Answers to questions
 -----------------------------------------------------------*/
 
+.question {
+    margin-top: 10px;
+    
+}
 
-/* Opening Post*/
+.answers {
+    
+}
+
+.user-asked-question .set-best-answer /* only show set-best-answer for user who is logged in*/,
+.user-asked-question .question .edit {
+    display: block;
+}
+
+
+.set-best-answer, /* never show set-best-answer */
+.user-asked-question .best-answer .set-best-answer /* best answer is already set as best-answer */{
+    display: none;
+}
+
+.best-answer {
+    background-color: #CDEBCD;
+    border: 1px dotted green;
+    padding: 5px;
+    padding-bottom: 20px;
+}
+.best-answer .post{
+    border: none;
+}
+.best-answer .post_user {
+    background: #a7c2ac;
+}
+
+
+.post {
+    margin-top: 10px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+}
+
+.post_vote {
+    display: inline-table;
+    text-align: center;
+    width: 60px;
+    font-size: 16px;
+    font-weight: bold;
+}
+.post_vote p:last-child {
+    margin-top: 6px;
+}
+
+.post_content {
+    display: inline-table;
+}
+
+.question_tags {
+    margin-top: 10px;
+    margin-left: 60px;
+}
+
+
+
+.question .post_user {
+    background: #EBEBEB;
+}
+
+.post_user {
+    float: right;
+    width: 190px;
+    height: 62px;
+    padding: 5px;
+
+    background: white;
+}
+
+.post_user .avatar {
+    float: left;
+    padding: 0 5px 0 0;
+}
+
 .post-left {
     float: left;
     width: 60px;
 }
 
 .post-right {
-    float: left;
-    width: 660px;
-    min-height: 100px;
+    margin-left: 60px;
+    margin-bottom: 5px;
 }
 
+.post-bar {
+    margin-left: 5px;
+    margin-top: 5px;
+}
+    .post-bar a {
+        margin-right: 10px;
+    }
+
+.post-reply {
+
+}
+
+
+.post-comments {
+    margin-left: 60px;
+    border-top: 1px dashed Silver;
+}
+
+.comment {
+    padding: 4px 0;
+    border-bottom: 1px dashed #ccc;
+}
+.comment :hover {
+    background-color: #f3f3f3;
+}
+
+.comment-user {
+    margin: 0 7px;
+}
 
 /* Votes block in each post */
 .vote-up-off,
@@ -412,9 +485,11 @@ input[type=submit] {
 .vote-down-on,
 .comment-up-off,
 .comment-up-on, .vote-accepted-off, .vote-accepted-on {
-    text-indent: 9999em;
+    text-indent: -9999em;
     font-size: 1px;   
 }
+
+
 
 
 /* <form> Ask A Question
@@ -569,10 +644,24 @@ input[type=submit] {
     font-size:xx-large;
 
 }
+.question-report-menu {
+    float:right;
+    margin-right: 20px;
+    padding:4px 4px 3px 4px;
+    border-bottom:1px solid #b3cee1;
+    border-left:1px solid #b3cee1;
+}
+
 .admin-menu { 
     float:right;
-    margin-right:50px;
-    background-color: #FF3334;
+    background-color: rgba(255, 0, 1, 0.07);
+    font-weight:bold;
+}
+.question-report-menu a {
+    font-size: 18px;
+    font-weight: 900;
+    font-family: 'Open Sans';
+    color: #22478a;
 }
 
 /* MARKDOWN EDITOR CSS

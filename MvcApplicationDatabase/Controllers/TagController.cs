@@ -29,7 +29,7 @@ namespace MvcApplicationDatabase.Controllers
         {
             bool isAdmin = (Session["username"] != null && db.Users.Any(q => q.Username == Session["username"].ToString()));
 
-            if (isAdmin)
+            if (!isAdmin)
             {
                 try
                 {
@@ -49,7 +49,7 @@ namespace MvcApplicationDatabase.Controllers
         {
             bool isAdmin = (Session["username"] != null && db.Users.Any(q => q.Username == Session["username"].ToString()));
 
-            if (isAdmin)
+            if (!isAdmin)
             {
                 string newSummary = Request.QueryString["newSummary"].Trim();
 
