@@ -244,9 +244,7 @@ namespace MvcApplicationDatabase.Controllers
         [HttpPost]
         public ActionResult Edit(Question question)
         {
-            bool isAdmin = (Session["username"] != null && db.Users.Any(q => q.Username == Session["username"].ToString()));
-
-            if (ModelState.IsValid && (question.Active == true || isAdmin))
+            if (ModelState.IsValid && (question.Active == true || UserController.isAdmin))
             {
                 db.Entry(question).State = System.Data.EntityState.Modified;
                 db.SaveChanges();

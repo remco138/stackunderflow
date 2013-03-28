@@ -15,6 +15,8 @@ namespace MvcApplicationDatabase.Controllers
         //
         public ActionResult Index()
         {
+            ViewBag.isAdmin = UserController.isAdmin;
+
             List<Tag> tagList = db.Tags.OrderByDescending(x => x.Questions.Count).ToList();  //I've got not clue whether this works or not 
             ViewBag.isAdmin = UserController.isAdmin;
             return View(tagList);
@@ -23,9 +25,9 @@ namespace MvcApplicationDatabase.Controllers
         //   /Tag/Delete/5
         public ActionResult Delete(int id = -1)
         {
-            bool isAdmin = (Session["username"] != null && db.Users.Any(q => q.Username == Session["username"].ToString()));
+            ViewBag.isAdmin = UserController.isAdmin;
 
-            if (!isAdmin)
+            if (UserController.isAdmin)
             {
                 try
                 {
@@ -43,9 +45,9 @@ namespace MvcApplicationDatabase.Controllers
 
         public ActionResult ModifySummary(int id = -1)
         {
-            bool isAdmin = (Session["username"] != null && db.Users.Any(q => q.Username == Session["username"].ToString()));
+            ViewBag.isAdmin = UserController.isAdmin;
 
-            if (!isAdmin)
+            if (UserController.isAdmin)
             {
                 string newSummary = Request.QueryString["newSummary"].Trim();
 
