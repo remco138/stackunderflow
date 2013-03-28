@@ -278,7 +278,7 @@ namespace MvcApplicationDatabase.Controllers
         {
             bool isAdmin = (Session["username"] != null && db.Users.Any(q => q.Username == Session["username"].ToString()));
 
-            if (!isAdmin && id >= 0)
+            if (isAdmin && id >= 0)
             {
                 try
                 {
@@ -302,7 +302,7 @@ namespace MvcApplicationDatabase.Controllers
         {
             bool isAdmin = (Session["username"] != null && db.Users.Any(q => q.Username == Session["username"].ToString()));
 
-            if (!isAdmin && id >= 0)
+            if (isAdmin && id >= 0)
             {
                 try
                 {
