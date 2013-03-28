@@ -48,16 +48,24 @@
         </div>
         <div class="question-report-menu" style="display:none">
             <div class="report-menu-option">
-                Report:
-                @Html.ActionLink("X", "Report", new { controller = "question", id=item.Question_id }, new { @class = "", onclick="return confirm('Are you sure you want to report this question?');"})
+                @if(item.Active == true) {
+                    <text>Report:</text>
+                    @Html.ActionLink("X", "Report", new { controller = "question", id=item.Question_id }, new { @class = "", onclick="return confirm('Are you sure you want to report this question?');"})
+                }
             </div>
 
             @if (ViewBag.isAdmin != true)
             {
                 <div class="admin-menu">
                     <div class="report-menu-option">
-                        Make inactive:
-                        @Html.ActionLink("X", "MakeInactive", new { controller = "question", id=item.Question_id }, new { @class = "", onclick="return confirm('Are you sure you want to report this question?');" })
+                        @if (item.Reported != null && item.Reported != "") {
+                            <text>Un-report</text>
+                            @Html.ActionLink("X", "RemoveReport", new { controller = "question", id = item.Question_id }, new { @class = "", onclick = "return confirm('Are you sure you want to remove the reported status of this question?');" })
+                        }
+                    </div>
+                    <div class="report-menu-option">
+                        @(item.Active == true ? "Lock: " : "Unlock: ")
+                        @Html.ActionLink("X", "Active", new { controller = "question", id=item.Question_id, active = !item.Active }, new { @class = "", onclick="return confirm('Are you sure you want to lock/unlock this question?');" })
                      </div>
                 </div>
             }

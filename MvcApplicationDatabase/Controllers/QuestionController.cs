@@ -274,7 +274,7 @@ namespace MvcApplicationDatabase.Controllers
             return RedirectToRoute("Question", new { id = comment.Post_id });
         }
 
-        public ActionResult MakeInactive(int id)
+        public ActionResult RemoveReport(int id, bool active = true)
         {
             bool isAdmin = (Session["username"] != null && db.Users.Any(q => q.Username == Session["username"].ToString()));
 
@@ -282,7 +282,31 @@ namespace MvcApplicationDatabase.Controllers
             {
                 try
                 {
-                    db.Questions.First(q => q.Question_id == id).Active = false;
+                    db.Questions.First(q => q.Question_id == id).Reported = null;   
+                }
+                catch (Exception e)
+                {
+                    return Content(e.Message);
+                }
+                db.SaveChanges();
+            }
+
+            if(Request.UrlReferrer != null)
+            {
+                return Redirect(Request.UrlReferrer.ToString());
+            }
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Active(int id, bool active = true)
+        {
+            bool isAdmin = (Session["username"] != null && db.Users.Any(q => q.Username == Session["username"].ToString()));
+
+            if (!isAdmin && id >= 0)
+            {
+                try
+                {
+                    db.Questions.First(q => q.Question_id == id).Active = active;
                 }
                 catch (Exception e)
                 {

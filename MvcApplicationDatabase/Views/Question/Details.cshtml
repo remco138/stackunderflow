@@ -10,21 +10,31 @@
 
 <div class="content-left @if(ViewBag.isUserWhoAskedThisQuestion) { @Html.Raw("user-asked-question") }">
 
-    <div class="question">
+    <div class="@((Model.Question.Active == true) ? "question" : "question-inactive")">
         <h1 class="title">@Html.ActionLink(Model.Question.Title, Model.Question.Question_id.ToString(), "question")</h1>
     
         <div class="question-report-menu" style="display:none">
             <div class="report-menu-option">
-                Report:
-                @Html.ActionLink("X", "Report", new { controller = "question", id = Model.Question.Question_id }, new { @class = "", onclick = "return confirm('Are you sure you want to report this question?');" })
+                @if(Model.Question.Active == true) {
+                    <text>Report:</text>
+                    @Html.ActionLink("X", "Report", new { controller = "question", id = Model.Question.Question_id }, new { @class = "", onclick = "return confirm('Are you sure you want to report this question?');" })
+                }
             </div>
 
             @if (ViewBag.isAdmin != true)
             {
                 <div class="admin-menu">
                     <div class="report-menu-option">
-                        Make inactive:
-                        @Html.ActionLink("X", "MakeInactive", new { controller = "question", id=Model.Question.Question_id }, new { @class = "", onclick="return confirm('Are you sure you want to report this question?');" })
+                        @if (Model.Question.Reported != null && Model.Question.Reported != "")
+                        {
+                            <text>Un-report</text>
+                            @Html.ActionLink("X", "RemoveReport", new { controller = "question", id = Model.Question.Question_id }, new { @class = "", onclick = "return confirm('Are you sure you want to remove the reported status of this question?');" })
+                        }
+                        </div>
+
+                    <div class="report-menu-option">
+                        @(Model.Question.Active == true ? "Lock: " : "Unlock: ")
+                        @Html.ActionLink("X", "Active", new { controller = "question", id=Model.Question.Question_id, active = !Model.Question.Active }, new { @class = "", onclick="return confirm('Are you sure you want to report this question?');" })
                      </div>
                 </div>
             }
