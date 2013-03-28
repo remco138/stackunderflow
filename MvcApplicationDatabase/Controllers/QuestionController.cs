@@ -23,8 +23,8 @@ namespace MvcApplicationDatabase.Controllers
             page = page - 1;
             int questionCount = db.Questions.Count();
             IQueryable questionList;
-            bool isAdmin = (Session["username"] != null && db.Users.Any(q => q.Username == Session["username"].ToString()));
-            
+            //bool isAdmin = (Session["username"] != null && db.Users.Any(q => q.Username == Session["username"].ToString()));
+            bool isAdmin = false;
             switch (sort)
             {
                 case "votes":
@@ -85,6 +85,7 @@ namespace MvcApplicationDatabase.Controllers
             Markdown md = new Markdown();
             if (ModelState.IsValid)
             {
+                vm.Question.Active = true;
                 vm.Question.DateCreated = DateTime.Now;
                 vm.Question.Posts.Add(new Post()
                 {
@@ -283,7 +284,6 @@ namespace MvcApplicationDatabase.Controllers
             {
                 comment.User_id = (int)Session["ID"];
                 comment.DateCreated = DateTime.Now;
-
                 db.Comments.Add(comment);
                 db.SaveChanges();
             }
@@ -318,7 +318,6 @@ namespace MvcApplicationDatabase.Controllers
         public ActionResult Active(int id, bool active = true)
         {
             bool isAdmin = (Session["username"] != null && db.Users.Any(q => q.Username == Session["username"].ToString()));
-
             if (isAdmin && id >= 0)
             {
                 try

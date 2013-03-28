@@ -9,7 +9,8 @@
           <EntitySet Name="Comments" EntityType="StackOverflowDatabaseModel.Store.Comments" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Posts" EntityType="StackOverflowDatabaseModel.Store.Posts" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Questions" EntityType="StackOverflowDatabaseModel.Store.Questions" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Tagged_Questions" EntityType="StackOverflowDatabaseModel.Store.Tagged_Questions" store:Type="Tables" Schema="dbo" store:Name="Tagged_Questions"></EntitySet>
+          <EntitySet Name="Tagged_Questions" EntityType="StackOverflowDatabaseModel.Store.Tagged_Questions" store:Type="Tables" Schema="dbo" store:Name="Tagged_Questions">
+          </EntitySet>
           <EntitySet Name="Tags" EntityType="StackOverflowDatabaseModel.Store.Tags" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Users" EntityType="StackOverflowDatabaseModel.Store.Users" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="BelongsToQuestion" Association="StackOverflowDatabaseModel.Store.BelongsToQuestion">
@@ -52,7 +53,7 @@
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="Votes" Type="int" />
           <Property Name="Reported" Type="varchar" MaxLength="50" />
-          <Property Name="Active" Type="bit" />
+          <Property Name="Active" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Posts">
           <Key>
@@ -65,7 +66,7 @@
           <Property Name="Votes" Type="int" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="Reported" Type="varchar" MaxLength="50" />
-          <Property Name="Active" Type="bit" />
+          <Property Name="Active" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Questions">
           <Key>
@@ -77,10 +78,10 @@
           <Property Name="Title" Type="varchar" Nullable="false" MaxLength="150" />
           <Property Name="Views" Type="int" Nullable="false" />
           <Property Name="Reported" Type="varchar" MaxLength="50" />
-          <Property Name="Active" Type="bit" />
+          <Property Name="Active" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'L:\MIJN DOCUMENTEN\VISUAL STUDIO 2012\PROJECTS\GITHUB\STACKUNDERFLOW\MVCAPPLICATIONDATABASE\APP_DATA\STACKOVERFLOWDATABASE.MDF.dbo.Tagged_Questions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view '17AC21E954199D7E75EFB0CBFFFE9EFC_ROJECTS\STACKUNDERFLOW\STACKUNDERFLOW\MVCAPPLICATIONDATABASE\APP_DATA\STACKOVERFLOWDATABASE.MDF.dbo.Tagged_Questions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="Tagged_Questions">
           <Key>
@@ -97,7 +98,7 @@
           <Property Name="Tag_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="varchar" MaxLength="25" />
           <Property Name="Summary" Type="text" />
-          <Property Name="Active" Type="bit" />
+          <Property Name="Active" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -114,7 +115,7 @@
           <Property Name="Username" Type="varchar" MaxLength="50" />
           <Property Name="Address" Type="varchar" MaxLength="50" />
           <Property Name="Zip" Type="varchar" MaxLength="6" />
-          <Property Name="Photo" Type="varchar" MaxLength="255" />
+          <Property Name="Photo" Type="varchar" Nullable="false" MaxLength="255" />
           <Property Name="Bio" Type="text" />
         </EntityType>
         <Association Name="BelongsToQuestion">
@@ -249,7 +250,7 @@
           <NavigationProperty Name="Post" Relationship="StackOverflowDatabaseModel.Post_id" FromRole="Comments" ToRole="Posts" />
           <NavigationProperty Name="User" Relationship="StackOverflowDatabaseModel.User_id" FromRole="Comments" ToRole="Users" />
           <Property Type="String" Name="Reported" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="Boolean" Name="Active" />
+          <Property Type="Boolean" Name="Active" Nullable="false" />
         </EntityType>
         <EntityType Name="Post">
           <Key>
@@ -266,7 +267,7 @@
           <NavigationProperty Name="Questions" Relationship="StackOverflowDatabaseModel.BestAnswerPost_id" FromRole="Posts" ToRole="Questions" />
           <NavigationProperty Name="User" Relationship="StackOverflowDatabaseModel.UserWhoPosted" FromRole="Posts" ToRole="Users" />
           <Property Type="String" Name="Reported" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="Boolean" Name="Active" />
+          <Property Type="Boolean" Name="Active" Nullable="false" />
         </EntityType>
         <EntityType Name="Question">
           <Key>
@@ -281,7 +282,7 @@
           <NavigationProperty Name="BestAnswer" Relationship="StackOverflowDatabaseModel.BestAnswerPost_id" FromRole="Questions" ToRole="Posts" />
           <NavigationProperty Name="Tags" Relationship="StackOverflowDatabaseModel.Tagged_Questions" FromRole="Questions" ToRole="Tags" />
           <Property Type="String" Name="Reported" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="Boolean" Name="Active" />
+          <Property Type="Boolean" Name="Active" Nullable="false" />
         </EntityType>
         <EntityType Name="Tag">
           <Key>
@@ -291,7 +292,7 @@
           <Property Name="Name" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
           <Property Name="Summary" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Questions" Relationship="StackOverflowDatabaseModel.Tagged_Questions" FromRole="Tags" ToRole="Questions" />
-          <Property Type="Boolean" Name="Active" />
+          <Property Type="Boolean" Name="Active" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -308,7 +309,7 @@
           <Property Name="Username" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="Address" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="Zip" Type="String" MaxLength="6" Unicode="false" FixedLength="false" />
-          <Property Name="Photo" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="Photo" Type="String" MaxLength="255" Unicode="false" FixedLength="false" Nullable="false" />
           <NavigationProperty Name="Comments" Relationship="StackOverflowDatabaseModel.User_id" FromRole="Users" ToRole="Comments" />
           <NavigationProperty Name="Posts" Relationship="StackOverflowDatabaseModel.UserWhoPosted" FromRole="Users" ToRole="Posts" />
           <Property Type="String" Name="Bio" MaxLength="Max" FixedLength="false" Unicode="false" />
