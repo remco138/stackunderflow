@@ -183,12 +183,37 @@ a:visited { color: #4a6b82; }
 #content h1.title a {
     color: #000;
 }
-#content h2.title { 
-    margin-bottom: -30px; 
+#content h2.title { margin-bottom: -30px; }
+#content .question {
+    float: left;
+    margin-top: 10px;
+    width: 730px;
+}
+#content .answers {
+    width: 730px;
+    margin-top: -25px;
+}
+#content .post_vote {
+    float: left;
+    text-align: center;
+    width: 60px;
+    font-size: 16px;
+    font-weight: bold;
+}
+#content .post_vote p:last-child {
+    margin-top: 6px;
 }
 
-#content .content-left {
-    width: 730px;
+#content .post_user {
+    float: right;
+    width: 190px;
+    height: 70px;
+    background: #ddd;
+    padding: 5px;
+}
+#content .post_user .avatar {
+    float: left;
+    padding: 0 5px 0 0;
 }
 
 /* QuestionList (bijna alles van stackoverflow.com)
