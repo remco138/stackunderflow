@@ -20,7 +20,7 @@
             <a href="?sort=@tab.Key" title="@tab.Value" @(sort == tab.Key ? "class=youarehere" : "")>@tab.Key</a>
         }
 
-        @if(ViewBag.isadmin == true && Model.Any(q => q.Reported != null && q.Reported != "")) {
+        @if(ViewBag.isAdmin == true && Model.Any(q => q.Reported != null && q.Reported != "")) {
         <a href="?sort=reported" class="reports-tab@(sort == "reported" ? " youarehere" : "")">Reports 
          </a>
                     <span class="exclamation-mark"> ! </span>

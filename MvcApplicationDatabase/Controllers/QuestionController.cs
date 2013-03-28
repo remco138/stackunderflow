@@ -55,6 +55,7 @@ namespace MvcApplicationDatabase.Controllers
             ViewBag.StdPageSize = pagesize;
             ViewBag.QuestionCount = questionCount;
             ViewBag.RecentTags = db.Tags.OrderByDescending(x => x.Questions.Count).ToArray();
+            ViewBag.isAdmin = UserController.isAdmin;
             return View(questionList);
         }
 
@@ -138,6 +139,7 @@ namespace MvcApplicationDatabase.Controllers
                 var question = db.Questions.First(q => q.Question_id == id);
                 var posts = question.Posts.OrderBy(q => q.DateCreated).Skip(1);
                 ViewBag.Login = Session["login"];
+                ViewBag.isAdmin = UserController.isAdmin;
 
                 if (UserController.isLoggedIn)
                     ViewBag.isUserWhoAskedThisQuestion = question.Posts.First().User_id == (int)Session["ID"];
@@ -293,9 +295,7 @@ namespace MvcApplicationDatabase.Controllers
 
         public ActionResult RemoveReport(int id, bool active = true)
         {
-            bool isAdmin = (Session["username"] != null && db.Users.Any(q => q.Username == Session["username"].ToString()));
-
-            if (isAdmin && id >= 0)
+           if (UserController.isAdmin && id >= 0)
             {
                 try
                 {
@@ -317,8 +317,7 @@ namespace MvcApplicationDatabase.Controllers
 
         public ActionResult Active(int id, bool active = true)
         {
-            bool isAdmin = (Session["username"] != null && db.Users.Any(q => q.Username == Session["username"].ToString()));
-            if (isAdmin && id >= 0)
+            if (UserController.isAdmin && id >= 0)
             {
                 try
                 {

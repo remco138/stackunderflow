@@ -15,8 +15,6 @@ namespace MvcApplicationDatabase.Controllers
         //
         public ActionResult Index()
         {
-            ViewBag.isAdmin = UserController.isAdmin;
-
             List<Tag> tagList = db.Tags.OrderByDescending(x => x.Questions.Count).ToList();  //I've got not clue whether this works or not 
             ViewBag.isAdmin = UserController.isAdmin;
             return View(tagList);

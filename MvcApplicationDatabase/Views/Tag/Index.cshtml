@@ -17,7 +17,7 @@
             <a href="@Html.Raw("/question/tagged/" + Uri.EscapeDataString(t.Name.ToLower()))" class="post-tag">@t.Name</a>  
             <span class="tag-excerpt"> 
                 #@t.Questions.Count
-                @if(ViewBag.isAdmin == true)
+                @if(ViewBag.isAdmin)
                 {
                         @:<a href="#" class="modify-summary-button" id="@("modifytag" + t.Tag_id)">Edit </a>
                         @:<a href="#" class="delete-tag-button" id="@("deletetag" + t.Tag_id)"> X </a>

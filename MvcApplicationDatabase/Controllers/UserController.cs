@@ -131,8 +131,13 @@ namespace MvcApplicationDatabase.Controllers
         {
             int id = 1337;
             bool loginCheck = false;
-            try { id = db.Users.Where(u => u.Username == user.Username).Select(u => u.User_id).First(); }
-            catch (Exception ex) { /* login failed */ }
+            User userDetails;
+            
+            try { userDetails = db.Users.First(u => u.Username == user.Username); }
+            catch (Exception ex) {
+                return RedirectToAction("login", "user");
+            }
+            
             foreach (var userlist in db.Users)
             {
                 if (userlist.Username.Equals(user.Username) && userlist.Password.Equals(user.Password))
@@ -148,7 +153,7 @@ namespace MvcApplicationDatabase.Controllers
                 if ( (bool)Session["login"] == true )
                 {
                     Session.Add("Username", user.Username);
-                    if(user.PermissionLEvel == 1)
+                    if (userDetails.PermissionLEvel == 1)
                         Session.Add("isAdmin", true);
                     return RedirectToAction("index", "home");
                 }
