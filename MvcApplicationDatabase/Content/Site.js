@@ -5,7 +5,7 @@ $("document").ready(
     function () {
         /*  toggling question menu for admins, make inactive, delete, etc      */
         //mouseOver
-        myDiv = $(".question-summary, .question");
+        myDiv = $(".question-summary, .question, .question-summary-inactive, .question-inactive");
         myDiv.mouseover(function () {
             $(this).children(".question-report-menu").show();//.css("visibility", "visible");
         })

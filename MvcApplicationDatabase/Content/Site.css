@@ -361,7 +361,11 @@ input[type=submit] {
 
 .question {
     margin-top: 10px;
-    
+}
+
+.question-inactive {
+    margin-top: 10px;
+    background-color:#ddd;
 }
 
 .answers {
