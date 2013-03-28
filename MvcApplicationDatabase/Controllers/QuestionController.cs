@@ -25,12 +25,18 @@ namespace MvcApplicationDatabase.Controllers
             IQueryable questionList;
             switch (sort)
             {
-                case "faq":
-                    questionList = db.Questions.OrderByDescending(q => q.Views)
+                case "votes":
+                    questionList = db.Questions.OrderByDescending(q => q.Posts.FirstOrDefault().Votes)
+                                           .Skip(page * pagesize)
+                                           .Take(pagesize);
+                    break;
+                case "active":
+                    questionList = db.Questions.OrderByDescending(q => q.Posts.FirstOrDefault().DateCreated)
                                            .Skip(page * pagesize)
                                            .Take(pagesize);
                     break;
                 default:
+                    /* newest */
                     questionList = db.Questions.OrderByDescending(q => q.DateCreated)
                                            .Skip(page * pagesize)
                                            .Take(pagesize);

@@ -7,7 +7,7 @@
         sort = "newest";
     }
     ViewBag.Title = "Questions";
-    string[] tabs = {"newest", "faq", "votes", "active", "unanswered"};
+    string[] tabs = {"newest", "frequent", "votes", "active", "unanswered"};
 }
 
 <h2 class="title">All @ViewBag.Title</h2>
@@ -17,7 +17,6 @@
             <a href="?sort=@tab" @(sort == tab ? "class=youarehere" : "")>@tab</a>
         }
 
-        
         <a href="?sort=reported" class="reports-tab@(sort == "reported" ? " youarehere" : "")">Reports 
          </a>
             @if(Model.Any(q => q.Reported != null && q.Reported != "")) {
