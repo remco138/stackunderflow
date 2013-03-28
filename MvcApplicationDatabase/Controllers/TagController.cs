@@ -16,11 +16,7 @@ namespace MvcApplicationDatabase.Controllers
         public ActionResult Index()
         {
             List<Tag> tagList = db.Tags.OrderByDescending(x => x.Questions.Count).ToList();  //I've got not clue whether this works or not 
-            if (Session["username"] != null)
-            {
-                ViewBag.isAdmin = db.Users.Any(q => q.Username == Session["username"].ToString());
-            }
-            else ViewBag.isAdmin = false;
+            ViewBag.isAdmin = UserController.isAdmin;
             return View(tagList);
         }
 

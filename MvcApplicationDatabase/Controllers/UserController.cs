@@ -148,7 +148,8 @@ namespace MvcApplicationDatabase.Controllers
                 if ( (bool)Session["login"] == true )
                 {
                     Session.Add("Username", user.Username);
-                    
+                    if(user.PermissionLEvel == 1)
+                        Session.Add("isAdmin", true);
                     return RedirectToAction("index", "home");
                 }
                 return RedirectToAction("index", "home");
@@ -194,12 +195,9 @@ namespace MvcApplicationDatabase.Controllers
         {
             get
             {
-                if (true /*TODO: isAdmin*/)
-                {
+                if (System.Web.HttpContext.Current.Session["isAdmin"] != null)
                     return true;
-                }
-                else 
-                    return false;
+                return false;
             }
 
         }
