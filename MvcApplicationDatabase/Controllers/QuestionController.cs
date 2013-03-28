@@ -23,6 +23,8 @@ namespace MvcApplicationDatabase.Controllers
             page = page - 1;
             int questionCount = db.Questions.Count();
             IQueryable questionList;
+            bool isAdmin = (Session["username"] != null && db.Users.Any(q => q.Username == Session["username"].ToString()));
+            
             switch (sort)
             {
                 case "votes":
@@ -35,6 +37,17 @@ namespace MvcApplicationDatabase.Controllers
                                            .Skip(page * pagesize)
                                            .Take(pagesize);
                     break;
+                case "reported":
+                    if (isAdmin == true)
+                    {
+                        questionList = db.Questions.OrderByDescending(q => q.Posts.FirstOrDefault().DateCreated)
+                                               .Select(q => q.Reported != null && q.Reported != "")
+                                               .Skip(page * pagesize)
+                                               .Take(pagesize);
+                        break;
+                    }
+                    return RedirectToAction("Index");
+
                 default:
                     /* newest */
                     questionList = db.Questions.OrderByDescending(q => q.DateCreated)

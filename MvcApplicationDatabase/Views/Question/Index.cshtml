@@ -17,9 +17,9 @@
             <a href="?sort=@tab" @(sort == tab ? "class=youarehere" : "")>@tab</a>
         }
 
+        @if(ViewBag.isadmin == true && Model.Any(q => q.Reported != null && q.Reported != "")) {
         <a href="?sort=reported" class="reports-tab@(sort == "reported" ? " youarehere" : "")">Reports 
          </a>
-            @if(ViewBag.isadmin == true && Model.Any(q => q.Reported != null && q.Reported != "")) {
                     <span class="exclamation-mark"> ! </span>
             }
     </div>
