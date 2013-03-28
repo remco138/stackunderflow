@@ -32,7 +32,7 @@ namespace MvcApplicationDatabase.Controllers
             {
                 if ((bool)Session["login"])
                 {
-                    if (user.Photo == null)
+                    if (user.Photo == "photo")
                     {
                         photoURL = "~/Content/themes/layout/photo.jpg";
                     }
@@ -129,8 +129,10 @@ namespace MvcApplicationDatabase.Controllers
         [HttpPost]
         public ActionResult Login(User user)
         {
+            int id = 1337;
             bool loginCheck = false;
-            int id = db.Users.Where(u => u.Username == user.Username).Select(u => u.User_id).First();
+            try { id = db.Users.Where(u => u.Username == user.Username).Select(u => u.User_id).First(); }
+            catch (Exception ex) { /* login failed */ }
             foreach (var userlist in db.Users)
             {
                 if (userlist.Username.Equals(user.Username) && userlist.Password.Equals(user.Password))
@@ -142,17 +144,18 @@ namespace MvcApplicationDatabase.Controllers
             Session.Add("login", loginCheck);
             try
             {
+                Session.Add("ID", id);
                 if ( (bool)Session["login"] == true )
                 {
                     Session.Add("Username", user.Username);
-                    Session.Add("ID", id);
+                    
                     return RedirectToAction("index", "home");
                 }
-                return null;
+                return RedirectToAction("index", "home");
             }
             catch
             {
-                return View();
+                return RedirectToAction("index", "home");
             }
         }
         //
