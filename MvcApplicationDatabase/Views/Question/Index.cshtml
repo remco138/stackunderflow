@@ -20,9 +20,9 @@
             <a href="?sort=@tab.Key" title="@tab.Value" @(sort == tab.Key ? "class=youarehere" : "")>@tab.Key</a>
         }
 
+        @if(ViewBag.isadmin == true && Model.Any(q => q.Reported != null && q.Reported != "")) {
         <a href="?sort=reported" class="reports-tab@(sort == "reported" ? " youarehere" : "")">Reports 
          </a>
-            @if(Model.Any(q => q.Reported != null && q.Reported != "")) {
                     <span class="exclamation-mark"> ! </span>
             }
     </div>
@@ -56,7 +56,7 @@
                 }
             </div>
 
-            @if (ViewBag.isAdmin != true)
+            @if (ViewBag.isAdmin == true)
             {
                 <div class="admin-menu">
                     <div class="report-menu-option">
@@ -72,13 +72,13 @@
                 </div>
             }
             </div>
+            
         <div class="summary">
             <h3>@Html.ActionLink(item.Title, item.Question_id.ToString(), "question")
-                @if(item.Reported != null && item.Reported != "") {
+                @if(ViewBag.isAdmin == true && item.Reported != null && item.Reported != "") {
                     <span class="exclamation-mark"> ! </span>
                 }
             </h3>
-
             <div class="tags">
                 @foreach (var tag in item.Tags)
                 {
@@ -95,6 +95,7 @@
         </div>
     </div>
     }
+
 </div>
 <div id="toptags">
     <h2>Recent Tags</h2>
