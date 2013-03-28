@@ -190,7 +190,19 @@ namespace MvcApplicationDatabase.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public static bool isAdmin
+        {
+            get
+            {
+                if (true /*TODO: isAdmin*/)
+                {
+                    return true;
+                }
+                else 
+                    return false;
+            }
 
+        }
 
         public static bool isLoggedIn
         {

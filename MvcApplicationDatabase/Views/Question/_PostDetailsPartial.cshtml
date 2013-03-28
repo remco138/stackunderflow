@@ -22,12 +22,12 @@
         <div class="post-right">
             <div class="post-text">@Html.Raw(Model.Content)</div> 
 
-            @if (Model.Question.Active == false)
+            @if (Model.Question.Active == true)
             {
-            <div class="post-bar">
-                <a class="post-reply" href="/question/comment/@Model.Post_id" title="Reply to this post.">comment</a>
-                <a hidden class="post-edit" href="/question/edit/@Model.Post_id">edit</a>               
-            </div>
+                <div class="post-bar">
+                    <a class="post-reply" href="/question/comment/@Model.Post_id" title="Reply to this post.">comment</a>
+                    <a hidden class="post-edit" href="/question/edit/@Model.Post_id">edit</a>               
+                </div>
             }
             
 

@@ -23,8 +23,7 @@ namespace MvcApplicationDatabase.Controllers
             page = page - 1;
             int questionCount = db.Questions.Count();
             IQueryable questionList;
-            //bool isAdmin = (Session["username"] != null && db.Users.Any(q => q.Username == Session["username"].ToString()));
-            bool isAdmin = false;
+
             switch (sort)
             {
                 case "votes":
@@ -38,7 +37,7 @@ namespace MvcApplicationDatabase.Controllers
                                             .Take(pagesize);
                     break;
                 case "reported":
-                    if (isAdmin == true)
+                    if (UserController.isAdmin)
                     {
                         questionList = db.Questions.OrderByDescending(q => q.Posts.FirstOrDefault().DateCreated)
                                                .Select(q => q.Reported != null && q.Reported != "")
@@ -89,10 +88,11 @@ namespace MvcApplicationDatabase.Controllers
                 vm.Question.DateCreated = DateTime.Now;
                 vm.Question.Posts.Add(new Post()
                 {
+                    Active = true,
                     Content = md.Transform(Request.Form["Post.Content"]),
                     User_id = (int)Session["ID"],
                     DateCreated = DateTime.Now,
-                });         
+                });
                 
                 // Was unable to add Tags, but fixed this by following the steps under 'Issues With Views': http://oyonti.wordpress.com/2011/05/26/unable-to-update-the-entityset-because-it-has-a-definingquery/
                 //
@@ -104,6 +104,7 @@ namespace MvcApplicationDatabase.Controllers
                     {
                         vm.Question.Tags.Add(new Tag()
                         {
+                            Active = true,
                             Name = t,
                             Summary = "Requires summary",
                         });
@@ -180,6 +181,7 @@ namespace MvcApplicationDatabase.Controllers
                 return RedirectToRoute("Question", new { id = model.Question.Question_id });
             }
 
+            model.NewAnswer.Active = true;
             model.NewAnswer.Question_id = model.Question.Question_id;
             model.NewAnswer.DateCreated = DateTime.Now;
             model.NewAnswer.User_id = (int)Session["ID"];
@@ -278,17 +280,17 @@ namespace MvcApplicationDatabase.Controllers
         public ActionResult Comment(Comment comment)
         {
             UserController.CheckLogin();
-            bool isAdmin = (Session["username"] != null && db.Users.Any(q => q.Username == Session["username"].ToString()));
+            var post = db.Posts.First(p => p.Post_id == comment.Post_id);
 
-            if (comment.Post.Question.Active == false || isAdmin)
+            if (post.Active) // Can only add comments to the post if post is active.
             {
+                comment.Active = true;
                 comment.User_id = (int)Session["ID"];
                 comment.DateCreated = DateTime.Now;
                 db.Comments.Add(comment);
                 db.SaveChanges();
             }
-
-            return RedirectToRoute("Question", new { id = comment.Post_id });
+            return RedirectToRoute("Question", new { id = post.Question_id });
         }
 
         public ActionResult RemoveReport(int id, bool active = true)
