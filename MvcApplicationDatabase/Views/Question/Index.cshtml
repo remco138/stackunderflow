@@ -7,14 +7,17 @@
         sort = "newest";
     }
     ViewBag.Title = "Questions";
-    string[] tabs = {"newest", "frequent", "votes", "active", "unanswered"};
+    Dictionary<string, string> tabs = new Dictionary<string,string>();
+    tabs.Add("newest", "the most recently asked questions");
+    tabs.Add("votes", "questions with the most votes");
+    tabs.Add("unanswered", "questions that have no upvoted answers");
 }
 
 <h2 class="title">All @ViewBag.Title</h2>
 <div class="subheader">
     <div id="tabs">
-        @foreach(string tab in tabs) {
-            <a href="?sort=@tab" @(sort == tab ? "class=youarehere" : "")>@tab</a>
+        @foreach(KeyValuePair<string, string> tab in tabs) {
+            <a href="?sort=@tab.Key" title="@tab.Value" @(sort == tab.Key ? "class=youarehere" : "")>@tab.Key</a>
         }
 
         <a href="?sort=reported" class="reports-tab@(sort == "reported" ? " youarehere" : "")">Reports 
@@ -81,6 +84,13 @@
                 {
                     @Html.ActionLink(@tag.Name, @tag.Name.ToLower(), new { controller = "question/tagged" }, new { @class = "post-tag", })
                 }
+            </div>
+            <div class="post_user" style="margin-top:-25px;">
+                <p>asked @item.Posts.FirstOrDefault().DateCreated.ToString("dd MMM \\a\\t HH:mm")</p>
+                <p>
+                    <img class="avatar" src="~/Content/themes/layout/@item.Posts.FirstOrDefault().User.Photo" alt="avatar" width="40px" height="40px" />
+                    @Html.ActionLink(item.Posts.FirstOrDefault().User.FirstName + " " + item.Posts.FirstOrDefault().User.LastName, "details/" + item.Posts.FirstOrDefault().User_id, "user")
+                </p>
             </div>
         </div>
     </div>
