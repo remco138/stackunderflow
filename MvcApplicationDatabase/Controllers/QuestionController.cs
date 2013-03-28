@@ -32,10 +32,10 @@ namespace MvcApplicationDatabase.Controllers
                                            .Skip(page * pagesize)
                                            .Take(pagesize);
                     break;
-                case "active":
-                    questionList = db.Questions.OrderByDescending(q => q.Posts.FirstOrDefault().DateCreated)
-                                           .Skip(page * pagesize)
-                                           .Take(pagesize);
+                case "unanswered":
+                    questionList = db.Questions.Where(q => q.Posts.Count == 1).OrderByDescending(q => q.DateCreated)
+                                            .Skip(page * pagesize)
+                                            .Take(pagesize);
                     break;
                 case "reported":
                     if (isAdmin == true)
@@ -47,9 +47,7 @@ namespace MvcApplicationDatabase.Controllers
                         break;
                     }
                     return RedirectToAction("Index");
-
                 default:
-                    /* newest */
                     questionList = db.Questions.OrderByDescending(q => q.DateCreated)
                                            .Skip(page * pagesize)
                                            .Take(pagesize);
