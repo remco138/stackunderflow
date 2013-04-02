@@ -34,12 +34,12 @@
                 <li@(ctrl.Equals("user") && act.Equals("index") ? " class=active" : "")>@Html.ActionLink("Users", "Index", "User")</li>
 
                 <li@(ctrl.Equals("question") && act.Equals("ask") ? " class=active" : "")>@Html.ActionLink("Ask Question", "Ask", "Question")</li>
-                  @if (Session["login"] != null && (bool)Session["login"] == true)
+                  @if (Session["login"] != null)
                   { 
                      <li@(ctrl.Equals("user") && act.Equals("details") ? " class=active" : "")>@Html.ActionLink("Profile", "details/"  + Session["ID"].ToString(), "user")</li>
                  }
 
-                    @if (Session["login"] != null && (bool)Session["login"] == true)
+                 @if (Session["login"] != null)
                     { 
                      <li@(ctrl.Equals("user") && act.Equals("logout") ? " class=active" : "")>@Html.ActionLink("Logout", "logout", "user")</li>
                  }

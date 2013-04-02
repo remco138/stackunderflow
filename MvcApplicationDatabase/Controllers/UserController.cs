@@ -15,10 +15,8 @@ namespace MvcApplicationDatabase.Controllers
 
         public ActionResult Index()
         {
-
-                    var all = db.Users.Take(50);
-                    return View(all);
-
+            var all = db.Users.Take(50);
+            return View(all);
         }
 
         //
@@ -27,20 +25,11 @@ namespace MvcApplicationDatabase.Controllers
         public ActionResult Details(int id)
         {
             var user = db.Users.First(u => u.User_id == id);
-            string photoURL;
             try
             {
                 if ((bool)Session["login"])
                 {
-                    if (user.Photo == "photo")
-                    {
-                        photoURL = "~/Content/themes/layout/photo.jpg";
-                    }
-                    else
-                    {
-                        photoURL = "~/Content/themes/layout/profilephoto/" + user.User_id.ToString() + ".jpg";
-                    }
-                    ViewBag.PhotoURL = photoURL;
+                    ViewBag.PhotoURL = "~/Content/themes/layout/" + user.Photo;
 
                     if ((int)Session["ID"] == id)
                     {
@@ -129,7 +118,6 @@ namespace MvcApplicationDatabase.Controllers
         [HttpPost]
         public ActionResult Login(User user)
         {
-            int id = 1337;
             bool loginCheck = false;
             User userDetails;
             
@@ -149,7 +137,7 @@ namespace MvcApplicationDatabase.Controllers
             Session.Add("login", loginCheck);
             try
             {
-                Session.Add("ID", id);
+                Session.Add("ID", userDetails.User_id);
                 if ( (bool)Session["login"] == true )
                 {
                     Session.Add("Username", user.Username);

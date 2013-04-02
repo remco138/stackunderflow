@@ -118,11 +118,11 @@ a:visited { color: #4a6b82; }
 
 #logo {
     background: url(themes/layout/logo.png) no-repeat left center;
-    height: 100px;
+    height: 120px;
     width: 100%;
     margin-top: 10px;
     text-align: center;
-    line-height: 100px;
+    line-height: 120px;
 }
 
 .homebox {
