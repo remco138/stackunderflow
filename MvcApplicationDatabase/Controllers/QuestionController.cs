@@ -81,6 +81,14 @@ namespace MvcApplicationDatabase.Controllers
             ViewBag.QuestionCount = db.Questions.Count();
             ViewBag.PageSize = pagesize;
             ViewBag.RecentTags = db.Tags.OrderByDescending(x => x.Questions.Count).ToArray();
+            ViewBag.isAdmin = UserController.isAdmin;
+            ViewBag.showReportedTab = false;
+
+            // Check for reported questions
+            if (ViewBag.isAdmin && db.Questions.Any(q => q.Reported != ""))
+            {
+                ViewBag.showReportedTab = true;
+            }
             return View("Index", questionList);
         }
 
