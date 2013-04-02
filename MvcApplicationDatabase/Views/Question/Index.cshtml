@@ -7,6 +7,7 @@
         sort = "newest";
     }
     ViewBag.Title = "Questions";
+    ViewBag.StdPageSize = ViewBag.StdPageSize != null ? ViewBag.StdPageSize : 15;
     Dictionary<string, string> tabs = new Dictionary<string,string>();
     tabs.Add("newest", "the most recently asked questions");
     tabs.Add("votes", "questions with the most votes");
