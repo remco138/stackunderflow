@@ -379,7 +379,7 @@ namespace MvcApplicationDatabase.Controllers
         }
 
         [WebMethod()]
-        public void Vote(int? id, int user_id, string type = "up")
+        public void Vote(int? id, int? user_id, string type = "up")
         {
             if (id != null && user_id != null)
             {
@@ -387,13 +387,13 @@ namespace MvcApplicationDatabase.Controllers
                 var user = db.Users.First(u => u.User_id == user_id);
                 if (type == "up")
                 {
-                    post.Votes++;
-                    user.Votes++;
+                    ++post.Votes;
+                    ++user.Votes;
                 }
                 else if (type == "down")
                 {
-                    post.Votes--;
-                    user.Votes--;
+                    --post.Votes;
+                    --user.Votes;
                 }
                 db.SaveChanges();
             }

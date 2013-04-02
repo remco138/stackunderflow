@@ -14,7 +14,7 @@ function downvote(id, user_id) {
     $("#totalvote_" + id).text(prev);
     $.ajax({
         type: "POST",
-        url: "vote?id=" + id + "&user_id=" + user_id + "type=down",
+        url: "vote?id=" + id + "&user_id=" + user_id + "&type=down",
         success: function (result) {
         }
     });
