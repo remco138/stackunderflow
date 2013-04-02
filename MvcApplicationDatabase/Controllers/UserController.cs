@@ -61,15 +61,22 @@ namespace MvcApplicationDatabase.Controllers
         [HttpPost]
         public ActionResult Create(User user)
         {
-            if (ModelState.IsValid)
+            // WAT GAAT HIER FOUT?
+            try
             {
-                user.DateCreated = DateTime.Now;
-                user.PermissionLEvel = 0;
-                user.Votes = 0;
-                db.Users.Add(user);
-                db.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    user.DateCreated = DateTime.Now;
+                    user.PermissionLEvel = 0;
+                    user.Votes = 0;
+                    db.Users.Add(user);
+                    db.SaveChanges();
+                }
             }
-            return View();
+            catch
+            {
+            }
+            return View("login");
         }
 
         //
