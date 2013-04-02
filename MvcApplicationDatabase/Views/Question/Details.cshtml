@@ -40,29 +40,32 @@
             </p>
         </div>
 
-        <div class="question-report-menu" style="display:none">
-            <div class="report-menu-option">
-                @if(Model.Question.Active == true) {
-                    @Html.ActionLink("Report", "Report", new { controller = "question", id = Model.Question.Question_id }, new { @class = "", onclick = "return confirm('Are you sure you want to report this question?');" })
+        @if(Session["login"] != null)
+        {
+            <div class="question-report-menu" style="display:none">
+                <div class="report-menu-option">
+                    @if(Model.Question.Active == true) {
+                        @Html.ActionLink("Report", "Report", new { controller = "question", id = Model.Question.Question_id }, new { @class = "", onclick = "return confirm('Are you sure you want to report this question?');" })
+                    }
+                </div>
+
+                @if (ViewBag.isAdmin == true)
+                {
+                    <div class="admin-menu">
+                        <div class="report-menu-option">
+                            @if (Model.Question.Reported != null && Model.Question.Reported != "")
+                            {
+                                @Html.ActionLink("Un-Report", "RemoveReport", new { controller = "question", id = Model.Question.Question_id }, new { @class = "", onclick = "return confirm('Are you sure you want to remove the reported status of this question?');" })
+                            }
+                            </div>
+
+                        <div class="report-menu-option">
+                            @Html.ActionLink((string)ViewBag.lockText, "Active", new { controller = "question", id=Model.Question.Question_id, active = !Model.Question.Active }, new { @class = "", onclick="return confirm('Are you sure you want to report this question?');" })
+                         </div>
+                    </div>
                 }
             </div>
-
-            @if (ViewBag.isAdmin == true)
-            {
-                <div class="admin-menu">
-                    <div class="report-menu-option">
-                        @if (Model.Question.Reported != null && Model.Question.Reported != "")
-                        {
-                            @Html.ActionLink("Un-Report", "RemoveReport", new { controller = "question", id = Model.Question.Question_id }, new { @class = "", onclick = "return confirm('Are you sure you want to remove the reported status of this question?');" })
-                        }
-                        </div>
-
-                    <div class="report-menu-option">
-                        @Html.ActionLink((string)ViewBag.lockText, "Active", new { controller = "question", id=Model.Question.Question_id, active = !Model.Question.Active }, new { @class = "", onclick="return confirm('Are you sure you want to report this question?');" })
-                     </div>
-                </div>
-            }
-        </div>
+        }
 
 
 
