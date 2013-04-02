@@ -39,10 +39,11 @@ namespace MvcApplicationDatabase.Controllers
                 case "reported":
                     if (UserController.isAdmin)
                     {
-                        questionList = db.Questions.OrderByDescending(q => q.Posts.FirstOrDefault().DateCreated)
-                                               .Select(q => q.Reported != null && q.Reported != "")
-                                               .Skip(page * pagesize)
-                                               .Take(pagesize);
+                        questionList = db.Questions.OrderByDescending(q => q.DateCreated)
+                                                   .Where(q => q.Reported != "")
+                                                   .Skip(page * pagesize)
+                                                   .Take(pagesize);
+
                         break;
                     }
                     return RedirectToAction("Index");
@@ -52,10 +53,20 @@ namespace MvcApplicationDatabase.Controllers
                                            .Take(pagesize);
                     break;
             }
+
+
             ViewBag.StdPageSize = pagesize;
             ViewBag.QuestionCount = questionCount;
             ViewBag.RecentTags = db.Tags.OrderByDescending(x => x.Questions.Count).ToArray();
             ViewBag.isAdmin = UserController.isAdmin;
+            ViewBag.showReportedTab = false;
+    
+            // Check for reported questions
+            if (ViewBag.isAdmin && db.Questions.Any(q => q.Reported != ""))
+            {
+                ViewBag.showReportedTab = true;
+            }
+
             return View(questionList);
         }
 
