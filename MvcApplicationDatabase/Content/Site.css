@@ -185,7 +185,7 @@ a:visited { color: #4a6b82; }
 }
 #content h2.title { margin-bottom: -30px; }
 
-/* QuestionList (bijna alles van stackoverflow.com)
+/* QuestionList
 -----------------------------------------------------------*/
 
 #question-list {
@@ -349,6 +349,10 @@ input[type=submit] {
     width: 220px;
 }
 
+.content-left {
+    width: 730px;
+}
+
 
 /* Opening post & Answers to questions
 -----------------------------------------------------------*/
@@ -358,7 +362,6 @@ input[type=submit] {
     width: 730px;
 }
 .answers {
-    width: 730px;
     margin-top: -25px;
 }
 .post_vote {
@@ -684,14 +687,10 @@ input[type=submit] {
 
 .admin-menu { 
     float:right;
-    background-color: rgba(255, 0, 1, 0.07);
     font-weight:bold;
 }
 .question-report-menu a {
-    font-size: 18px;
     font-weight: 900;
-    font-family: 'Open Sans';
-    color: #22478a;
 }
 
 /* MARKDOWN EDITOR CSS

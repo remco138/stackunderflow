@@ -21,11 +21,11 @@
             <a href="?sort=@tab.Key" title="@tab.Value" @(sort == tab.Key ? "class=youarehere" : "")>@tab.Key</a>
         }
 
-        @if(ViewBag.isAdmin == true && Model.Any(q => q.Reported != null && q.Reported != "")) {
-        <a href="?sort=reported" class="reports-tab@(sort == "reported" ? " youarehere" : "")">Reports 
-         </a>
-                    <span class="exclamation-mark"> ! </span>
-            }
+        @if (ViewBag.showReportedTab)
+        {
+            <a href="?sort=reported" class="reports-tab@(sort == "reported" ? " youarehere" : "")">Reports</a>
+            <span class="exclamation-mark"> ! </span>
+        }
     </div>
 </div>
 <p class="dno">
@@ -48,30 +48,6 @@
             <div class="ql_views">
                 <div>@item.Views views</div>
             </div>
-        </div>
-        <div class="question-report-menu" style="display:none">
-            <div class="report-menu-option">
-                @if(item.Active == true) {
-                    <text>Report:</text>
-                    @Html.ActionLink("X", "Report", new { controller = "question", id=item.Question_id }, new { @class = "", onclick="return confirm('Are you sure you want to report this question?');"})
-                }
-            </div>
-
-            @if (ViewBag.isAdmin == true)
-            {
-                <div class="admin-menu">
-                    <div class="report-menu-option">
-                        @if (item.Reported != null && item.Reported != "") {
-                            <text>Un-report</text>
-                            @Html.ActionLink("X", "RemoveReport", new { controller = "question", id = item.Question_id }, new { @class = "", onclick = "return confirm('Are you sure you want to remove the reported status of this question?');" })
-                        }
-                    </div>
-                    <div class="report-menu-option">
-                        @(item.Active == true ? "Lock: " : "Unlock: ")
-                        @Html.ActionLink("X", "Active", new { controller = "question", id=item.Question_id, active = !item.Active }, new { @class = "", onclick="return confirm('Are you sure you want to lock/unlock this question?');" })
-                     </div>
-                </div>
-            }
         </div>
             
         <div class="summary">

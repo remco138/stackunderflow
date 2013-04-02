@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Details";
+    ViewBag.lockText = (Model.Question.Active == true) ? "Lock" : "Unlock";
 }
 @Scripts.Render("~/Scripts/Markdown.Converter.js")
 @Scripts.Render("~/Scripts/Markdown.Editor.js")
@@ -13,33 +14,6 @@
     <div class="@((Model.Question.Active == true) ? "question" : "question-inactive")">
         <h1 class="title">@Html.ActionLink(Model.Question.Title, Model.Question.Question_id.ToString(), "question")</h1>
     
-        <div class="question-report-menu" style="display:none">
-            <div class="report-menu-option">
-                @if(Model.Question.Active == true) {
-                    <text>Report:</text>
-                    @Html.ActionLink("X", "Report", new { controller = "question", id = Model.Question.Question_id }, new { @class = "", onclick = "return confirm('Are you sure you want to report this question?');" })
-                }
-            </div>
-
-            @if (ViewBag.isAdmin == true)
-            {
-                <div class="admin-menu">
-                    <div class="report-menu-option">
-                        @if (Model.Question.Reported != null && Model.Question.Reported != "")
-                        {
-                            <text>Un-report</text>
-                            @Html.ActionLink("X", "RemoveReport", new { controller = "question", id = Model.Question.Question_id }, new { @class = "", onclick = "return confirm('Are you sure you want to remove the reported status of this question?');" })
-                        }
-                        </div>
-
-                    <div class="report-menu-option">
-                        @(Model.Question.Active == true ? "Lock: " : "Unlock: ")
-                        @Html.ActionLink("X", "Active", new { controller = "question", id=Model.Question.Question_id, active = !Model.Question.Active }, new { @class = "", onclick="return confirm('Are you sure you want to report this question?');" })
-                     </div>
-                </div>
-            }
-            </div>
-
 
         <div class="post_vote">
             <p><a href="#" title="This question shows research effort; it is useful and clear (click again to undo)"><img src="~/Content/themes/layout/upvote.gif" alt="upvote" onclick="@(Session["login"] != null ? "upvote(" + Model.OpeningPost.Post_id + ");" : "notloggedin();")" /></a></p>
@@ -65,8 +39,36 @@
                 @Html.ActionLink(Model.OpeningPost.User.FirstName + " " + Model.OpeningPost.User.LastName, "details/" + Model.OpeningPost.User_id, "user")
             </p>
         </div>
+
+        <div class="question-report-menu" style="display:none">
+            <div class="report-menu-option">
+                @if(Model.Question.Active == true) {
+                    @Html.ActionLink("Report", "Report", new { controller = "question", id = Model.Question.Question_id }, new { @class = "", onclick = "return confirm('Are you sure you want to report this question?');" })
+                }
+            </div>
+
+            @if (ViewBag.isAdmin == true)
+            {
+                <div class="admin-menu">
+                    <div class="report-menu-option">
+                        @if (Model.Question.Reported != null && Model.Question.Reported != "")
+                        {
+                            @Html.ActionLink("Un-Report", "RemoveReport", new { controller = "question", id = Model.Question.Question_id }, new { @class = "", onclick = "return confirm('Are you sure you want to remove the reported status of this question?');" })
+                        }
+                        </div>
+
+                    <div class="report-menu-option">
+                        @Html.ActionLink((string)ViewBag.lockText, "Active", new { controller = "question", id=Model.Question.Question_id, active = !Model.Question.Active }, new { @class = "", onclick="return confirm('Are you sure you want to report this question?');" })
+                     </div>
+                </div>
+            }
+        </div>
+
+
+
+        <div class="clear"></div>
     </div>
-    <div class="clear"></div>
+    
 
     <div class="answers">
 
