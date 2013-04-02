@@ -66,6 +66,8 @@ namespace MvcApplicationDatabase.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    user.Photo = "";
+                    user.Bio = "";
                     user.DateCreated = DateTime.Now;
                     user.PermissionLEvel = 0;
                     user.Votes = 0;
@@ -73,8 +75,9 @@ namespace MvcApplicationDatabase.Controllers
                     db.SaveChanges();
                 }
             }
-            catch
+            catch (System.Data.Entity.Validation.DbEntityValidationException ex)
             {
+                Console.WriteLine(ex.Message);
             }
             return View("login");
         }
