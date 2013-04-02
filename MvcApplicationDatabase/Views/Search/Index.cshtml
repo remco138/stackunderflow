@@ -1,5 +1,21 @@
-﻿@{
-    ViewBag.Title = "Index";
-}
+﻿
 
-<h2>Index</h2>
+<div class="content-left">
+   
+    <form action="/search" method="get" class="search-form">
+         <h2>Search</h2>
+        <div class="form-item">
+            <input name="q" type="text" size="80" />
+        </div>
+       
+        <input type="submit" value="search" />
+    </form>
+
+
+    @if(ViewBag.QuestionList != null)
+    {
+        <div class="search-results">
+            @Html.Partial("../Question/_QuestionListPartial", (IEnumerable<MvcApplicationDatabase.Models.Question>) ViewBag.QuestionList)
+        </div>
+    }
+</div>

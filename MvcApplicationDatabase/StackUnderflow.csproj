@@ -126,6 +126,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\StaticContentController.cs" />
     <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -168,6 +169,7 @@
     <Compile Include="ViewModels\CommentReply.cs" />
     <Compile Include="ViewModels\QuestionDetailsFormViewModel.cs" />
     <Compile Include="ViewModels\QuestionFormViewModel.cs" />
+    <Compile Include="ViewModels\SearchViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\StackOverflowDatabase.mdf" />
@@ -303,6 +305,8 @@
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\StaticContent\PageNotFound.cshtml" />
     <Content Include="Views\Question\Comment.cshtml" />
+    <Content Include="Views\Search\Index.cshtml" />
+    <Content Include="Views\Question\_QuestionListPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\js\" />

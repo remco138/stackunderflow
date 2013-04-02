@@ -33,47 +33,9 @@
 </p>
 
 <div id="question-list">
-    @foreach (var item in Model) {
-    <div class="@((item.Active == true) ? "question-summary" : "question-summary-inactive")" id="question-summary-@item.Question_id">
-        <div class="cp">
-            <div class="ql_votes">
-                <div class="count">@item.Posts.First().Votes</div>
-                <div>votes</div>
-            </div>
-            <div class="ql_answers">
-                @{ int answers = item.Posts.Count() - 1; }
-                <div class="count">@answers</div>
-                <div>answers</div>
-            </div>
-            <div class="ql_views">
-                <div>@item.Views views</div>
-            </div>
-        </div>
-            
-        <div class="summary">
-            <h3>@Html.ActionLink(item.Title, item.Question_id.ToString(), "question")
-                @if(ViewBag.isAdmin == true && item.Reported != null && item.Reported != "") {
-                    <span class="exclamation-mark"> ! </span>
-                }
-            </h3>
-            <div class="tags">
-                @foreach (var tag in item.Tags)
-                {
-                    @Html.ActionLink(@tag.Name, @tag.Name.ToLower(), new { controller = "question/tagged" }, new { @class = "post-tag", })
-                }
-            </div>
-            <div class="post_user" style="margin-top:-25px;">
-                <p>asked @item.Posts.FirstOrDefault().DateCreated.ToString("dd MMM \\a\\t HH:mm")</p>
-                <p>
-                    <img class="avatar" src="~/Content/themes/layout/@item.Posts.FirstOrDefault().User.Photo" alt="avatar" width="40px" height="40px" />
-                    @Html.ActionLink(item.Posts.FirstOrDefault().User.FirstName + " " + item.Posts.FirstOrDefault().User.LastName, "details/" + item.Posts.FirstOrDefault().User_id, "user")
-                </p>
-            </div>
-        </div>
-    </div>
-    }
-
+    @Html.Partial("_QuestionListPartial", Model)
 </div>
+
 <div id="toptags">
     <h2>Recent Tags</h2>
     @foreach (var tag in ViewBag.RecentTags)
