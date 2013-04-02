@@ -66,7 +66,7 @@ namespace MvcApplicationDatabase.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    user.Photo = "";
+                    user.Photo = "photo.jpg";
                     user.Bio = "";
                     user.DateCreated = DateTime.Now;
                     user.PermissionLEvel = 0;
@@ -79,7 +79,7 @@ namespace MvcApplicationDatabase.Controllers
             {
                 Console.WriteLine(ex.Message);
             }
-            return View("login");
+            return RedirectToAction("login", "user");
         }
 
         //
