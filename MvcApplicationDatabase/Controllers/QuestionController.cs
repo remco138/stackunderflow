@@ -85,7 +85,7 @@ namespace MvcApplicationDatabase.Controllers
             ViewBag.showReportedTab = false;
 
             // Check for reported questions
-            if (ViewBag.isAdmin && db.Questions.Any(q => q.Reported != ""))
+            if (UserController.isAdmin && db.Questions.Any(q => q.Reported != ""))
             {
                 ViewBag.showReportedTab = true;
             }
@@ -94,7 +94,7 @@ namespace MvcApplicationDatabase.Controllers
 
         public ActionResult Ask()
         {
-            if (Session["login"] == null || !(bool)Session["Login"])
+            if (!UserController.isLoggedIn)
                 return RedirectToAction("login", "user", new { auth_error = 1 });
             return View();
         }
@@ -197,7 +197,7 @@ namespace MvcApplicationDatabase.Controllers
         [HttpPost]
         public ActionResult Details(QuestionDetailsFormViewModel model)
         {
-            if (Session["login"] == null)
+            if (!UserController.isLoggedIn)
             {
                 return RedirectToRoute("Question", new { id = model.Question.Question_id });
             }
@@ -379,15 +379,22 @@ namespace MvcApplicationDatabase.Controllers
         }
 
         [WebMethod()]
-        public void Vote(int? id, string type = "up")
+        public void Vote(int? id, int user_id, string type = "up")
         {
-            if (id != null)
+            if (id != null && user_id != null)
             {
-                var row = db.Posts.Where(p => p.Post_id == id).Single();
+                var post = db.Posts.First(p => p.Post_id == id);
+                var user = db.Users.First(u => u.User_id == user_id);
                 if (type == "up")
-                    row.Votes++;
+                {
+                    post.Votes++;
+                    user.Votes++;
+                }
                 else if (type == "down")
-                    row.Votes--;
+                {
+                    post.Votes--;
+                    user.Votes--;
+                }
                 db.SaveChanges();
             }
         }

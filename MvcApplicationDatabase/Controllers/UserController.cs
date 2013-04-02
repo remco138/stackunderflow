@@ -76,7 +76,7 @@ namespace MvcApplicationDatabase.Controllers
 
         public ActionResult Edit(int id)
         {
-            if ((bool)Session["login"])
+            if (isLoggedIn)
             {
                 var user = db.Users.First(u => u.User_id == id);
                 return View("Edit", user);
@@ -97,7 +97,7 @@ namespace MvcApplicationDatabase.Controllers
                     db.Entry(user).State = System.Data.EntityState.Modified;
                     db.SaveChanges();
 
-                    return View("index", "home");
+                    return RedirectToAction("details/" + id.ToString());
                 }
             }
             catch

@@ -11,6 +11,7 @@ namespace MvcApplicationDatabase.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class Question
     {
@@ -23,6 +24,7 @@ namespace MvcApplicationDatabase.Models
         public int Question_id { get; set; }
         public Nullable<int> BestAnswer_id { get; set; }
         public System.DateTime DateCreated { get; set; }
+        [Required]
         public string Title { get; set; }
         public int Views { get; set; }
         public string Reported { get; set; }
