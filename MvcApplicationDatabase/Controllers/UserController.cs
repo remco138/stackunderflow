@@ -90,6 +90,9 @@ namespace MvcApplicationDatabase.Controllers
         [HttpPost]
         public ActionResult Edit(int id, User user)
         {
+            // add lost stuff
+            //var userDetails = db.Users.First(u => u.User_id == user.User_id);
+            // post edits to db
             try
             {
                 if (ModelState.IsValid)

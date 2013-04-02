@@ -33,7 +33,7 @@
         </div>
         <div class="editor-field">
             @Html.PasswordFor(model => model.Password)
-               @Html.ValidationMessageFor(model => model.Password)
+            @Html.ValidationMessageFor(model => model.Password)
         </div>
 
         <div class="editor-label">
@@ -85,6 +85,8 @@
             @Html.EditorFor(model => model.Bio)
             @Html.ValidationMessageFor(model => model.Bio)
         </div>
+
+            @Html.HiddenFor(model => model.User_id)
 
         <p>
             <input type="submit" value="Save" />
