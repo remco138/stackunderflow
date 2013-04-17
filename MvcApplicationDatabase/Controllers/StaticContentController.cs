@@ -10,7 +10,7 @@ namespace MvcApplicationDatabase.Controllers
     {
         //
         // GET: /StaticContent/
-
+        //404 action, doesn't do much
         public ActionResult PageNotFound()
         {
             return View();

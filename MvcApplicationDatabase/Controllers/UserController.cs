@@ -13,7 +13,7 @@ namespace MvcApplicationDatabase.Controllers
         private StackOverflowDatabaseContext db = new StackOverflowDatabaseContext();
         //
         // GET: /User/
-
+        //Index action, returns the first 50 users 
         public ActionResult Index()
         {
             var all = db.Users.Take(50);
@@ -22,7 +22,7 @@ namespace MvcApplicationDatabase.Controllers
 
         //
         // GET: /User/Details/5
-
+        //Private page of a user, will show a picture, info and other information the database may contain about specified user id
         public ActionResult Details(int id)
         {
             var user = db.Users.First(u => u.User_id == id);
@@ -49,7 +49,7 @@ namespace MvcApplicationDatabase.Controllers
 
         //
         // GET: /User/Create
-
+        //Returns the raw view
         public ActionResult Create()
         {
             return View();
@@ -57,7 +57,7 @@ namespace MvcApplicationDatabase.Controllers
 
         //
         // POST: /User/Create
-
+        //Action for creating a user, code is pretty obvious
         [HttpPost]
         public ActionResult Create(User user)
         {
@@ -84,7 +84,7 @@ namespace MvcApplicationDatabase.Controllers
 
         //
         // GET: /User/Edit/5
-
+        //Doesn't do much, login first!
         public ActionResult Edit(int id)
         {
             if (isLoggedIn)
@@ -97,7 +97,7 @@ namespace MvcApplicationDatabase.Controllers
 
         //
         // POST: /User/Edit/5
-
+        //Action for editing your user account details
         [HttpPost]
         public ActionResult Edit(int id, User user)
         {
@@ -128,7 +128,7 @@ namespace MvcApplicationDatabase.Controllers
 
         //
         // POST: /User/Edit/5
-
+        //Will set some session stuff so the website will know whether user is logged in
         [HttpPost]
         public ActionResult Login(User user)
         {
@@ -168,7 +168,6 @@ namespace MvcApplicationDatabase.Controllers
         }
         //
         // GET: /User/Delete/5
-
         public ActionResult Delete(int id)
         {
             return View();
@@ -176,7 +175,7 @@ namespace MvcApplicationDatabase.Controllers
 
         //
         // POST: /User/Delete/5
-
+        //Action should delete the user, but we aren't sure if we want this functionality at all
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
@@ -192,12 +191,14 @@ namespace MvcApplicationDatabase.Controllers
             }
         }
 
+        //Logs the user out
         public ActionResult logout()
         {
             Session.Clear();
             return RedirectToAction("Index", "Home");
         }
 
+        //Handy method for actions elsewhere, will return true if the user is logged in
         public static bool isAdmin
         {
             get
@@ -209,6 +210,7 @@ namespace MvcApplicationDatabase.Controllers
 
         }
 
+        //Handy methods for actions elsewhere
         public static bool isLoggedIn
         {
             get
@@ -220,6 +222,7 @@ namespace MvcApplicationDatabase.Controllers
             }
         }
 
+        //depricated
         public static void CheckLogin()
         {
             if (!isLoggedIn)

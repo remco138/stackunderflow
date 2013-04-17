@@ -17,9 +17,10 @@ namespace MvcApplicationDatabase.Controllers
         private StackOverflowDatabaseContext db = new StackOverflowDatabaseContext();
 
         // GET: /Search/
-        //
+        //Index action for the search controller, lists the raw view when no search string is provided
+        //Will only list questions containing the specified string when provided ofcourse
         [HttpGet]
-        public ActionResult Index(String q)
+        public ActionResult Index(string q)
         {
             if (q == "") 
                 return View();

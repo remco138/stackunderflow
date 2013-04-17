@@ -13,6 +13,7 @@ namespace MvcApplicationDatabase.Controllers
 
         // GET: /Tag/
         //
+        //Index action for tags top-page, will return the tags ordered by times the tag is used
         public ActionResult Index()
         {
             List<Tag> tagList = db.Tags.OrderByDescending(x => x.Questions.Count).ToList();  //I've got not clue whether this works or not 
@@ -21,6 +22,9 @@ namespace MvcApplicationDatabase.Controllers
         }
 
         //   /Tag/Delete/5
+        //Action for admins/mods, will set the tag on "inactive", meaning that it will not be displayed at the top-tags page
+        //These tags wont be deleted because there might be questions which use the tag (in a decent manner)
+        //And nobody likes questions without tags!
         public ActionResult Delete(int id = -1)
         {
             ViewBag.isAdmin = UserController.isAdmin;
@@ -41,6 +45,8 @@ namespace MvcApplicationDatabase.Controllers
             return RedirectToAction("Index");
         }
 
+        //Action for modifying the summary (description) of the tag, this summary will be shown at the top-tags page
+        //Only mods/admins will be able to use it, this action is important because new tags will have a default summary
         public ActionResult ModifySummary(int id = -1)
         {
             ViewBag.isAdmin = UserController.isAdmin;

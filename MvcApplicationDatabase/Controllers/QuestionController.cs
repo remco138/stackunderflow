@@ -14,9 +14,17 @@ namespace MvcApplicationDatabase.Controllers
 {
     public class QuestionController : Controller
     {
+        /* 
+         * This is the question controller, Here models are sent to the views to render
+         * 
+         */
+
         private StackOverflowDatabaseContext db = new StackOverflowDatabaseContext();
 
         // GET: /Question/
+        //Index action, it returns the 15 most recent questions by default.
+        //The view allows to press buttons to sort on different methods, sorting will be based on arguments
+        //
         //
         public ActionResult Index(string sort = "", int page = 1, int pagesize = 15)
         {
@@ -54,7 +62,7 @@ namespace MvcApplicationDatabase.Controllers
                     break;
             }
 
-
+            //provide the view with basic info
             ViewBag.StdPageSize = pagesize;
             ViewBag.QuestionCount = questionCount;
             ViewBag.RecentTags = db.Tags.OrderByDescending(x => x.Questions.Count).ToArray();
@@ -70,14 +78,16 @@ namespace MvcApplicationDatabase.Controllers
             return View(questionList);
         }
 
-        public ActionResult Tagged(string id, int page = 1, int pagesize = 15)
+        //Will list questions which are tagged with the appropriate tag
+        public ActionResult Tagged(string tag, int page = 1, int pagesize = 15)
         {
             page = page - 1;
             var questionList = db.Questions.OrderBy(q => q.DateCreated)
-                                           .Where(q => q.Tags.Any(w => w.Name == id))
+                                           .Where(q => q.Tags.Any(w => w.Name == tag))
                                            .Skip(page * pagesize)
                                            .Take(pagesize);
 
+            //Provides view with basic info
             ViewBag.QuestionCount = db.Questions.Count();
             ViewBag.PageSize = pagesize;
             ViewBag.RecentTags = db.Tags.OrderByDescending(x => x.Questions.Count).ToArray();
@@ -92,12 +102,15 @@ namespace MvcApplicationDatabase.Controllers
             return View("Index", questionList);
         }
 
+        //Action for the ask page, will redirect to the inlog page if user is not logged in
         public ActionResult Ask()
         {
             if (!UserController.isLoggedIn)
                 return RedirectToAction("login", "user", new { auth_error = 1 });
             return View();
         }
+
+        //The action for inserting a new question in the database
         [HttpPost, ValidateInput(false)]
         public ActionResult Ask(QuestionFormViewModel vm)
         {
@@ -135,6 +148,7 @@ namespace MvcApplicationDatabase.Controllers
                     }
                 }
 
+                //Add and apply changes to the database
                 db.Questions.Add(vm.Question);
                 db.SaveChanges();
 
@@ -150,6 +164,7 @@ namespace MvcApplicationDatabase.Controllers
         //      Maps to:
         //  
         //  /Question/Details/1234
+        //
         //
         public ActionResult Details(int id)
         {
@@ -194,6 +209,7 @@ namespace MvcApplicationDatabase.Controllers
         //  [HttpPost]
         //  /Question/Details/1234
         //
+        //Inserts a new answer in the database, will redirect to the login page when user is not logged in
         [HttpPost]
         public ActionResult Details(QuestionDetailsFormViewModel model)
         {
@@ -247,6 +263,7 @@ namespace MvcApplicationDatabase.Controllers
             
         }
 
+        //Action for editing the question
         public ActionResult Edit(int id)
         {
             try
@@ -262,6 +279,7 @@ namespace MvcApplicationDatabase.Controllers
             }
         }
 
+        //Action for editing the question
         [HttpPost]
         public ActionResult Edit(Question question)
         {
@@ -276,7 +294,6 @@ namespace MvcApplicationDatabase.Controllers
             return View(question);
         }
 
-
         public ActionResult Comment(int id) // id = post_id
         {
             UserController.CheckLogin();
@@ -290,11 +307,11 @@ namespace MvcApplicationDatabase.Controllers
             {
                 return RedirectToAction("Index");
             }
-
-
+ 
             return View();
         }
 
+        //Will insert a comment into the database
         [HttpPost]
         public ActionResult Comment(Comment comment)
         {
@@ -312,6 +329,8 @@ namespace MvcApplicationDatabase.Controllers
             return RedirectToRoute("Question", new { id = post.Question_id });
         }
 
+        //Removes the reported status from a question
+        //Admin should take action against the user who wrongly reported the questions
         public ActionResult RemoveReport(int id, bool active = true)
         {
            if (UserController.isAdmin && id >= 0)
@@ -334,6 +353,8 @@ namespace MvcApplicationDatabase.Controllers
             return RedirectToAction("Index");
         }
 
+        //Action for locking/unlocking a question, the active field is set to false
+        //If the question is locked 
         public ActionResult Active(int id, bool active = true)
         {
             if (UserController.isAdmin && id >= 0)
@@ -356,7 +377,7 @@ namespace MvcApplicationDatabase.Controllers
             return RedirectToAction("Index");
         }
 
-    
+    //Will report a question, mods/admins will see a red '!' next to it
     public ActionResult Report(int id)
         {
             if (id >= 0)
@@ -378,6 +399,7 @@ namespace MvcApplicationDatabase.Controllers
             return RedirectToAction("Index");
         }
 
+        //Action for handling votes, users who are logged in can upvote or downvote a question
         [WebMethod()]
         public void Vote(int? id, int? user_id, string type = "up")
         {
